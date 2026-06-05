@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Ambientes
+.venv/
+venv/
+env/
+
+# Clone de referência externa (PALLAS) — não republicar repo de terceiro
+docs/PALLAS_ref/
+
+# Config local do Claude (pessoal, não compartilhar)
+.claude/settings.local.json
+
+# SO / editores
+.DS_Store
+Thumbs.db
+*.swp

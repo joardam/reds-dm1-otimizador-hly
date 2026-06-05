@@ -121,14 +121,22 @@ não depende de baixar nada nem resolver acesso.
 
 1. **Desenhar o testbed de marcadores plantados** (discutir antes de codar):
    - 🟡 **EM RASCUNHO** — estrutura desenhada em **`docs/desenho_marcadores.md`**. Decisões já fixadas:
-     - Base **100% DM1** (sem DM2); tratamento por insulina + bomba/CGM (fora: metformina/sulfonilureia).
+     - Base **100% DM1** (sem DM2); fora: metformina/sulfonilureia.
+     - **Tratamento = escada ordenada `NIVEL_TRATAMENTO` (0→3)** atravessando modalidade + tier de
+       insulina, monótona em eficácia e custo (L0 MDI+humana → L1 MDI+análogo → L2 bomba → L3
+       bomba+CGM). **Decidido 2026-06-05:** o **nível** é o sinal (decisão + custo + alvo da escalada);
+       a **droga específica dentro do nível** é ruído. Escada ordinal → consistente com o "discreto
+       por design" da §8.
      - **Longitudinal:** mesmo paciente repetido em vários tempos (REDS `PACIENTE` 1→N `ATENDIMENTO`),
        cronologia correta, com melhora/piora **plantada** = "delta T" como verdade-base.
      - **Horizonte longo (~15–30 anos)**, não 2 — complicações DM1 levam ≥10 anos a surgir; cadência
        ~anual com HbA1c trimestral/semestral, rastreio de complicações conforme diretrizes.
      - Campos dos 19 do reds_clean: manter (idade, HbA1c, IS_RENAL/CARDIO, insulina, município),
        virar ruído (sexo/raça), remover (drogas DM2, triagem Manchester, internação, óbito), e
-       adicionar (tempo de diagnóstico, modalidade de tratamento, marcador de resposta, retino/neuro).
+       adicionar (tempo de diagnóstico, nível de tratamento, marcador de resposta, retino/neuro).
+     - **Epistemologia do BFSS (decidido 2026-06-05):** o gabarito (quais variáveis têm efeito) é fato
+       da base; que o BFSS o **recupere** é **hipótese sob teste** (idealmente sim, medido por
+       precisão/recall) — não um "deve". Não selecionar é resultado válido, não defeito de spec.
    - Plano em **2 fases**: (1) mecânica temporal reusando faixas do reds_clean; (2) reformular valores.
    - Falta a **proposta numérica** (pesos M1/M2/M3, curvas, regras de progressão temporal, custos por
      nível, horizonte/cadência exatos, ruído, exemplo de paciente ponta a ponta).

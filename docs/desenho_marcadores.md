@@ -112,6 +112,14 @@ tier de insulina são leituras do nível, ver §0; intensidade atual = modulador
 > efeito, porque plantamos). Que o BFSS o **recupere** é a **hipótese sob teste** — idealmente sim,
 > medido por precisão/recall; se não recuperar, é um **resultado válido**, não um defeito de spec.
 
+> **Alvo da seleção (decidido 2026-06-05): `ΔHLY` por atendimento.** Seleção supervisionada com **alvo
+> único** → **BFSS single-objective**. Cada linha = uma visita; alvo = ganho de HLY do período;
+> features = valores daquele período (casa com `ΔHLY(período) = f(features)` da §1). Os marcadores são
+> **features (entrada)**, não alvos: alvo único ⇒ um objetivo só já recupera os vários marcadores.
+> **MOBFSS (BFSS multiobjetivo) descartado** (nem opcional) — ele só acrescentaria a troca
+> "acurácia × nº de features", que não é necessária aqui; o multiobjetivo de verdade é a etapa 2
+> (política: HLY × Custo × Equidade), não a seleção.
+
 **✅ Esperadas (idealmente selecionadas):** `NU_IDADE`, `IS_RENAL`, `IS_CARDIOVASCULAR`, `EXAME_HBA1C` (M1),
 `TEMPO_DIAGNOSTICO` (M2), `MARCADOR_RESPOSTA` (M3), `INTENSIDADE_TRATAMENTO_ATUAL` (nível da escada — modulador).
 (+ opcionalmente `IS_RETINOPATIA`/`IS_NEUROPATIA` se entrarem na fórmula.)

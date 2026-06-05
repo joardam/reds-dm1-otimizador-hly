@@ -137,6 +137,13 @@ não depende de baixar nada nem resolver acesso.
      - **Epistemologia do BFSS (decidido 2026-06-05):** o gabarito (quais variáveis têm efeito) é fato
        da base; que o BFSS o **recupere** é **hipótese sob teste** (idealmente sim, medido por
        precisão/recall) — não um "deve". Não selecionar é resultado válido, não defeito de spec.
+     - **Seleção = BFSS single-objective (decidido 2026-06-05).** **MOBFSS descartado** (nem como
+       opcional): o alvo é um valor único → um objetivo só basta; vários marcadores são *features*
+       (entrada), não objetivos, e um objetivo já recupera todos. Multiobjetivo de verdade fica só na
+       etapa 2 (política: HLY × Custo × Equidade).
+     - **Alvo da seleção (decidido 2026-06-05, importante): `ΔHLY` por atendimento.** Cada linha = uma
+       visita; alvo = ganho de HLY do período; features = valores daquele período. Casa com a fórmula
+       `ΔHLY(período) = f(features do período)` → o BFSS recupera exatamente as variáveis da fórmula.
    - Plano em **2 fases**: (1) mecânica temporal reusando faixas do reds_clean; (2) reformular valores.
    - Falta a **proposta numérica** (pesos M1/M2/M3, curvas, regras de progressão temporal, custos por
      nível, horizonte/cadência exatos, ruído, exemplo de paciente ponta a ponta).

@@ -144,6 +144,13 @@ não depende de baixar nada nem resolver acesso.
      - **Alvo da seleção (decidido 2026-06-05, importante): `ΔHLY` por atendimento.** Cada linha = uma
        visita; alvo = ganho de HLY do período; features = valores daquele período. Casa com a fórmula
        `ΔHLY(período) = f(features do período)` → o BFSS recupera exatamente as variáveis da fórmula.
+     - **M2 = DANO ACUMULADO, não duração crua (decidido 2026-06-05).** M2 saiu da responsividade e
+       virou modulador próprio `fator_dano(M2)`, **paralelo ao `fator_idade`** (dois relógios: idade =
+       tempo/desgaste do corpo; M2 = dano/evolução da doença). Multiplicativo = teto não-compensável.
+       É um acumulador `dano(t)=dano(t−1)+max(0,HbA1c(t)−alvo)` (efeito legado/memória metabólica,
+       DCCT/EDIC) → "controlou bem desde cedo = pouco dano apesar de anos". `TEMPO_DIAGNOSTICO` cru
+       vira proxy fraco/distrator. Responsividade re-normaliza para M1,M3 (ex.: 0.6·M1 + 0.4·M3).
+       Detalhes na fórmula em `docs/desenho_marcadores.md` §1.
    - Plano em **2 fases**: (1) mecânica temporal reusando faixas do reds_clean; (2) reformular valores.
    - Falta a **proposta numérica** (pesos M1/M2/M3, curvas, regras de progressão temporal, custos por
      nível, horizonte/cadência exatos, ruído, exemplo de paciente ponta a ponta).

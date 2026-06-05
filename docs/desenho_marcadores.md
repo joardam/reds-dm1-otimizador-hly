@@ -35,17 +35,29 @@ preserva o gabarito), aplicado **ao longo da trajetória** (acumula no tempo):
 
 ```
 ΔHLY(período) = potência_do_tratamento
-              × responsividade_do_paciente   (combinação contínua de M1,M2,M3)
-              × fator_idade                   (jovem ganha mais; curva monótona)
+              × responsividade_do_paciente   (combinação contínua de M1 e M3)
+              × fator_idade                   (jovem ganha mais; relógio de TEMPO do corpo)
+              × fator_dano(M2)                (dano acumulado = relógio da DOENÇA; mais dano → menos ganho)
               × (1 − desconto_comorbidade)    (renal/cardio/retino/neuro reduzem o teto)
               + ruído_pequeno
 HLY_total = soma dos períodos ponderados pela qualidade ao longo do acompanhamento
 ```
 
 - `potência_do_tratamento` = função **crescente do nível da escada** `NIVEL_TRATAMENTO` (0→3); ver §0.
-- `responsividade` = ex.: `0.5·M1 + 0.3·M2 + 0.2·M3` (cada marcador 0..1). Espectro contínuo.
-- **Freios de complexidade:** 3 marcadores + 2 moduladores + **1 interação** (tratamento×responsividade).
-  Forma fechada → ótimo teórico calculável. Ruído pequeno → sinal recuperável.
+- `responsividade` = ex.: `0.6·M1 + 0.4·M3` (cada marcador 0..1; pesos a definir). Espectro contínuo.
+- **M2 saiu da responsividade e virou modulador próprio** `fator_dano(M2)` (decidido 2026-06-05),
+  paralelo ao `fator_idade` — dois relógios: idade = desgaste do corpo (tempo); M2 = evolução da
+  doença (dano). Multiplicativo = teto **não-compensável** (M1/M3 altos não "salvam" dano alto).
+- **M2 = DANO ACUMULADO, não duração crua** (efeito legado / memória metabólica, DCCT/EDIC). É **um
+  acumulador**: `dano(t) = dano(t−1) + max(0, HbA1c(t) − alvo)`; `fator_dano = g(dano)`, curva suave
+  (decrescente). Captura "controlou bem desde cedo → pouco dano apesar de anos de doença". Dá peso real
+  ao longitudinal (decisões passadas deixam marca permanente).
+- **M1 (HbA1c atual) × M2 (dano acumulado) são relacionados mas distintos** — paciente que foi mal por
+  anos e *agora* controlou tem M1 baixo e M2 alto. Essa distinção **é** o efeito legado → sinais
+  separáveis pelo BFSS e por nós.
+- **Freios de complexidade:** 2 marcadores na responsividade (M1,M3) + 3 moduladores (idade, dano,
+  comorbidade) + **1 interação** (tratamento×responsividade). Forma fechada (path-dependent, mas
+  determinística) → simulável e com gabarito conhecido. Ruído pequeno → sinal recuperável.
 
 ## 2. Estrutura temporal (longitudinal) — paciente repetido no tempo
 
@@ -62,8 +74,9 @@ base real longitudinal e seus problemas de acesso/validação).
 
 **Campos temporais (em cada `ATENDIMENTO`, evoluem):**
 `DT_ATENDIMENTO` (datas crescentes), `EXAME_HBA1C` (M1; melhora/piora conforme tratamento×responsividade),
-`TEMPO_DIAGNOSTICO` (M2; aumenta), `NIVEL_TRATAMENTO` (0→3; **a decisão** — `MODALIDADE_TRATAMENTO`
-e o tier de insulina são **facetas derivadas** do nível, ver §0),
+`DANO_ACUMULADO` (M2; acumulador da HbA1c acima do alvo — relógio da doença, ver §1; `TEMPO_DIAGNOSTICO`
+ainda existe como campo, mas o **driver** do efeito é o dano, não a duração crua), `NIVEL_TRATAMENTO`
+(0→3; **a decisão** — `MODALIDADE_TRATAMENTO` e o tier de insulina são **facetas derivadas** do nível, ver §0),
 `IS_RENAL`/`IS_CARDIOVASCULAR`/`IS_RETINOPATIA`/`IS_NEUROPATIA` (comorbidades que **aparecem** se o
 controle for ruim por tempo suficiente).
 
@@ -121,11 +134,13 @@ tier de insulina são leituras do nível, ver §0; intensidade atual = modulador
 > (política: HLY × Custo × Equidade), não a seleção.
 
 **✅ Esperadas (idealmente selecionadas):** `NU_IDADE`, `IS_RENAL`, `IS_CARDIOVASCULAR`, `EXAME_HBA1C` (M1),
-`TEMPO_DIAGNOSTICO` (M2), `MARCADOR_RESPOSTA` (M3), `INTENSIDADE_TRATAMENTO_ATUAL` (nível da escada — modulador).
+`DANO_ACUMULADO` (M2 — driver real do efeito da doença), `MARCADOR_RESPOSTA` (M3),
+`INTENSIDADE_TRATAMENTO_ATUAL` (nível da escada — modulador).
 (+ opcionalmente `IS_RETINOPATIA`/`IS_NEUROPATIA` se entrarem na fórmula.)
 
 **❌ Ignoradas (idealmente descartadas):** `IN_SEXO`, `DS_RACA`, exame extra plantado sem efeito,
-IDs/administrativos, `RUIDO_01..15`, e **a identidade da droga específica dentro de um mesmo nível**
+IDs/administrativos, `RUIDO_01..15`, `TEMPO_DIAGNOSTICO` cru (proxy fraco — o driver é o `DANO_ACUMULADO`;
+serve até de distrator plausível), e **a identidade da droga específica dentro de um mesmo nível**
 (idealmente o BFSS a descarta, mostrando que a droga isolada não importa, só o nível/intensidade geral —
 hipótese sob teste).
 

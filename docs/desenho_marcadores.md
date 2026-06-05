@@ -132,6 +132,11 @@ Como o mFSS trata **contínuo × discreto** (no `fss.py`):
 - **Fitness é plugável** (PALLAS usa verossimilhança de rede gênica via `abcsmc`/`apf`; trocamos pela
   nossa avaliação de política → HLY/custo/equidade).
 
+> 🔀 **2026-06-05 — Este achado abriu uma POSSÍVEL MUDANÇA DE ROTA (não decidida).** Se a política for
+> tratada como **discreta por design**, a necessidade do mFSS **desaparece** (o motivo dele é o domínio
+> misto). Decisão em aberto, aguardando a equipe. **Ver `ESTADO_ATUAL.md` §8** (registro canônico da
+> ideia inicial × possível mudança).
+
 ⚠️ **ACHADO QUE MUDA O PLANO:** o `fss.py` do PALLAS é **SINGLE-OBJECTIVE** (maximiza um escalar; sem
 dominância nem arquivo de não-dominados). "Misto" e "multiobjetivo" são **camadas separadas**. Logo:
 - Reaproveitamos do PALLAS a **maquinaria mista (contínuo+discreto)**.

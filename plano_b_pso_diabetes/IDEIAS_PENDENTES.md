@@ -37,4 +37,7 @@
 - **Base não distingue T1D/T2D** → "diabetes tipo não especificado"; é testbed do otimizador.
 - **Coorte única (China, 2012) e transversal** → fala de associação, não de causa; não generaliza
   para o Brasil/SUS.
+- **LAMBDA=0.05 (força da L2) foi calibrado empiricamente**, não por validação cruzada. Funcionou
+  bem (pesos moderados, treino×teste próximos), mas o jeito "by the book" seria escolher por
+  cross-validation. *(ponto 4.3)*
 

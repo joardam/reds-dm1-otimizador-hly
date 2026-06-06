@@ -170,7 +170,8 @@ function reset(){
  particles=[]; traces=[]; iter=0; gbest=null; acc=0;
  for(let i=0;i<n;i++){
    const x=rnd(P.xmin,P.xmax), y=rnd(P.ymin,P.ymax), f=fit(x,y);
-   particles.push({x,y,vx:rnd(-.1,.1),vy:rnd(-.1,.1),bx:x,by:y,bf:f});
+   const hue=Math.round(360*i/n);
+   particles.push({x,y,vx:rnd(-.1,.1),vy:rnd(-.1,.1),bx:x,by:y,bf:f,dx:x,dy:y,hue});
    traces.push([[x,y]]);
    if(!gbest||f>gbest.f) gbest={x,y,f};
  }
@@ -191,34 +192,48 @@ function stepOnce(){
    const f=fit(p.x,p.y);
    if(f>p.bf){p.bf=f;p.bx=p.x;p.by=p.y;}
    if(f>gbest.f) gbest={x:p.x,y:p.y,f};
-   traces[i].push([p.x,p.y]); if(traces[i].length>120) traces[i].shift();
  }
  iter++;
  document.getElementById('it').textContent=iter;
  document.getElementById('best').textContent=gbest.f.toFixed(4);
 }
+function animate(){
+ const ease=0.16, thr=(P.xmax-P.xmin)*0.0015;
+ for(let i=0;i<particles.length;i++){const p=particles[i];
+   p.dx+=(p.x-p.dx)*ease; p.dy+=(p.y-p.dy)*ease;            // suaviza o movimento (fluido)
+   const tr=traces[i], last=tr[tr.length-1];
+   if(Math.abs(p.dx-last[0])+Math.abs(p.dy-last[1])>thr){ tr.push([p.dx,p.dy]); if(tr.length>90) tr.shift(); }
+ }
+}
 function draw(){
  ctx.imageSmoothingEnabled=true;
  ctx.drawImage(heat,0,0,G,G,0,0,W,H);
- // rastros
+ ctx.fillStyle='rgba(8,10,15,0.30)'; ctx.fillRect(0,0,W,H);   // escurece p/ as cores saltarem
+ // rastros: cada partícula na sua cor, com desvanecimento (cauda transparente -> cabeça forte)
  if(document.getElementById('trace').checked){
-   for(const tr of traces){ ctx.beginPath();
-     for(let k=0;k<tr.length;k++){const X=px(tr[k][0]),Y=py(tr[k][1]); k?ctx.lineTo(X,Y):ctx.moveTo(X,Y);}
-     ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=1; ctx.stroke();
+   ctx.lineCap='round';
+   for(let i=0;i<traces.length;i++){const tr=traces[i], hue=particles[i].hue;
+     for(let k=1;k<tr.length;k++){const a=k/tr.length;
+       ctx.beginPath(); ctx.moveTo(px(tr[k-1][0]),py(tr[k-1][1])); ctx.lineTo(px(tr[k][0]),py(tr[k][1]));
+       ctx.strokeStyle='hsla('+hue+',95%,62%,'+(a*0.9).toFixed(3)+')'; ctx.lineWidth=0.6+2.6*a; ctx.stroke();
+     }
    }
  }
  // velocidades
  if(document.getElementById('showv').checked){
-   for(const p of particles){ ctx.beginPath(); ctx.moveTo(px(p.x),py(p.y));
-     ctx.lineTo(px(p.x+p.vx*3),py(p.y+p.vy*3)); ctx.strokeStyle='rgba(255,200,0,.8)'; ctx.lineWidth=1; ctx.stroke(); }
+   for(const p of particles){ ctx.beginPath(); ctx.moveTo(px(p.dx),py(p.dy));
+     ctx.lineTo(px(p.dx+p.vx*3),py(p.dy+p.vy*3)); ctx.strokeStyle='rgba(255,220,120,.85)'; ctx.lineWidth=1.2; ctx.stroke(); }
  }
- // partículas
- for(const p of particles){ ctx.beginPath(); ctx.arc(px(p.x),py(p.y),3.2,0,7); ctx.fillStyle='#fff'; ctx.fill(); }
- // ótimo (estrela) e gbest
- star(px(P.ox),py(P.oy),9,'#ffd166');
+ // partículas coloridas com brilho
+ ctx.save();
+ for(const p of particles){ ctx.shadowColor='hsl('+p.hue+',95%,60%)'; ctx.shadowBlur=8;
+   ctx.beginPath(); ctx.arc(px(p.dx),py(p.dy),3.6,0,7); ctx.fillStyle='hsl('+p.hue+',95%,66%)'; ctx.fill(); }
+ ctx.restore();
+ // ótimo (estrela) e gbest, com brilho
+ ctx.save(); ctx.shadowColor='#ffd166'; ctx.shadowBlur=14; star(px(P.ox),py(P.oy),11,'#ffd166'); ctx.restore();
  if(document.getElementById('showg').checked && gbest){
-   ctx.beginPath(); ctx.arc(px(gbest.x),py(gbest.y),6,0,7);
-   ctx.strokeStyle='#22d3ee'; ctx.lineWidth=2.5; ctx.stroke();
+   ctx.save(); ctx.shadowColor='#22d3ee'; ctx.shadowBlur=12;
+   ctx.beginPath(); ctx.arc(px(gbest.x),py(gbest.y),7,0,7); ctx.strokeStyle='#22d3ee'; ctx.lineWidth=2.5; ctx.stroke(); ctx.restore();
  }
 }
 function star(cx,cy,r,col){ ctx.beginPath();
@@ -226,7 +241,7 @@ function star(cx,cy,r,col){ ctx.beginPath();
    const X=cx+Math.cos(ang)*rad,Y=cy+Math.sin(ang)*rad; i?ctx.lineTo(X,Y):ctx.moveTo(X,Y);}
  ctx.closePath(); ctx.fillStyle=col; ctx.fill(); }
 function loop(){ if(playing){ acc += SPF[+document.getElementById('speed').value];
-   while(acc>=1){ stepOnce(); acc--; } draw(); } requestAnimationFrame(loop); }
+   while(acc>=1){ stepOnce(); acc--; } } animate(); draw(); requestAnimationFrame(loop); }
 // ---- controles ----
 document.getElementById('play').onclick=function(){playing=!playing; this.textContent=playing?'⏸ Pause':'▶ Play';};
 document.getElementById('step').onclick=()=>{stepOnce();draw();};

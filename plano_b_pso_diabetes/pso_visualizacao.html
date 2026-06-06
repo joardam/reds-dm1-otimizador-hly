@@ -35,7 +35,7 @@
   <div class="row"><label><input type="checkbox" id="trace" checked> Mostrar rastro</label>
        <label><input type="checkbox" id="showg" checked> Mostrar gbest</label></div>
   <div class="row"><label><input type="checkbox" id="showv"> Mostrar velocidades</label></div>
-  <div class="row"><label>Velocidade</label><input type="range" id="speed" min="1" max="10" value="2"></div>
+  <div class="row"><label>Velocidade: <span id="speedLbl">lenta</span></label><input type="range" id="speed" min="1" max="10" value="2"></div>
   <div class="row"><label>Nº partículas: <span id="npLbl">30</span></label><input type="range" id="np" min="5" max="80" value="30"></div>
   <div class="row"><label>Inércia (w): <span id="wLbl">0.70</span></label><input type="range" id="winr" min="0" max="100" value="70"></div>
   <div class="row"><label>c1 (pessoal): <span id="c1Lbl">1.5</span></label><input type="range" id="c1" min="0" max="300" value="150"></div>
@@ -52,7 +52,9 @@ const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
 const G=DATA.G, W=cv.width, H=cv.height;
 let P=DATA.pares[0];                 // par atual
 let heat=document.createElement('canvas'); heat.width=G; heat.height=G;
-let particles=[], gbest=null, iter=0, playing=false, traces=[];
+let particles=[], gbest=null, iter=0, playing=false, traces=[], acc=0;
+const SPF=[0,0.04,0.08,0.16,0.3,0.6,1.2,2.5,4,7,11]; // passos por frame por valor do slider (1..10)
+const SPF_LBL=['','muito lenta','lenta','lenta','média','média','rápida','rápida','muito rápida','muito rápida','turbo'];
 
 // ---- seletor de par ----
 const sel=document.getElementById('par');
@@ -92,7 +94,7 @@ function fit(x,y){
 const rnd=(a,b)=>a+Math.random()*(b-a);
 function reset(){
  const n=+document.getElementById('np').value;
- particles=[]; traces=[]; iter=0; gbest=null;
+ particles=[]; traces=[]; iter=0; gbest=null; acc=0;
  for(let i=0;i<n;i++){
    const x=rnd(P.xmin,P.xmax), y=rnd(P.ymin,P.ymax), f=fit(x,y);
    particles.push({x,y,vx:rnd(-.1,.1),vy:rnd(-.1,.1),bx:x,by:y,bf:f});
@@ -110,7 +112,7 @@ function stepOnce(){
    const p=particles[i];
    p.vx=w*p.vx+c1*Math.random()*(p.bx-p.x)+c2*Math.random()*(gbest.x-p.x);
    p.vy=w*p.vy+c1*Math.random()*(p.by-p.y)+c2*Math.random()*(gbest.y-p.y);
-   const vmax=(P.xmax-P.xmin)*0.15;
+   const vmax=(P.xmax-P.xmin)*0.10;
    p.vx=Math.max(-vmax,Math.min(vmax,p.vx)); p.vy=Math.max(-vmax,Math.min(vmax,p.vy));
    p.x+=p.vx; p.y+=p.vy;
    const f=fit(p.x,p.y);
@@ -150,12 +152,13 @@ function star(cx,cy,r,col){ ctx.beginPath();
  for(let i=0;i<10;i++){const ang=Math.PI/5*i-Math.PI/2,rad=i%2?r*0.45:r;
    const X=cx+Math.cos(ang)*rad,Y=cy+Math.sin(ang)*rad; i?ctx.lineTo(X,Y):ctx.moveTo(X,Y);}
  ctx.closePath(); ctx.fillStyle=col; ctx.fill(); }
-function loop(){ if(playing){ const sp=+document.getElementById('speed').value;
-   for(let s=0;s<sp;s++) stepOnce(); draw(); } requestAnimationFrame(loop); }
+function loop(){ if(playing){ acc += SPF[+document.getElementById('speed').value];
+   while(acc>=1){ stepOnce(); acc--; } draw(); } requestAnimationFrame(loop); }
 // ---- controles ----
 document.getElementById('play').onclick=function(){playing=!playing; this.textContent=playing?'⏸ Pause':'▶ Play';};
 document.getElementById('step').onclick=()=>{stepOnce();draw();};
 document.getElementById('reset').onclick=reset;
+document.getElementById('speed').oninput=function(){document.getElementById('speedLbl').textContent=SPF_LBL[this.value];};
 document.getElementById('np').oninput=function(){document.getElementById('npLbl').textContent=this.value; reset();};
 document.getElementById('winr').oninput=function(){document.getElementById('wLbl').textContent=(this.value/100).toFixed(2);};
 document.getElementById('c1').oninput=function(){document.getElementById('c1Lbl').textContent=(this.value/100).toFixed(1);};

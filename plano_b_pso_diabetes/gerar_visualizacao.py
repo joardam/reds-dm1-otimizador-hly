@@ -42,11 +42,15 @@ def main():
     ordem = np.argsort(-np.abs(wstar))
     t = [int(i) for i in ordem[:4]]
     pares = [(t[0], t[1]), (t[0], t[2]), (t[1], t[3])]
+    # posição do ótimo DENTRO da moldura (fração 0..1 em x,y). Descentralizado de propósito,
+    # em cantos diferentes por par, p/ o bando ter de "caminhar" até o topo (busca visível).
+    fracs = [(0.27, 0.30), (0.72, 0.28), (0.30, 0.73)]
 
     dados_pares = []
-    for fi, fj in pares:
-        xs = np.linspace(wstar[fi] - R, wstar[fi] + R, G)
-        ys = np.linspace(wstar[fj] - R, wstar[fj] + R, G)
+    for (fi, fj), (fx, fy) in zip(pares, fracs):
+        # largura total continua 2R (mesmo zoom); só desloca o enquadramento
+        xs = np.linspace(wstar[fi] - 2 * R * fx, wstar[fi] + 2 * R * (1 - fx), G)
+        ys = np.linspace(wstar[fj] - 2 * R * fy, wstar[fj] + 2 * R * (1 - fy), G)
         Z = np.zeros((G, G))
         w = wstar.copy()
         for a, yv in enumerate(ys):
@@ -94,7 +98,7 @@ TEMPLATE = r"""<!DOCTYPE html>
 <body>
 <header>
  <h1>PSO — partículas buscando os melhores pesos (relevo de desempenho real)</h1>
- <small>Cada partícula é uma combinação de 2 pesos. O fundo é o desempenho real (claro = melhor). A ⭐ é o ótimo. As partículas (bando) convergem para o topo.</small>
+ <small>Cada partícula é uma combinação de 2 pesos. O fundo é o desempenho real (claro = melhor). A ⭐ é o ótimo (fora do centro, de propósito). As partículas (bando) convergem para o topo.</small>
 </header>
 <div class="wrap">
  <canvas id="cv" width="620" height="620"></canvas>

@@ -29,18 +29,36 @@ comum (PSO + correlação/interpretação).
 - **Comorbidades:** `HypertenHis`, `DyslipideHis`, pressão `Bpsys`/`Bpdia`, lipídios.
 - **Critério provisório de "melhor indivíduo":** idade, **poucas comorbidades**, **HbA1c ideal** (~7%).
 
-## A definir (próximos passos)
+## Implementação (Opção B) — `pso_diabetes.py`
 
-1. **Score de "melhor indivíduo"** — quais colunas exatas, pesos e o alvo de HbA1c.
-2. **Enquadramento do PSO** (com n=357, a Opção B é viável):
-   - **(A) Perfil ideal:** PSO busca no espaço de características o perfil que maximiza o score; depois
-     achamos os pacientes reais mais próximos.
-   - **(B) Modelo otimizado por PSO (recomendado):** PSO otimiza os **pesos de um modelo** que prevê um
-     rótulo de "bom desfecho" a partir das *outras* características → pesos altos = "quais
-     características o indivíduo ótimo tem".
-3. **Implementar** (Python: pandas + PSO simples) e interpretar.
+- **Rótulo "indivíduo ideal"** = terço superior de `wellness = z(idade) − z(HbA1c) − z(nº comorbidades)`
+  (comorbidades = hipertensão `WHO1999hbp` + dislipidemia `TGdis`/`DysHDLIDFNCEP`). Idade↑ = melhor.
+- **PSO** otimiza os pesos de uma **regressão logística** que prevê o rótulo a partir de 26
+  características que **não** entram no rótulo (antropometria, insulina/peptídeo-C/HOMA, enzimas
+  hepáticas, renais, estilo de vida, histórico familiar). Fitness = −(log-loss + L2).
+- **Validação:** o ótimo do PSO é comparado à logística analítica do sklearn (mesma regularização).
+
+### Como rodar
+
+```bash
+pip install numpy pandas scikit-learn matplotlib
+cd plano_b_pso_diabetes
+python3 pso_diabetes.py
+```
+
+Gera: `RESULTADOS.md`, `resultados_convergencia_pso.png`, `resultados_importancia.png`.
+
+### Resultados (n=357; 119 ideais vs 238 demais)
+
+- **PSO:** AUC treino ≈ 0.82 | teste ≈ 0.66 — **sklearn** teste ≈ 0.66.
+- **Validação:** similaridade (cosseno) dos pesos PSO×sklearn = **1.000** → o PSO resolveu a mesma
+  otimização (prova que funciona).
+- **Perfil do indivíduo ideal:** mais **magro** (BMI/cintura/gordura↓), menos **resistência à insulina**
+  (HOMA-IR/insulina jejum↓), **ALT↓** (menos fígado gorduroso) e **menos histórico familiar** de DM.
 
 ## Atenção metodológica
 
 - Não fatiar os 357 em sub-recortes pequenos (ex.: "top 10%" = ~36 → fraco).
 - Coorte única (China, 2012) → não generaliza; declarar como testbed.
+- O rótulo é construído de {idade, HbA1c, comorbidades}; por isso essas variáveis (e proxies de
+  glicose/lipídio/PA) ficam **fora** dos preditores, pra a descoberta não ser circular.

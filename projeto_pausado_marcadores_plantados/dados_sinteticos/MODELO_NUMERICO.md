@@ -46,7 +46,7 @@ Não é evidência clínica; é validação algorítmica.
 | `responsividade` | `0.6·M1_saúde + 0.4·M3` | combinação contínua decidida no design |
 | `fator_idade(idade)` | `clip(1.0 − 0.008·(idade − 12), 0.45, 1.0)` | jovem ganha mais anos saudáveis marginais |
 | `fator_dano(dano)` | `exp(−0.025·dano)` | multiplicativo = teto não-compensável; dano≈20→0.61, 40→0.37, 60→0.22 |
-| `desconto_comorbidade` | `clip(0.18·renal + 0.15·cardio + 0.12·retino + 0.10·neuro, 0, 0.6)` | complicações micro/macrovasculares reduzem qualidade de vida. Magnitudes **altas** para o efeito ser detectável pelo BFSS acima do ruído |
+| `desconto_comorbidade` | `clip(0.18·renal + 0.20·cardio + 0.15·retino + 0.15·neuro, 0, 0.6)` | complicações micro/macrovasculares reduzem qualidade de vida. Cardio com peso maior (principal causa de morte na DM1). Magnitudes **altas** para o efeito ser detectável pelo BFSS acima do ruído |
 | `ruído` | `N(0, 0.02)` | pequeno → sinal recuperável |
 
 **Fragilidade (decisão de identificabilidade):** cada paciente tem um traço fixo `fragilidade ~ N(0,1)`
@@ -68,13 +68,16 @@ ruído — com a fragilidade, elas carregam **sinal próprio** e ficam recuperá
   - retino: `σ(−3.5 + 0.035·dano + 0.015·(idade−40) + 0.9·frag)` se dx≥3
   - renal:  `σ(−4.3 + 0.035·dano + 0.015·(idade−40) + 0.9·frag)` se dx≥5
   - neuro:  `σ(−3.8 + 0.035·dano + 0.9·frag)` se dx≥5
-  - cardio: `σ(−5.2 + 0.03·dano + 0.04·(idade−50) + 0.9·frag)` se idade≥40
+  - cardio: `σ(−4.6 + 0.03·dano + 0.04·(idade−50) + 0.9·frag)` se idade≥40
 
 ## 4. Coorte
 
 - **N = 500 pacientes**, acompanhamento **15–25 anos** (anual) → ~10 mil atendimentos (1 linha BFSS = 1 visita).
-- Idade baseline ~ `N(35,15)` clip `[12,70]`; HbA1c baseline ~ `N(8.5,1.5)` clip `[5.5,13]`;
-  M3 ~ `Beta(2,2)`; duração-dx baseline aleatória (≤ idade−5).
+- **Idade ao diagnóstico ~ `Gamma(2.2, 8.0)` clip `[1,45]`** (média ~17,6) — onset de **DM1 realista**:
+  pico na infância/adolescência (mediana ~14 anos, ~70% até os 20), com cauda adulta. **NÃO** sorteamos
+  idade baseline direto: `idade_baseline = idade_dx + anos_já_decorridos` (`anos_já_decorridos ~ U{0..25}`),
+  o que mantém `TEMPO_DIAGNOSTICO` coerente (ex.: diagnosticado aos 12, aos 42 tem 30 anos de doença).
+- HbA1c baseline ~ `N(8.5,1.5)` clip `[5.5,13]`; M3 ~ `Beta(2,2)`; fragilidade ~ `N(0,1)`.
 - Entrada do paciente espalhada em ~1995–2005 para o horizonte caber até ~2025 (cronologia válida).
 
 ## 5. Gabarito do BFSS (o alvo da validação)
@@ -105,22 +108,30 @@ ruído — com a fragilidade, elas carregam **sinal próprio** e ficam recuperá
 
 ## 7. Resultado da geração + validação (seed=42, executado 2026-06-07)
 
-**Coorte:** 500 pacientes, **9.991 atendimentos** (linhas BFSS). HbA1c média global **8,30%** (faixa
-5,5–12,1 — plausível para DM1). HLY total médio/paciente 4,04 (0,38–14,04 — boa dispersão dirigida pelos
-marcadores). Prevalência final de complicações: renal 44%, retinopatia 63%, neuropatia 55%, cardio 18%
+**Coorte:** 500 pacientes, **10.031 atendimentos** (linhas BFSS). HbA1c média global **8,3%** (plausível
+para DM1). Idade ao diagnóstico mediana ~14 anos (onset DM1 realista); `TEMPO_DIAGNOSTICO` final mediana
+~32 anos. Prevalência final de complicações: renal 43%, retinopatia 60%, neuropatia 57%, cardio 17%
 (coerente com DM1 de longa duração e controle heterogêneo).
 
 **Validação A — integridade relacional:** **PASSOU** (0 violações de FK; cronologia nascimento<atendimento,
 exame≤resultado, início≤fim; HbA1c em faixa; CPF=11, CNS=15; sexo∈{F,M}).
 
-**Validação B — recuperabilidade do sinal (sanidade pré-BFSS, RandomForest, R²=0,984):** as **9 variáveis
-relevantes do gabarito ocupam exatamente o top-9** por importância (recall **100%**). A menor relevante
-(`IS_CARDIOVASCULAR` ≈ 0,0048) fica **acima** do maior ruído (`TEMPO_DIAGNOSTICO` ≈ 0,0038 — o distrator
-correlacionado, por design), que por sua vez fica acima do ruído puro (`RUIDO_*` ≈ 0,0024). Ordem de
-importância: M3 > HbA1c > dano > idade > renal > nível > retino ≈ neuro > cardio ≫ ruído.
+**Validação B — recuperabilidade do sinal (sanidade pré-BFSS, RandomForest, R²≈0,98):** o critério é
+**todo driver plantado superar todo ruído PURO** → **SIM**. Estrutura em **3 camadas**:
+1. **Sinal forte** (clive limpo): M3 ≫ dano ≈ HbA1c ≫ idade > retino > renal > nível > neuro.
+2. **Zona contestada** (o "botão de dificuldade" §7): `TEMPO_DIAGNOSTICO` (≈0,0074, distrator
+   **correlacionado** com idade+dano) fica acima do driver mais fraco, `IS_CARDIOVASCULAR` (≈0,0052, raro
+   e tardio). `NM_MUNIC` (categórica de 10 níveis, dimensão de equidade) também aparece levemente.
+3. **Ruído puro** (`RUIDO_*`, sexo, raça, marca, pressão) ≈ 0,0024, abaixo de **todos** os drivers.
 
-**Conclusão:** a base separa **limpa** sinal de ruído e está **pronta para o BFSS** (alvo `DELTA_HLY`). A
-métrica de avaliação do BFSS será precisão/recall contra `gabarito_marcadores.json`.
+> **Importante (interpretação):** a importância de **um** RandomForest é um proxy **pessimista** — divide
+> o crédito entre features colineares e infla um distrator que aproxima idade+dano. O **BFSS é um wrapper**
+> que avalia **subconjuntos** e, condicionado a idade+dano, tende a **rejeitar** `TEMPO_DIAGNOSTICO` por
+> redundância. Ou seja: a zona contestada é **de propósito** (testa se o BFSS pega o driver causal ou cai
+> no proxy), não um defeito da base.
+
+**Conclusão:** a base separa sinal de ruído de forma honesta e está **pronta para o BFSS** (alvo
+`DELTA_HLY`). A métrica de avaliação do BFSS será precisão/recall contra `gabarito_marcadores.json`.
 
 ## 8. Como reproduzir
 

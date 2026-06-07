@@ -35,7 +35,7 @@ IDADE_REF, IDADE_SLOPE, IDADE_PISO = 12, 0.008, 0.45
 DANO_K = 0.025
 
 # desconto por comorbidade (somado, com teto). Magnitudes altas => efeito detectável pelo BFSS.
-DESC_RENAL, DESC_CARDIO, DESC_RETINO, DESC_NEURO, DESC_TETO = 0.18, 0.15, 0.12, 0.10, 0.60
+DESC_RENAL, DESC_CARDIO, DESC_RETINO, DESC_NEURO, DESC_TETO = 0.18, 0.20, 0.15, 0.15, 0.60
 
 # fragilidade: traço fixo por paciente que desloca os hazards de comorbidade de forma
 # INDEPENDENTE do dano -> as comorbidades carregam sinal próprio (decola da colinearidade com M2).
@@ -116,7 +116,7 @@ def hazard_neuropatia(dano: float, frag: float = 0.0) -> float:
 
 
 def hazard_cardiovascular(dano: float, idade: float, frag: float = 0.0) -> float:
-    return _sigmoid(-5.2 + 0.03 * dano + 0.04 * (idade - 50) + FRAG_W * frag)
+    return _sigmoid(-4.6 + 0.03 * dano + 0.04 * (idade - 50) + FRAG_W * frag)
 
 
 def regra_escalada(nivel: int, anos_acima_alvo: int, rng: np.random.Generator) -> int:

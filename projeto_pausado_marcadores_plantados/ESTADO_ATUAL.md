@@ -124,9 +124,10 @@ não depende de baixar nada nem resolver acesso.
 > ✅ **ATUALIZAÇÃO 2026-06-07 — PASSOS 1–3 CONCLUÍDOS.** O modelo numérico foi **fechado e implementado**
 > (decisões M1/M2/M3 + fórmula + parâmetros em `dados_sinteticos/MODELO_NUMERICO.md`), o **gerador**
 > (`dados_sinteticos/gerar_base.py` + `simulador_hly/modelo_hly.py`) e o **validador**
-> (`validacao/validar_base.py`) estão prontos, e a **base foi gerada e validada** (500 pacientes, 9.991
-> atendimentos em `dados_sinteticos/saida/`). Integridade relacional PASSOU; sinal recuperável (top-9 =
-> gabarito, recall 100%, R²=0,984). **Próximo passo real = implementar o BFSS** (passo 4) sobre
+> (`validacao/validar_base.py`) estão prontos, e a **base foi gerada e validada** (500 pacientes, 10.031
+> atendimentos em `dados_sinteticos/saida/`). Integridade relacional PASSOU; sinal recuperável (todo
+> driver plantado > todo ruído puro; R²≈0,98; distrator `TEMPO_DIAGNOSTICO` na zona contestada por
+> design — §7). **Próximo passo real = implementar o BFSS** (passo 4) sobre
 > `saida/base_bfss.csv`, alvo `DELTA_HLY`, medindo precisão/recall contra `saida/gabarito_marcadores.json`.
 
 1. ~~**Desenhar o testbed de marcadores plantados**~~ ✅ **FEITO** (ver `dados_sinteticos/MODELO_NUMERICO.md`).

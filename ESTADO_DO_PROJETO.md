@@ -22,9 +22,9 @@
    - Projeto ambicioso original (o "plano principal"): otimizador multiobjetivo HLY × Custo × Equidade
      validado por marcadores plantados. Canônico: `ESTADO_ATUAL.md` lá dentro (todo o histórico de decisões).
    - **Rota fechada (2026-06-07):** política **discretizada** + **PSO** no 2º estágio; **mFSS descartado** (§8).
-   - **Base final CONSTRUÍDA e validada (2026-06-07):** 500 pacientes / 9.991 atendimentos em
+   - **Base final CONSTRUÍDA e validada (2026-06-07):** 500 pacientes / 10.031 atendimentos em
      `dados_sinteticos/saida/` (`base_bfss.csv` + banco relacional + gabarito). Modelo em `MODELO_NUMERICO.md`.
-     Integridade relacional PASSOU; sinal recuperável (top-9 = gabarito). **Próximo: BFSS.**
+     Integridade relacional PASSOU; sinal recuperável (todo driver plantado > ruído puro). **Próximo: BFSS.**
    - (Foi pausado em 2026-06-06 por prazo; retomado nesta branch.)
 
 3. **`old/`** — 1ª tentativa (130-US/CTGAN), arquivada.

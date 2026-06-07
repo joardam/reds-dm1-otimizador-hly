@@ -65,11 +65,14 @@ RUIDO_COLS = [f"RUIDO_{i:02d}" for i in range(1, 11)]
 
 # ----------------------------------------------------------------- simulação de 1 paciente
 def simular_paciente(pid: int, rng: np.random.Generator) -> tuple[dict, list[dict]]:
-    idade0 = int(np.clip(rng.normal(35, 15), 12, 70))
+    # DM1: onset majoritariamente jovem (infância/adolescência/adulto-jovem), com cauda adulta.
+    # idade ao diagnóstico ~ Gamma(2.2, 8.0) (média ~17,6 anos), limitada a [1, 45].
+    idade_dx = int(np.clip(rng.gamma(2.2, 8.0), 1, 45))
+    dx0 = int(rng.integers(0, 26))           # anos já decorridos desde o diagnóstico no baseline
+    idade0 = idade_dx + dx0                   # idade no baseline (coerente com o onset de DM1)
     hba1c = float(np.clip(rng.normal(8.5, 1.5), 5.5, 13.0))
     m3 = float(rng.beta(2, 2))
     nivel = int(rng.choice([0, 1, 2, 3], p=[0.40, 0.30, 0.20, 0.10]))
-    dx0 = int(rng.integers(0, max(1, min(idade0 - 5, 20))))  # anos de diagnóstico no baseline
     sexo = rng.choice(SEXOS)
     raca = rng.choice(RACAS)
     munic = rng.choice(MUNICIPIOS)

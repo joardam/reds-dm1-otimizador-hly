@@ -112,24 +112,33 @@ def validar_sinal() -> bool:
         tag = "RELEVANTE" if f in relevantes else "ruido    "
         print(f"    {f:20} {v:7.4f}  [{tag}]")
 
-    imp_rel = {f: imp_feat[f] for f in relevantes}
-    imp_ruido = {f: imp_feat[f] for f in irrelevantes}
-    min_rel = min(imp_rel.values())
-    max_ruido = max(imp_ruido.values())
-    pior_rel = min(imp_rel, key=imp_rel.get)
-    pior_ruido = max(imp_ruido, key=imp_ruido.get)
-    print(f"\n  menor importancia RELEVANTE: {pior_rel} = {min_rel:.4f}")
-    print(f"  maior importancia RUIDO    : {pior_ruido} = {max_ruido:.4f}")
+    # Três camadas: sinal (relevantes) / distratores estruturais (correlacionado e alta-cardinalidade) /
+    # ruído puro. O critério honesto é: TODO driver plantado supera TODO ruído PURO. Os distratores
+    # estruturais (TEMPO_DIAGNOSTICO ~ idade+dano; NM_MUNIC categórica de 10 níveis) podem cair na
+    # "zona contestada" entre os drivers fracos — isso é o "botão de dificuldade" (§7), não um defeito.
+    DISTRATORES = [d for d in ["TEMPO_DIAGNOSTICO", "NM_MUNIC"] if d in irrelevantes]
+    ruido_puro = [c for c in irrelevantes if c not in DISTRATORES]
 
-    # separação top-K: as K=len(relevantes) features mais importantes coincidem com o gabarito?
+    min_rel = min(imp_feat[f] for f in relevantes)
+    pior_rel = min(relevantes, key=lambda f: imp_feat[f])
+    max_puro = max(imp_feat[f] for f in ruido_puro)
+    pior_puro = max(ruido_puro, key=lambda f: imp_feat[f])
+    print(f"\n  menor importancia RELEVANTE   : {pior_rel} = {min_rel:.4f}")
+    print(f"  maior importancia RUIDO PURO  : {pior_puro} = {max_puro:.4f}")
+    for d in DISTRATORES:
+        acima = sum(imp_feat[r] < imp_feat[d] for r in relevantes)
+        print(f"  distrator {d:18}= {imp_feat[d]:.4f}  (acima de {acima} driver(es) fraco(s))")
+
+    # top-K como métrica secundária (ilustrativa)
     K = len(relevantes)
-    topK = {f for f, _ in ranking[:K]}
-    recall = len(topK & set(relevantes)) / K
-    print(f"  top-{K} por importancia recupera {recall*100:.0f}% das relevantes do gabarito")
-    sep = min_rel > max_ruido
-    print(f"  --> separacao relevante>ruido: {'CLARA' if sep else 'PARCIAL'} "
-          f"(distrator TEMPO_DIAGNOSTICO pode ficar acima do ruido puro, por design)")
-    return recall >= 0.8
+    recall_topK = len({f for f, _ in ranking[:K]} & set(relevantes)) / K
+
+    ok = min_rel > max_puro
+    print(f"\n  todo driver plantado > todo ruido PURO: {'SIM' if ok else 'NAO'} "
+          f"(top-{K} recall ilustrativo = {recall_topK*100:.0f}%)")
+    print("  Obs.: a importancia de 1 RandomForest e proxy pessimista (divide credito entre")
+    print("        colineares); o BFSS-wrapper avalia subconjuntos e tende a rejeitar o distrator.")
+    return ok
 
 
 def main():

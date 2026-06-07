@@ -40,6 +40,36 @@ AMIGAVEL = {
     "MotherDM": "mãe com diabetes", "DMfamilyHistory": "histórico familiar de diabetes",
 }
 
+# descrição curta por característica (para os tooltips/balãozinho do seletor de par)
+DESCRICAO = {
+    "BMI": "IMC — peso relativo à altura (massa corporal)",
+    "waist1": "cintura — mede gordura abdominal",
+    "Waist2": "cintura (2ª medida) — gordura abdominal",
+    "hip": "quadril — circunferência do quadril",
+    "WHR": "relação cintura/quadril — como a gordura se distribui",
+    "Fat": "% de gordura corporal",
+    "HR": "frequência cardíaca de repouso",
+    "FINS": "insulina de jejum — quanto o pâncreas secreta em jejum",
+    "FCP": "peptídeo-C de jejum — reserva/produção do pâncreas",
+    "INS2h": "insulina 2h pós-glicose — resposta ao açúcar",
+    "CP2h": "peptídeo-C 2h — reserva do pâncreas após estímulo",
+    "HomaIR": "HOMA-IR — grau de resistência à insulina",
+    "ISIGutt": "índice de Gutt — sensibilidade à insulina",
+    "ALT": "ALT — enzima do fígado (sobe no fígado gorduroso)",
+    "AST": "AST — enzima do fígado",
+    "GGT": "GGT — enzima do fígado/vias biliares",
+    "ALP": "fosfatase alcalina — fígado/osso",
+    "BUN": "ureia (BUN) — função renal",
+    "SCRE": "creatinina sérica — função renal",
+    "TP": "proteína total do sangue",
+    "ALB": "albumina — proteína ligada ao fígado/nutrição",
+    "Gender": "sexo",
+    "Smoking": "tabagismo",
+    "FatherDM": "pai com diabetes",
+    "MotherDM": "mãe com diabetes",
+    "DMfamilyHistory": "histórico familiar de diabetes",
+}
+
 
 def fitness_full(w, X, y, b):
     p = np.clip(sigmoid(X @ w + b), 1e-9, 1 - 1e-9)
@@ -119,8 +149,8 @@ def montar_apresentacao(img_conv, img_imp, linhas, perfil, met):
 
  <div class="card">
   <h2>3. O papel do PSO</h2>
-  <p>O PSO é inspirado no <b>voo coordenado de bandos de pássaros</b> (Kennedy &amp; Eberhart, 1995) —
-     <i>não</i> em cardumes. Cada "partícula" do enxame é uma <b>tentativa de resposta</b>: um conjunto
+  <p>O PSO é inspirado no <b>voo coordenado de bandos de pássaros</b> (Kennedy &amp; Eberhart, 1995).
+     Cada "partícula" do enxame é uma <b>tentativa de resposta</b>: um conjunto
      de pesos que diz o quanto cada característica empurra alguém para o perfil "ideal". As partículas
      voam pelo espaço de possibilidades, atraídas pela melhor posição que elas já viram
      (memória própria) e pela melhor que o <b>bando inteiro</b> já viu (cooperação social), até o
@@ -204,10 +234,36 @@ def montar_apresentacao(img_conv, img_imp, linhas, perfil, met):
 
  <div class="card">
   <h2>9. Limitações (para não exagerar)</h2>
-  <p class="muted">• É um retrato <b>transversal</b> (uma foto no tempo), então fala de
-     <b>associação</b>, não de causa. • Uma única coorte (China, 2012) → não generaliza para
-     o Brasil/SUS. • O rótulo "ideal" é uma <b>escolha de projeto</b> (idade + HbA1c + comorbidades),
-     defensável mas não única. • Base não distingue tipo 1/tipo 2 → é testbed do otimizador.</p>
+  <p>Toda escolha de projeto tem um custo. Reunimos aqui, de forma honesta, <b>tudo</b> o que limita
+     a leitura dos resultados — desde o desenho do estudo até as decisões técnicas da pipeline.</p>
+  <table class="r">
+   <tr><th>Limitação</th><th>O que significa</th></tr>
+   <tr><td><b>Natureza dos dados</b></td>
+       <td>É um retrato <b>transversal</b> (uma foto no tempo): fala de <b>associação</b>, não de
+           <b>causa</b>. E vem de uma <b>coorte única</b> (rastreio metabólico, China, 2012) → não
+           generaliza para o Brasil/SUS.</td></tr>
+   <tr><td><b>Tipo de diabetes</b></td>
+       <td>A base <b>não distingue tipo 1 de tipo 2</b> (sem autoanticorpos) → "diabetes tipo não
+           especificado". O entregável é o <b>otimizador</b>; a base é apenas testbed.</td></tr>
+   <tr><td><b>Definição de "ideal"</b></td>
+       <td>O rótulo (idade↑ + HbA1c↓ + comorbidades↓) é uma <b>escolha de projeto</b> defensável,
+           mas não a única — outra equipe poderia pesar diferente.</td></tr>
+   <tr><td><b>Corte do terço (33%)</b></td>
+       <td>O limiar que separa "ideais" dos "demais" é <b>arbitrário</b> e gera classes
+           desbalanceadas ({ni} ideais × {nd} demais). Não é grave (o AUC lida bem), mas é uma
+           decisão, não uma verdade.</td></tr>
+   <tr><td><b>Lista de preditoras</b></td>
+       <td>As 26 características foram <b>curadas à mão</b> (de 190 colunas), por conhecimento de
+           domínio — não por varredura automática. Prós: interpretável, sem circularidade. Contra:
+           pode ter ficado de fora alguma pista boa não pensada.</td></tr>
+   <tr><td><b>Imputação pela mediana</b></td>
+       <td>Preencher vazios com a mediana <b>"achata" a variação</b> (vários buracos viram o mesmo
+           valor). Aceitável com &lt;25% de ausência, mas reduz um pouco a variabilidade real.</td></tr>
+   <tr><td><b>Regularização (L2)</b></td>
+       <td>A força da L2 (LAMBDA = 0,05) foi <b>calibrada empiricamente</b>, não por validação
+           cruzada. Funcionou bem (pesos moderados, treino×teste próximos), mas o jeito "by the book"
+           seria escolher por cross-validation.</td></tr>
+  </table>
  </div>
 
  <p class="muted" style="text-align:center;margin:20px 0">
@@ -279,7 +335,8 @@ def main():
             "Z": [[round(v, 5) for v in row] for row in Z.tolist()],
         })
 
-    payload = {"G": G, "pares": dados_pares}
+    payload = {"G": G, "pares": dados_pares,
+               "descr": {c: DESCRICAO.get(c, c) for c in cols}}
     apres = montar_apresentacao(img_conv, img_imp, linhas, perfil, met)
     html = TEMPLATE.replace("/*DATA*/", json.dumps(payload)).replace("<!--APRES-->", apres)
     with open("pso_visualizacao.html", "w", encoding="utf-8") as f:
@@ -345,6 +402,7 @@ TEMPLATE = r"""<!DOCTYPE html>
   <canvas id="cv" width="620" height="620"></canvas>
   <div class="panel">
    <div class="row"><label>Par de características</label><select id="par"></select></div>
+   <div class="legend" id="parHelp"></div>
    <div class="row">
     <button id="play">▶ Play</button>
     <button id="step" class="sec">Passo</button>
@@ -377,8 +435,15 @@ const SPF_LBL=['','muito lenta','lenta','lenta','média','média','rápida','rá
 
 // ---- seletor de par ----
 const sel=document.getElementById('par');
-DATA.pares.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.fi+'  ×  '+p.fj;sel.appendChild(o);});
-sel.onchange=()=>{P=DATA.pares[sel.value]; buildHeat(); reset();};
+const descr=f=>(DATA.descr&&DATA.descr[f])||f;
+DATA.pares.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.fi+'  ×  '+p.fj;
+ o.title=p.fi+': '+descr(p.fi)+'\n'+p.fj+': '+descr(p.fj);   // tooltip nativo ao passar o mouse
+ sel.appendChild(o);});
+function updateParHelp(){
+ document.getElementById('parHelp').innerHTML=
+   '<b>'+P.fi+'</b>: '+descr(P.fi)+'<br><b>'+P.fj+'</b>: '+descr(P.fj);
+}
+sel.onchange=()=>{P=DATA.pares[sel.value]; buildHeat(); updateParHelp(); reset();};
 
 function color(t){ // t in [0,1] -> azul->verde->amarelo->vermelho-claro (desempenho)
  t=Math.max(0,Math.min(1,t));
@@ -508,7 +573,7 @@ function show(which){
 }
 document.getElementById('tabApres').onclick=()=>show('apres');
 document.getElementById('tabSim').onclick=()=>show('sim');
-buildHeat(); reset(); loop();
+buildHeat(); updateParHelp(); reset(); loop();
 </script></body></html>"""
 
 

@@ -2,7 +2,7 @@
 
 > Status: **rascunho** (estrutura decidida; faltam os números exatos).
 > Documento de trabalho. O canônico de estado é o `ESTADO_ATUAL.md` na raiz.
-> Última atualização: 2026-06-05.
+> Última atualização: 2026-06-07.
 
 ## 0. Decisões de base
 - Base **100% DM1** (sem diabetes tipo 2). NÃO metformina/sulfonilureia (drogas de DM2 herdadas do
@@ -180,17 +180,19 @@ Como o mFSS trata **contínuo × discreto** (no `fss.py`):
 - **Fitness é plugável** (PALLAS usa verossimilhança de rede gênica via `abcsmc`/`apf`; trocamos pela
   nossa avaliação de política → HLY/custo/equidade).
 
-> 🔀 **2026-06-05 — Este achado abriu uma POSSÍVEL MUDANÇA DE ROTA (não decidida).** Se a política for
-> tratada como **discreta por design**, a necessidade do mFSS **desaparece** (o motivo dele é o domínio
-> misto). Decisão em aberto, aguardando a equipe. **Ver `ESTADO_ATUAL.md` §8** (registro canônico da
-> ideia inicial × possível mudança).
+> ✅ **2026-06-07 — ROTA FECHADA ("Mundo B").** A política é **discretizada por design** → a necessidade
+> do mFSS **desaparece** e o **PSO** ocupa a vaga do motor do 2º estágio. **mFSS descartado.** O texto
+> abaixo sobre PALLAS/mFSS é histórico (não vamos mais usá-lo); mantido só para rastreabilidade.
+> **Ver `ESTADO_ATUAL.md` §8** (registro canônico da decisão). Continuam em aberto: o baseline (NSGA-II?)
+> e o **como** da camada de Pareto sobre o PSO (MOPSO c/ arquivo externo vs. escalarização).
 
-⚠️ **ACHADO QUE MUDA O PLANO:** o `fss.py` do PALLAS é **SINGLE-OBJECTIVE** (maximiza um escalar; sem
-dominância nem arquivo de não-dominados). "Misto" e "multiobjetivo" são **camadas separadas**. Logo:
-- Reaproveitamos do PALLAS a **maquinaria mista (contínuo+discreto)**.
-- Teremos que **acoplar por cima a camada multiobjetivo** (dominância + arquivo externo, estilo MOFSS)
-  para a Frente de Pareto (HLY × custo × equidade).
-- E adaptar o discreto de {-1,0,+1} (arestas de rede) para nossos domínios (inteiro/categórico/binário).
+⚠️ **(HISTÓRICO) ACHADO QUE MUDOU O PLANO:** o `fss.py` do PALLAS é **SINGLE-OBJECTIVE** (maximiza um
+escalar; sem dominância nem arquivo de não-dominados). "Misto" e "multiobjetivo" são **camadas
+separadas**. Esse achado foi parte do que motivou descartar o mFSS e ir para PSO discreto (acima).
+Mantido para contexto:
+- Reaproveitaríamos do PALLAS a **maquinaria mista (contínuo+discreto)** — não mais necessário.
+- Teríamos que **acoplar por cima a camada multiobjetivo** (dominância + arquivo externo, estilo MOFSS).
+- A camada de Pareto (dominância + arquivo de não-dominados) **continua necessária** com o PSO.
 
 ## 6. Papéis especiais (fora do pool do BFSS)
 - `NM_MUNIC`: não é preditor de HLY (BFSS ignora), mas é dimensão de **equidade** do MOFSS.

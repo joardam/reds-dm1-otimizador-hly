@@ -1,7 +1,7 @@
 # ESTADO ATUAL DO PROJETO — REDS-DM1 (RECOMEÇO)
 
 > Arquivo de contexto canônico. Leia isto **primeiro**. Em caso de conflito com qualquer
-> outro documento, **este arquivo tem prioridade**. Última atualização: **2026-06-05**.
+> outro documento, **este arquivo tem prioridade**. Última atualização: **2026-06-07**.
 >
 > **Houve um recomeço (reset) do projeto nesta data.** A tentativa anterior foi inteira
 > preservada na pasta `old/` (nada foi apagado). Os motivos do reset e o que mudou estão
@@ -15,19 +15,21 @@ Disciplina de **Computação Natural**. O entregável avaliado é um **otimizado
 Anos de Vida Saudáveis (HLY — Healthy Life Years)** de pacientes com Diabetes Mellitus Tipo 1 (DM1)
 em Pernambuco, gerando uma **Frente de Pareto** entre três objetivos: **HLY × Custo × Equidade**.
 
-Algoritmos previstos:
+Algoritmos previstos (**ROTA FECHADA em 2026-06-07 — "Mundo B", ver §8**):
 - **BFSS / wFSS** (Binary/weighted Fish School Search) — seleção de variáveis.
-- **MOFSS / mFSS** (Multi-Objective/Mixed-Variable Fish School Search) — núcleo da otimização.
-  ⚠️ **Pode mudar — ver §8 (POSSÍVEL MUDANÇA DE ROTA).**
-- **NSGA-II** e **PSO** — baselines de comparação. ⚠️ Status de "obrigatório" **não confirmado**
-  pelo usuário (o pipeline mental dele era só BFSS→mFSS); ver §8.
+- **PSO (Particle Swarm Optimization) DISCRETO — NÚCLEO da otimização do 2º estágio.** Substitui o mFSS.
+- ~~**MOFSS / mFSS**~~ — **DESCARTADO**: ao discretizar a política por design, o motivo do mFSS (domínio
+  contínuo×discreto) deixa de existir (ver §8). Mantido o histórico para rastreabilidade.
+- **Baseline de comparação** (ex.: NSGA-II/pymoo): **EM ABERTO** — manter um ao lado do PSO ou não ainda
+  não está decidido (ver §8.4).
 
 **Forma do problema de otimização (decidido 2026-06-04): POLÍTICA DINÂMICA POR REGRAS.** O otimizador
 não aloca paciente-a-paciente; ele otimiza os **parâmetros de uma política** (regras de escalada de
 tratamento, priorização e orçamento) aplicada à população ao longo do horizonte longitudinal. O BFSS
 escolhe as features que as regras usam; MOFSS/NSGA-II/PSO otimizam os parâmetros. O **orçamento acopla
 os pacientes** → problema não-separável (evita o risco de ser fácil demais). Detalhes em
-`docs/desenho_marcadores.md` §5b.
+`docs/desenho_marcadores.md` §5b. **Atualização 2026-06-07:** os parâmetros são **discretizados** e o
+**PSO** os otimiza (mFSS descartado — ver §8).
 
 **Referência do mFSS contínuo-discreto:** PALLAS (`yukuntan92/PALLAS`, `PALLAS/fss.py`), lido linha a
 linha e clonado em `docs/PALLAS_ref/` (só referência). Trata contínuo×discreto por **limiarização
@@ -158,8 +160,9 @@ não depende de baixar nada nem resolver acesso.
 2. **Construir o gerador sintético com marcadores** + validador de integridade relacional.
 3. **Construir o simulador de HLY** (transforma perfil+tratamento em HLY, respeitando os marcadores).
 4. **Implementar BFSS** e validar recuperação dos marcadores (precisão/recall).
-5. **Implementar MOFSS/mFSS** e validar a Frente de Pareto vs. frente conhecida.
-6. **Baselines NSGA-II e PSO** para comparação.
+5. **Implementar o PSO discreto** (2º estágio) + a **camada de Pareto** (a definir: MOPSO c/ arquivo
+   externo vs. escalarização) e validar a Frente de Pareto vs. frente conhecida.
+6. (Em aberto) **Baseline de comparação** (ex.: NSGA-II/pymoo), se a equipe quiser um ao lado do PSO.
 7. (Opcional) 2ª camada: aplicar em base realista DM1.
 
 ---
@@ -181,11 +184,18 @@ não depende de baixar nada nem resolver acesso.
 
 ---
 
-## 8. POSSÍVEL MUDANÇA DE ROTA (NÃO DECIDIDO) — domínio discreto por design vs. mFSS misto
+## 8. ROTA FECHADA (decidida 2026-06-07) — "Mundo B": discreto por design + PSO, mFSS descartado
 
-> **Status: discutido em 2026-06-05, NÃO decidido.** Aguarda decisão do usuário **com a equipe dele**.
-> Registrado deliberadamente como **rota possível e reversível** — o usuário quer poder voltar atrás.
-> Esta seção **não** sobrescreve o plano vigente; ela documenta a ideia inicial e a alternativa em aberto.
+> **Status: DECIDIDO em 2026-06-07.** Escolhido o **"Mundo B"**: a política é **discretizada por design**,
+> o que **elimina o mFSS**, e o **PSO** ocupa a vaga do motor de otimização do 2º estágio. Decisão tomada
+> em conversa; só não havia sido carimbada nos docs (perdeu-se na compactação). Agora oficializada.
+>
+> **O que CONTINUA em aberto** (não bloqueia a rota): (a) se haverá um **baseline** ao lado do PSO
+> (ex.: NSGA-II) — ver §8.4; (b) **como** o PSO constrói a Frente de Pareto (a "dificuldade A", camada de
+> Pareto — ex.: MOPSO com arquivo externo de não-dominados vs. escalarização) — fica para a próxima etapa.
+>
+> O texto abaixo (§8.1–§8.5) é **histórico da discussão** que levou a esta decisão; mantido para
+> rastreabilidade. §8.3 = a rota escolhida; §8.5 = como reverter caso a equipe mude de ideia.
 
 ### 8.1 Ideia INICIAL (registro definitivo do que era o plano)
 Pipeline enxuto, na cabeça do usuário desde o começo:
@@ -231,14 +241,19 @@ Banco → BFSS → mFSS (o próprio mFSS constrói a Frente de Pareto)
   (dificuldade A), que continua de pé com qualquer algoritmo — mas é **território padrão** e bem mais
   domável quando o espaço já é discreto.
 
-### 8.4 Sub-decisão em aberto SE formos pro Mundo B
-Quem ocupa a vaga do 2º estágio (a camada Pareto é necessária em qualquer caso):
+### 8.4 Quem ocupa a vaga do 2º estágio — RESOLVIDO: PSO (baseline ainda em aberto)
+A vaga deixada pelo mFSS foi preenchida pelo **PSO** (decisão de 2026-06-07): metaheurística de enxame,
+lida bem com grid discreto, e **já implementado e validado** no Plano B (cosseno 1.000 vs. logística do
+sklearn). As opções originais aqui consideradas foram:
 - **FSS discreto + camada Pareto construída por nós** → fica na família dos peixes; nós escrevemos a
-  dominância + arquivo externo.
+  dominância + arquivo externo. *(não escolhido)*
 - **NSGA-II pronto** (ex.: `pymoo`) → Pareto e variável discreta **de graça**, mas **não é FSS**.
+  *(possível baseline ao lado do PSO — decisão em aberto)*
 
-Depende de **uma pergunta ainda não respondida:** *o entregável exige ser FSS especificamente, ou
-aceita outro otimizador de Computação Natural?* — a confirmar com a equipe/enunciado.
+A camada de Pareto ("dificuldade A") **continua de pé** com PSO (MOPSO precisa de arquivo de
+não-dominados); o **como** fica para a próxima etapa. Sobre a pergunta "*o entregável exige ser FSS,
+ou aceita outro otimizador de Computação Natural?*" — a escolha do PSO assume que **aceita** (PSO é
+Computação Natural); confirmar com a equipe/enunciado se houver dúvida.
 
 ### 8.5 Como REVERTER (se a equipe decidir manter o mFSS — "Mundo A")
 - Manter **pelo menos uma** variável genuinamente **contínua** (ex.: `L` ou `B`) → aí o mFSS se

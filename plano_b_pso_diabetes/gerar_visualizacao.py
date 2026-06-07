@@ -407,7 +407,10 @@ TEMPLATE = r"""<!DOCTYPE html>
      <button id="v2d">2D</button> <button id="v3d" class="sec">3D</button></span></div>
    <div class="row" id="row3d" style="display:none">
      <label><input type="checkbox" id="autorot" checked> Girar sozinho</label>
-     <label>Altura <input type="range" id="zscale" min="20" max="100" value="55"></label></div>
+     <label>Zoom <input type="range" id="zoom3d" min="40" max="300" value="100"></label></div>
+   <div class="row" id="row3d2" style="display:none">
+     <label>Altura <input type="range" id="zscale" min="20" max="100" value="55"></label>
+     <span class="muted" style="font-size:11px">scroll = zoom · arraste = girar</span></div>
    <div class="row">
     <button id="play">▶ Play</button>
     <button id="step" class="sec">Passo</button>
@@ -435,7 +438,7 @@ const G=DATA.G, W=cv.width, H=cv.height;
 let P=DATA.pares[0];                 // par atual
 let heat=document.createElement('canvas'); heat.width=G; heat.height=G;
 let particles=[], gbest=null, iter=0, playing=false, traces=[], acc=0;
-let render3d=false, yaw=0.7, pitch=0.95, H3=0.55, autorot=true, drag3=null;  // estado da câmera 3D
+let render3d=false, yaw=0.7, pitch=0.95, H3=0.55, zoom=1, autorot=true, drag3=null;  // estado da câmera 3D
 const SPF=[0,0.04,0.08,0.16,0.3,0.6,1.2,2.5,4,7,11]; // passos por frame por valor do slider (1..10)
 const SPF_LBL=['','muito lenta','lenta','lenta','média','média','rápida','rápida','muito rápida','muito rápida','turbo'];
 
@@ -560,7 +563,7 @@ function star(cx,cy,r,col){ ctx.beginPath();
  ctx.closePath(); ctx.fillStyle=col; ctx.fill(); }
 // ---- render 3D: a MESMA superfície de desempenho, agora com altura = fitness ----
 function draw3d(){
- const CX=W/2, CY=H*0.60, scale=360, dz=(P.zmax-P.zmin)||1;
+ const CX=W/2, CY=H*0.60, scale=360*zoom, dz=(P.zmax-P.zmin)||1;
  const cyw=Math.cos(yaw), syw=Math.sin(yaw), cpt=Math.cos(pitch), spt=Math.sin(pitch);
  // projeta um ponto do mundo (wx,wy,wz) -> [pixelX, pixelY, profundidade] (giro + inclinação)
  const proj=(wx,wy,wz)=>{ const xr=wx*cyw-wy*syw, yr=wx*syw+wy*cyw;
@@ -582,6 +585,20 @@ function draw3d(){
    ctx.lineTo(q.C[0],q.C[1]); ctx.lineTo(q.D[0],q.D[1]); ctx.closePath();
    ctx.fillStyle='rgb('+c[0]+','+c[1]+','+c[2]+')'; ctx.fill();
    ctx.strokeStyle='rgba(0,0,0,.18)'; ctx.lineWidth=.5; ctx.stroke(); }
+ // rastros projetados sobre o relevo (mesma cor da partícula, desbotando na cauda)
+ if(document.getElementById('trace').checked){ ctx.lineCap='round';
+   for(let i=0;i<traces.length;i++){ const pc=particles[i]; if(!pc) continue;
+     const tr=traces[i], hue=pc.hue; let prev=null;
+     for(let k=0;k<tr.length;k++){ const pp=proj(nx(tr[k][0]),ny(tr[k][1]),gz(fit(tr[k][0],tr[k][1]))+.015);
+       if(prev){ const al=k/tr.length; ctx.beginPath(); ctx.moveTo(prev[0],prev[1]); ctx.lineTo(pp[0],pp[1]);
+         ctx.strokeStyle='hsla('+hue+',95%,62%,'+(al*0.9).toFixed(3)+')'; ctx.lineWidth=0.6+2.2*al; ctx.stroke(); }
+       prev=pp; } } }
+ // velocidades (seta curta a partir de cada partícula, seguindo o relevo)
+ if(document.getElementById('showv').checked){
+   for(const p of particles){ const a0=proj(nx(p.dx),ny(p.dy),gz(fit(p.dx,p.dy))+.02);
+     const b0=proj(nx(p.dx+p.vx*3),ny(p.dy+p.vy*3),gz(fit(p.dx+p.vx*3,p.dy+p.vy*3))+.02);
+     ctx.beginPath(); ctx.moveTo(a0[0],a0[1]); ctx.lineTo(b0[0],b0[1]);
+     ctx.strokeStyle='rgba(255,220,120,.85)'; ctx.lineWidth=1.2; ctx.stroke(); } }
  // partículas pousadas na superfície (cada uma na sua cor), ordenadas por profundidade
  const pts=particles.map(p=>({s:proj(nx(p.dx),ny(p.dy),gz(fit(p.dx,p.dy))+.02),hue:p.hue}))
                     .sort((m,n)=>n.s[2]-m.s[2]);
@@ -615,6 +632,7 @@ document.getElementById('c2').oninput=function(){document.getElementById('c2Lbl'
 // ---- alternância 2D/3D + câmera ----
 function setView(is3d){ render3d=is3d;
  document.getElementById('row3d').style.display=is3d?'flex':'none';
+ document.getElementById('row3d2').style.display=is3d?'flex':'none';
  document.getElementById('v3d').className=is3d?'':'sec';
  document.getElementById('v2d').className=is3d?'sec':'';
  if(is3d) legend3d(); else buildHeat();
@@ -624,6 +642,10 @@ document.getElementById('v2d').onclick=()=>setView(false);
 document.getElementById('v3d').onclick=()=>setView(true);
 document.getElementById('autorot').onchange=function(){autorot=this.checked;};
 document.getElementById('zscale').oninput=function(){H3=this.value/100; if(!playing) render();};
+document.getElementById('zoom3d').oninput=function(){zoom=this.value/100; if(!playing) render();};
+cv.addEventListener('wheel',e=>{ if(!render3d) return; e.preventDefault();
+ zoom=Math.max(0.4,Math.min(3,zoom*(e.deltaY<0?1.1:0.9)));
+ document.getElementById('zoom3d').value=Math.round(zoom*100); if(!playing) render(); },{passive:false});
 cv.addEventListener('mousedown',e=>{ if(render3d) drag3={x:e.clientX,y:e.clientY,yaw,pitch}; });
 window.addEventListener('mousemove',e=>{ if(drag3){ yaw=drag3.yaw+(e.clientX-drag3.x)*0.01;
   pitch=Math.max(0.15,Math.min(1.45,drag3.pitch+(e.clientY-drag3.y)*0.005)); if(!playing) render(); }});

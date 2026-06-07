@@ -1,7 +1,7 @@
 # ESTADO ATUAL DO PROJETO — REDS-DM1 (RECOMEÇO)
 
 > Arquivo de contexto canônico. Leia isto **primeiro**. Em caso de conflito com qualquer
-> outro documento, **este arquivo tem prioridade**. Última atualização: **2026-06-04**.
+> outro documento, **este arquivo tem prioridade**. Última atualização: **2026-06-05**.
 >
 > **Houve um recomeço (reset) do projeto nesta data.** A tentativa anterior foi inteira
 > preservada na pasta `old/` (nada foi apagado). Os motivos do reset e o que mudou estão
@@ -18,7 +18,9 @@ em Pernambuco, gerando uma **Frente de Pareto** entre três objetivos: **HLY × 
 Algoritmos previstos:
 - **BFSS / wFSS** (Binary/weighted Fish School Search) — seleção de variáveis.
 - **MOFSS / mFSS** (Multi-Objective/Mixed-Variable Fish School Search) — núcleo da otimização.
-- **NSGA-II** e **PSO** — baselines de comparação.
+  ⚠️ **Pode mudar — ver §8 (POSSÍVEL MUDANÇA DE ROTA).**
+- **NSGA-II** e **PSO** — baselines de comparação. ⚠️ Status de "obrigatório" **não confirmado**
+  pelo usuário (o pipeline mental dele era só BFSS→mFSS); ver §8.
 
 **Forma do problema de otimização (decidido 2026-06-04): POLÍTICA DINÂMICA POR REGRAS.** O otimizador
 não aloca paciente-a-paciente; ele otimiza os **parâmetros de uma política** (regras de escalada de
@@ -119,14 +121,36 @@ não depende de baixar nada nem resolver acesso.
 
 1. **Desenhar o testbed de marcadores plantados** (discutir antes de codar):
    - 🟡 **EM RASCUNHO** — estrutura desenhada em **`docs/desenho_marcadores.md`**. Decisões já fixadas:
-     - Base **100% DM1** (sem DM2); tratamento por insulina + bomba/CGM (fora: metformina/sulfonilureia).
+     - Base **100% DM1** (sem DM2); fora: metformina/sulfonilureia.
+     - **Tratamento = escada ordenada `NIVEL_TRATAMENTO` (0→3)** atravessando modalidade + tier de
+       insulina, monótona em eficácia e custo (L0 MDI+humana → L1 MDI+análogo → L2 bomba → L3
+       bomba+CGM). **Decidido 2026-06-05:** o **nível** é o sinal (decisão + custo + alvo da escalada);
+       a **droga específica dentro do nível** é ruído. Escada ordinal → consistente com o "discreto
+       por design" da §8.
      - **Longitudinal:** mesmo paciente repetido em vários tempos (REDS `PACIENTE` 1→N `ATENDIMENTO`),
        cronologia correta, com melhora/piora **plantada** = "delta T" como verdade-base.
      - **Horizonte longo (~15–30 anos)**, não 2 — complicações DM1 levam ≥10 anos a surgir; cadência
        ~anual com HbA1c trimestral/semestral, rastreio de complicações conforme diretrizes.
      - Campos dos 19 do reds_clean: manter (idade, HbA1c, IS_RENAL/CARDIO, insulina, município),
        virar ruído (sexo/raça), remover (drogas DM2, triagem Manchester, internação, óbito), e
-       adicionar (tempo de diagnóstico, modalidade de tratamento, marcador de resposta, retino/neuro).
+       adicionar (tempo de diagnóstico, nível de tratamento, marcador de resposta, retino/neuro).
+     - **Epistemologia do BFSS (decidido 2026-06-05):** o gabarito (quais variáveis têm efeito) é fato
+       da base; que o BFSS o **recupere** é **hipótese sob teste** (idealmente sim, medido por
+       precisão/recall) — não um "deve". Não selecionar é resultado válido, não defeito de spec.
+     - **Seleção = BFSS single-objective (decidido 2026-06-05).** **MOBFSS descartado** (nem como
+       opcional): o alvo é um valor único → um objetivo só basta; vários marcadores são *features*
+       (entrada), não objetivos, e um objetivo já recupera todos. Multiobjetivo de verdade fica só na
+       etapa 2 (política: HLY × Custo × Equidade).
+     - **Alvo da seleção (decidido 2026-06-05, importante): `ΔHLY` por atendimento.** Cada linha = uma
+       visita; alvo = ganho de HLY do período; features = valores daquele período. Casa com a fórmula
+       `ΔHLY(período) = f(features do período)` → o BFSS recupera exatamente as variáveis da fórmula.
+     - **M2 = DANO ACUMULADO, não duração crua (decidido 2026-06-05).** M2 saiu da responsividade e
+       virou modulador próprio `fator_dano(M2)`, **paralelo ao `fator_idade`** (dois relógios: idade =
+       tempo/desgaste do corpo; M2 = dano/evolução da doença). Multiplicativo = teto não-compensável.
+       É um acumulador `dano(t)=dano(t−1)+max(0,HbA1c(t)−alvo)` (efeito legado/memória metabólica,
+       DCCT/EDIC) → "controlou bem desde cedo = pouco dano apesar de anos". `TEMPO_DIAGNOSTICO` cru
+       vira proxy fraco/distrator. Responsividade re-normaliza para M1,M3 (ex.: 0.6·M1 + 0.4·M3).
+       Detalhes na fórmula em `docs/desenho_marcadores.md` §1.
    - Plano em **2 fases**: (1) mecânica temporal reusando faixas do reds_clean; (2) reformular valores.
    - Falta a **proposta numérica** (pesos M1/M2/M3, curvas, regras de progressão temporal, custos por
      nível, horizonte/cadência exatos, ruído, exemplo de paciente ponta a ponta).
@@ -154,3 +178,72 @@ não depende de baixar nada nem resolver acesso.
 - **Discutir antes de implementar.** Alinhar escopo/abordagem antes de codar.
 - **Linguagem simples** — o usuário é estudante de Computação Natural, não técnico clínico.
 - **Fidelidade relacional** do banco no final é requisito firme.
+
+---
+
+## 8. POSSÍVEL MUDANÇA DE ROTA (NÃO DECIDIDO) — domínio discreto por design vs. mFSS misto
+
+> **Status: discutido em 2026-06-05, NÃO decidido.** Aguarda decisão do usuário **com a equipe dele**.
+> Registrado deliberadamente como **rota possível e reversível** — o usuário quer poder voltar atrás.
+> Esta seção **não** sobrescreve o plano vigente; ela documenta a ideia inicial e a alternativa em aberto.
+
+### 8.1 Ideia INICIAL (registro definitivo do que era o plano)
+Pipeline enxuto, na cabeça do usuário desde o começo:
+
+```
+Banco → BFSS → mFSS (o próprio mFSS constrói a Frente de Pareto)
+```
+
+- O **mFSS misto (contínuo × discreto)** era o **núcleo/protagonista** do 2º estágio.
+- Parâmetros de política tratados como **mistos** — alguns contínuos (limiar `L`, orçamento `B`),
+  outros discretos (`D` = nº de períodos, critério de prioridade).
+- **NSGA-II / PSO:** a doc os listava como "baselines de comparação", mas o usuário **não** os
+  considerava obrigatórios — o pipeline mental dele era só **BFSS → mFSS**. (Se são exigência do
+  enunciado/professor, ainda é **a confirmar** — provavelmente sim, em disciplina de metaheurística,
+  mas isso é decisão da equipe.)
+
+### 8.2 Por que pode mudar (o que descobrimos na discussão)
+- O mFSS contínuo×discreto só está implementado no **PALLAS** (nichado), e o `fss.py` é
+  **SINGLE-OBJECTIVE** — **NÃO tem Frente de Pareto** (sem dominância, sem arquivo de não-dominados).
+  ⚠️ O clone `docs/PALLAS_ref/` está no `.gitignore` e **não vem no repo** — o que sabemos do PALLAS
+  vem das anotações em `docs/desenho_marcadores.md` §5b, não de código reverificável aqui.
+- São **DUAS dificuldades independentes:** **(A)** a camada de Pareto e **(B)** o contínuo×discreto.
+  PALLAS resolve **B sem A**. MOFSS de prateleira costuma ter **A sem B**. Precisamos de **A+B**.
+- A **única razão de ser do mFSS** é lidar com os **dois domínios**. E o usuário esclareceu que o misto
+  era **meio, não fim**: foi escolhido porque **parecia melhor implementação que discretizar**, e
+  **não** porque tratar variável mista fosse a "graça"/contribuição do trabalho.
+- **Inversão da intuição:** para **single-objective**, o misto do PALLAS é a implementação **mais
+  fácil** (era essa a intuição original). Mas para **multiobjetivo** (nosso caso), o misto vira a
+  **MAIS difícil** — porque a parte mista do PALLAS não tem Pareto e teríamos que **acoplar à mão** a
+  dominância + arquivo externo sobre a maquinaria contínua-discreta. A intuição não estava errada; foi
+  formada num cenário (single-objective) que não é o nosso.
+
+### 8.3 A possível mudança de rota (chamada de "Mundo B — discreto por design")
+- Decidir, **por design**, que **todos** os parâmetros da política vivem em **grid (discretos)**:
+  `L` ∈ {7.0, 7.5, 8.0, ...}, `D` inteiro pequeno, `B` em níveis, critério categórico.
+- São **poucos parâmetros e todos toleram grid** → perda de resolução desprezível, custo baixíssimo.
+- **Consequência lógica (ponto do usuário):** isso **ELIMINA a necessidade do mFSS**, porque o motivo
+  dele (o domínio misto) **deixa de existir**. O 2º estágio passa a ser um **otimizador multiobjetivo
+  DISCRETO**.
+- **É um OU-EXCLUSIVO:** não dá pra "discretizar **e** manter o mFSS". Discretizar **custa** o mFSS.
+  (Foi uma contradição corrigida na discussão.)
+- **Mata o maior risco** (o contínuo×discreto acoplado ao Pareto). Sobra ainda a camada de Pareto
+  (dificuldade A), que continua de pé com qualquer algoritmo — mas é **território padrão** e bem mais
+  domável quando o espaço já é discreto.
+
+### 8.4 Sub-decisão em aberto SE formos pro Mundo B
+Quem ocupa a vaga do 2º estágio (a camada Pareto é necessária em qualquer caso):
+- **FSS discreto + camada Pareto construída por nós** → fica na família dos peixes; nós escrevemos a
+  dominância + arquivo externo.
+- **NSGA-II pronto** (ex.: `pymoo`) → Pareto e variável discreta **de graça**, mas **não é FSS**.
+
+Depende de **uma pergunta ainda não respondida:** *o entregável exige ser FSS especificamente, ou
+aceita outro otimizador de Computação Natural?* — a confirmar com a equipe/enunciado.
+
+### 8.5 Como REVERTER (se a equipe decidir manter o mFSS — "Mundo A")
+- Manter **pelo menos uma** variável genuinamente **contínua** (ex.: `L` ou `B`) → aí o mFSS se
+  justifica de novo.
+- Encarar o acoplamento **contínuo×discreto + Pareto** de frente.
+- Plano B de emergência nesse mundo: **MOFSS** (continua peixe, Pareto na literatura) ou **NSGA-II**
+  (menor risco). Estratégia de isolar risco: construir a **camada Pareto agnóstica** primeiro e ter um
+  baseline multiobjetivo funcionando como rede de segurança antes de apostar tudo no mFSS.

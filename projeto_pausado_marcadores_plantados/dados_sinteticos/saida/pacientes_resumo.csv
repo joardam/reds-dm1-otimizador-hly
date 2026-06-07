@@ -1,0 +1,501 @@
+ID_PACIEN,NU_IDADE_BASELINE,IN_SEXO,DS_RACA,NM_MUNIC,MARCADOR_RESPOSTA,N_VISITAS,HLY_TOTAL,HBA1C_MEDIA,DANO_FINAL,NIVEL_FINAL
+1,39,F,Preta,Caruaru,0.607,23,3.101,8.36,31.348,3
+2,25,M,Amarela,Garanhuns,0.538,17,2.651,8.516,25.785,3
+3,22,F,Indígena,Jaboatão dos Guararapes,0.126,23,1.882,9.035,46.796,3
+4,14,M,Amarela,Recife,0.725,25,6.891,7.716,18.975,2
+5,25,F,Preta,Garanhuns,0.371,18,4.775,8.184,21.416,3
+6,44,F,Parda,Cabo de Santo Agostinho,0.66,21,4.881,7.807,16.941,3
+7,54,M,Preta,Cabo de Santo Agostinho,0.317,19,2.295,8.67,31.717,3
+8,40,M,Amarela,Vitória de Santo Antão,0.146,21,2.07,8.933,40.593,3
+9,45,M,Branca,Caruaru,0.301,19,2.39,8.605,30.472,3
+10,26,M,Preta,Olinda,0.665,25,7.17,7.749,18.865,3
+11,31,F,Branca,Recife,0.658,15,5.102,7.808,12.427,3
+12,31,F,Amarela,Jaboatão dos Guararapes,0.314,18,2.373,8.877,33.796,3
+13,31,M,Preta,Caruaru,0.809,23,5.727,7.917,21.239,3
+14,59,F,Indígena,Petrolina,0.399,19,1.549,8.699,32.282,3
+15,20,F,Branca,Cabo de Santo Agostinho,0.895,16,6.509,7.891,14.244,3
+16,63,M,Indígena,Caruaru,0.663,18,3.373,8.099,19.773,3
+17,12,M,Indígena,Olinda,0.328,21,2.662,8.776,37.286,3
+18,26,F,Preta,Petrolina,0.55,20,6.282,7.966,19.31,3
+19,20,M,Parda,Petrolina,0.129,25,1.759,8.916,47.884,3
+20,33,M,Parda,Caruaru,0.434,23,3.929,8.311,30.123,3
+21,44,F,Branca,Garanhuns,0.728,15,5.608,7.472,7.171,3
+22,28,M,Preta,Jaboatão dos Guararapes,0.492,25,5.321,8.324,33.121,3
+23,18,M,Parda,Paulista,0.27,17,1.575,9.398,40.778,3
+24,28,M,Indígena,Camaragibe,0.801,15,6.144,7.767,11.47,3
+25,48,F,Branca,Jaboatão dos Guararapes,0.097,16,1.869,8.842,30.819,3
+26,17,M,Parda,Camaragibe,0.502,21,5.527,8.177,24.895,3
+27,62,F,Parda,Petrolina,0.267,19,1.512,8.726,32.796,3
+28,12,M,Amarela,Caruaru,0.239,23,3.345,8.824,41.979,3
+29,15,F,Parda,Recife,0.932,22,7.131,7.6,13.348,2
+30,26,F,Amarela,Paulista,0.714,25,6.656,8.022,25.573,3
+31,26,M,Preta,Petrolina,0.665,22,6.468,7.871,19.176,3
+32,41,F,Branca,Jaboatão dos Guararapes,0.706,15,3.066,8.111,16.684,2
+33,38,F,Amarela,Camaragibe,0.414,25,3.824,8.283,32.082,3
+34,56,F,Parda,Recife,0.74,23,3.719,8.093,25.203,3
+35,21,M,Preta,Petrolina,0.716,16,5.285,8.121,17.946,3
+36,30,F,Parda,Petrolina,0.459,24,3.711,8.551,37.224,3
+37,51,M,Preta,Jaboatão dos Guararapes,0.363,23,1.928,8.602,36.82,3
+38,12,M,Branca,Recife,0.419,24,5.302,8.448,34.733,3
+39,49,M,Preta,Paulista,0.529,18,2.474,8.233,22.195,3
+40,22,M,Amarela,Garanhuns,0.495,25,4.765,8.233,32.204,3
+41,48,M,Preta,Recife,0.814,24,4.722,8.008,24.346,3
+42,58,F,Parda,Garanhuns,0.437,25,3.355,8.342,33.566,3
+43,31,F,Parda,Garanhuns,0.77,24,8.522,7.68,16.655,3
+44,18,M,Preta,Camaragibe,0.314,19,3.913,8.473,27.979,3
+45,40,M,Indígena,Olinda,0.357,25,1.761,8.748,43.718,3
+46,39,F,Parda,Caruaru,0.594,18,3.92,8.039,18.97,3
+47,39,M,Indígena,Recife,0.386,21,3.047,8.761,37.602,3
+48,43,M,Indígena,Paulista,0.687,20,6.485,7.589,13.455,3
+49,30,F,Indígena,Caruaru,0.236,22,3.185,8.636,35.999,3
+50,17,F,Parda,Olinda,0.465,16,4.381,8.306,20.911,3
+51,44,F,Indígena,Camaragibe,0.086,21,1.179,9.311,48.534,3
+52,28,M,Branca,Cabo de Santo Agostinho,0.311,19,1.097,9.588,49.193,3
+53,56,M,Indígena,Cabo de Santo Agostinho,0.728,22,4.746,7.8,17.76,3
+54,63,M,Amarela,Cabo de Santo Agostinho,0.663,18,2.238,8.355,24.398,3
+55,31,F,Parda,Caruaru,0.316,15,2.152,8.808,27.127,3
+56,63,F,Amarela,Cabo de Santo Agostinho,0.335,20,1.424,8.748,34.974,3
+57,40,M,Indígena,Olinda,0.256,24,2.629,8.845,44.261,3
+58,34,M,Amarela,Jaboatão dos Guararapes,0.128,24,2.015,9.186,52.453,3
+59,12,F,Preta,Recife,0.267,17,3.782,8.553,26.41,3
+60,19,F,Indígena,Recife,0.552,21,5.161,8.248,26.205,3
+61,35,M,Preta,Garanhuns,0.322,16,2.164,8.524,24.416,3
+62,31,F,Indígena,Petrolina,0.741,16,6.122,7.663,10.611,3
+63,47,M,Parda,Vitória de Santo Antão,0.217,23,2.158,8.841,42.325,3
+64,22,F,Indígena,Camaragibe,0.226,23,3.476,8.65,37.953,3
+65,29,M,Indígena,Olinda,0.438,16,3.19,8.611,25.771,3
+66,43,M,Parda,Paulista,0.776,15,3.938,7.924,14.19,3
+67,29,M,Amarela,Cabo de Santo Agostinho,0.174,20,2.607,8.778,35.557,3
+68,37,M,Branca,Olinda,0.472,18,4.887,8.039,18.714,3
+69,12,M,Parda,Paulista,0.325,24,3.975,8.662,39.908,3
+70,30,F,Amarela,Cabo de Santo Agostinho,0.786,15,3.401,8.599,23.986,2
+71,31,M,Amarela,Caruaru,0.014,25,1.364,9.4,60.002,3
+72,70,M,Parda,Jaboatão dos Guararapes,0.42,15,2.151,8.236,18.539,3
+73,45,M,Preta,Garanhuns,0.727,21,5.787,7.869,18.245,3
+74,13,F,Branca,Paulista,0.398,18,4.55,8.322,23.799,3
+75,45,F,Branca,Garanhuns,0.202,24,1.007,9.346,56.307,3
+76,48,F,Preta,Paulista,0.76,20,4.742,7.711,14.271,3
+77,19,F,Indígena,Caruaru,0.755,25,6.21,7.835,21.415,3
+78,42,M,Amarela,Cabo de Santo Agostinho,0.877,19,6.716,7.558,11.563,3
+79,40,F,Amarela,Garanhuns,0.204,16,1.171,9.336,37.39,3
+80,29,M,Parda,Recife,0.69,20,3.411,8.338,26.765,3
+81,34,F,Parda,Caruaru,0.638,15,3.828,8.161,17.418,3
+82,12,M,Branca,Recife,0.522,25,4.169,8.544,38.609,3
+83,13,M,Indígena,Garanhuns,0.564,21,7.143,7.975,20.459,3
+84,34,M,Amarela,Jaboatão dos Guararapes,0.601,20,4.356,8.348,26.972,3
+85,24,F,Branca,Vitória de Santo Antão,0.587,23,5.394,8.24,28.507,3
+86,13,F,Amarela,Olinda,0.839,17,8.662,7.498,8.805,3
+87,50,M,Indígena,Garanhuns,0.465,19,3.674,8.279,24.322,3
+88,42,M,Amarela,Petrolina,0.867,23,4.171,7.748,17.203,2
+89,30,F,Amarela,Paulista,0.387,17,1.799,8.955,33.255,3
+90,65,M,Indígena,Garanhuns,0.039,16,0.378,9.774,44.386,3
+91,37,M,Indígena,Cabo de Santo Agostinho,0.616,23,5.375,8.059,24.761,3
+92,24,M,Amarela,Cabo de Santo Agostinho,0.541,18,3.085,8.691,30.413,3
+93,45,F,Indígena,Garanhuns,0.42,18,3.54,8.387,24.993,3
+94,12,F,Indígena,Caruaru,0.548,23,7.397,8.001,23.027,3
+95,40,M,Branca,Caruaru,0.556,16,2.894,8.638,26.22,3
+96,55,F,Indígena,Jaboatão dos Guararapes,0.826,19,4.345,7.734,14.299,3
+97,12,F,Branca,Jaboatão dos Guararapes,0.835,24,14.039,7.23,6.319,3
+98,30,M,Preta,Jaboatão dos Guararapes,0.573,24,6.789,7.822,20.128,3
+99,27,M,Amarela,Garanhuns,0.319,22,4.547,8.512,33.417,3
+100,43,F,Indígena,Jaboatão dos Guararapes,0.235,25,1.896,8.941,48.514,3
+101,30,M,Amarela,Olinda,0.375,16,2.573,8.798,28.762,3
+102,24,F,Indígena,Petrolina,0.279,20,3.339,8.506,30.089,3
+103,36,M,Preta,Olinda,0.816,17,5.002,7.896,15.246,3
+104,12,F,Amarela,Jaboatão dos Guararapes,0.58,20,6.084,8.242,24.832,3
+105,41,F,Parda,Petrolina,0.642,20,4.196,7.873,17.472,3
+106,44,F,Preta,Paulista,0.773,16,4.337,7.629,10.9,2
+107,42,M,Preta,Petrolina,0.394,16,2.043,8.791,28.661,3
+108,16,F,Amarela,Cabo de Santo Agostinho,0.274,22,3.143,8.725,37.915,3
+109,41,F,Branca,Olinda,0.023,18,0.842,9.304,41.452,3
+110,35,M,Indígena,Olinda,0.384,22,4.475,8.27,27.956,3
+111,30,F,Branca,Petrolina,0.354,15,2.737,8.645,24.659,3
+112,27,F,Parda,Caruaru,0.719,24,11.134,7.381,11.452,3
+113,37,F,Amarela,Vitória de Santo Antão,0.268,22,2.494,8.885,41.494,3
+114,31,F,Preta,Camaragibe,0.43,16,3.749,8.284,20.554,3
+115,38,M,Parda,Camaragibe,0.561,17,2.809,8.544,26.256,3
+116,13,F,Amarela,Recife,0.706,25,5.884,8.328,33.212,3
+117,42,F,Branca,Cabo de Santo Agostinho,0.593,18,3.93,8.164,20.951,3
+118,12,F,Parda,Vitória de Santo Antão,0.289,17,2.121,8.941,33.261,3
+119,54,F,Branca,Cabo de Santo Agostinho,0.282,20,1.271,8.872,37.441,3
+120,24,M,Indígena,Camaragibe,0.281,19,2.519,8.805,34.306,3
+121,44,M,Parda,Jaboatão dos Guararapes,0.315,16,1.998,8.892,30.274,3
+122,51,M,Parda,Cabo de Santo Agostinho,0.302,16,1.822,8.688,27.001,3
+123,40,M,Parda,Petrolina,0.554,23,4.615,8.128,26.38,3
+124,35,F,Amarela,Paulista,0.791,19,5.152,7.78,14.997,3
+125,12,M,Amarela,Cabo de Santo Agostinho,0.429,19,3.556,8.768,33.588,3
+126,38,F,Amarela,Jaboatão dos Guararapes,0.557,24,2.536,8.338,32.094,3
+127,31,M,Preta,Petrolina,0.293,15,3.384,8.223,18.494,3
+128,44,M,Amarela,Jaboatão dos Guararapes,0.796,16,4.403,7.866,13.96,3
+129,37,M,Parda,Petrolina,0.085,17,0.644,9.417,41.097,3
+130,23,M,Preta,Olinda,0.898,24,8.286,7.62,14.978,2
+131,22,M,Branca,Paulista,0.482,24,5.756,8.215,29.152,3
+132,53,F,Indígena,Olinda,0.329,22,1.643,9.052,45.171,3
+133,39,F,Amarela,Camaragibe,0.683,18,5.678,7.714,12.845,2
+134,40,F,Parda,Cabo de Santo Agostinho,0.614,23,4.464,7.855,19.652,3
+135,12,F,Indígena,Caruaru,0.577,20,8.248,7.756,16.133,3
+136,12,M,Preta,Vitória de Santo Antão,0.747,22,7.661,7.664,14.862,3
+137,12,F,Preta,Camaragibe,0.412,21,3.539,8.65,34.626,3
+138,38,M,Indígena,Vitória de Santo Antão,0.865,17,4.906,7.794,13.718,2
+139,50,F,Amarela,Paulista,0.252,25,2.207,8.606,40.132,3
+140,35,M,Amarela,Paulista,0.983,16,6.226,7.515,8.226,2
+141,60,M,Indígena,Olinda,0.589,22,2.854,8.039,22.838,3
+142,33,F,Indígena,Jaboatão dos Guararapes,0.603,22,3.825,8.277,28.08,3
+143,12,M,Amarela,Camaragibe,0.315,24,4.742,8.525,36.608,3
+144,43,M,Parda,Olinda,0.709,15,2.942,7.861,13.052,3
+145,35,M,Parda,Cabo de Santo Agostinho,0.407,17,2.684,8.394,23.69,3
+146,48,F,Amarela,Caruaru,0.702,25,4.142,7.752,18.796,3
+147,38,M,Parda,Recife,0.221,21,1.378,8.989,41.765,3
+148,33,F,Preta,Jaboatão dos Guararapes,0.521,18,4.771,8.012,19.123,3
+149,70,F,Preta,Vitória de Santo Antão,0.094,15,0.42,9.668,40.015,3
+150,30,F,Branca,Petrolina,0.645,15,2.747,8.267,19.401,3
+151,19,F,Parda,Camaragibe,0.773,17,4.878,7.654,11.392,3
+152,16,M,Parda,Vitória de Santo Antão,0.204,20,2.929,8.753,35.041,3
+153,46,F,Amarela,Olinda,0.77,23,3.817,7.9,20.681,2
+154,47,F,Preta,Cabo de Santo Agostinho,0.758,17,6.05,7.688,11.903,3
+155,33,M,Amarela,Caruaru,0.209,24,2.171,8.89,46.049,3
+156,15,M,Indígena,Recife,0.372,25,3.776,8.551,38.796,3
+157,31,F,Parda,Paulista,0.53,22,5.479,7.836,19.599,3
+158,45,M,Indígena,Jaboatão dos Guararapes,0.821,15,3.625,8.039,15.603,3
+159,38,F,Amarela,Petrolina,0.554,19,3.581,8.238,24.0,3
+160,45,M,Preta,Petrolina,0.647,25,4.773,8.039,25.963,3
+161,12,M,Indígena,Cabo de Santo Agostinho,0.451,23,5.971,8.395,32.103,3
+162,29,M,Amarela,Paulista,0.359,25,2.687,8.623,40.562,3
+163,27,M,Parda,Cabo de Santo Agostinho,0.753,24,5.912,7.71,17.135,3
+164,53,M,Branca,Petrolina,0.734,16,4.755,7.766,12.283,3
+165,41,F,Amarela,Camaragibe,0.464,24,2.912,8.635,39.216,3
+166,39,M,Parda,Jaboatão dos Guararapes,0.574,19,3.599,7.925,17.827,3
+167,25,M,Branca,Caruaru,0.309,22,2.291,8.848,40.667,3
+168,22,M,Parda,Vitória de Santo Antão,0.446,20,5.165,8.148,24.346,3
+169,29,F,Preta,Jaboatão dos Guararapes,0.781,23,6.343,7.987,22.671,3
+170,34,F,Amarela,Paulista,0.74,22,6.116,7.931,20.478,3
+171,18,F,Parda,Jaboatão dos Guararapes,0.437,16,4.242,8.314,21.03,3
+172,48,M,Preta,Jaboatão dos Guararapes,0.747,19,6.752,7.564,10.87,3
+173,26,M,Parda,Jaboatão dos Guararapes,0.735,19,6.8,7.719,13.673,3
+174,27,M,Amarela,Jaboatão dos Guararapes,0.548,25,5.163,8.27,31.741,3
+175,33,F,Preta,Garanhuns,0.694,24,9.548,7.562,13.838,3
+176,38,F,Branca,Cabo de Santo Agostinho,0.316,15,1.891,8.971,29.554,3
+177,42,F,Amarela,Cabo de Santo Agostinho,0.087,25,1.429,9.369,59.24,3
+178,38,F,Preta,Camaragibe,0.371,20,1.731,9.058,41.136,3
+179,17,M,Indígena,Garanhuns,0.784,23,7.798,7.841,19.366,3
+180,36,F,Branca,Camaragibe,0.859,16,6.794,7.219,6.435,3
+181,31,M,Branca,Garanhuns,0.311,15,1.83,9.109,31.629,3
+182,47,M,Amarela,Recife,0.784,23,8.528,7.171,5.674,3
+183,27,F,Parda,Olinda,0.188,23,2.16,8.877,43.65,3
+184,37,F,Indígena,Paulista,0.178,25,1.816,8.798,44.964,3
+185,14,F,Indígena,Cabo de Santo Agostinho,0.737,19,5.603,7.674,14.309,3
+186,40,M,Preta,Cabo de Santo Agostinho,0.453,15,4.167,8.039,16.186,3
+187,37,M,Branca,Recife,0.213,22,1.002,8.934,42.535,3
+188,36,F,Amarela,Recife,0.751,19,4.836,7.976,18.554,3
+189,35,M,Preta,Petrolina,0.234,17,1.839,8.814,30.824,3
+190,36,F,Branca,Vitória de Santo Antão,0.227,16,1.822,8.948,31.179,3
+191,24,F,Branca,Garanhuns,0.437,24,4.731,8.395,34.017,3
+192,16,M,Parda,Vitória de Santo Antão,0.366,19,3.982,8.304,24.885,3
+193,26,F,Branca,Garanhuns,0.591,21,5.658,7.974,20.458,3
+194,42,M,Preta,Recife,0.319,15,1.699,8.748,26.22,3
+195,39,F,Branca,Cabo de Santo Agostinho,0.066,23,0.736,9.514,57.826,3
+196,30,F,Preta,Recife,0.632,21,4.362,8.117,24.368,3
+197,44,F,Preta,Paulista,0.287,16,1.194,9.18,34.892,3
+198,45,M,Preta,Caruaru,0.346,18,2.582,8.443,25.971,3
+199,24,M,Branca,Olinda,0.61,18,5.004,7.883,15.872,3
+200,39,M,Parda,Recife,0.673,16,3.769,8.06,17.112,3
+201,70,M,Branca,Petrolina,0.723,15,2.275,8.163,17.45,3
+202,28,F,Preta,Paulista,0.37,24,2.97,8.675,40.211,3
+203,40,M,Parda,Jaboatão dos Guararapes,0.82,23,7.049,7.629,14.858,2
+204,12,F,Preta,Garanhuns,0.706,22,9.133,7.596,13.537,3
+205,52,F,Parda,Camaragibe,0.148,21,1.044,9.279,47.826,3
+206,12,M,Amarela,Olinda,0.218,16,1.67,9.251,35.987,3
+207,50,M,Amarela,Garanhuns,0.5,24,3.839,8.178,28.257,3
+208,61,M,Parda,Cabo de Santo Agostinho,0.328,21,1.974,8.478,31.032,3
+209,19,M,Amarela,Camaragibe,0.195,17,1.326,9.484,42.211,3
+210,28,M,Parda,Camaragibe,0.564,23,4.543,8.148,26.41,3
+211,64,F,Indígena,Olinda,0.754,21,2.835,8.16,24.347,3
+212,24,M,Branca,Recife,0.821,16,5.584,7.826,13.24,2
+213,52,F,Indígena,Recife,0.529,18,3.314,7.932,16.787,3
+214,62,M,Parda,Garanhuns,0.322,19,1.735,8.359,25.828,3
+215,30,F,Parda,Recife,0.199,16,3.061,8.392,22.846,3
+216,22,M,Amarela,Camaragibe,0.952,18,11.334,7.014,3.498,3
+217,25,M,Preta,Cabo de Santo Agostinho,0.921,15,4.169,7.805,12.09,2
+218,55,F,Branca,Vitória de Santo Antão,0.738,20,4.708,7.714,15.075,3
+219,56,F,Amarela,Vitória de Santo Antão,0.654,20,4.018,7.87,17.956,3
+220,38,F,Branca,Vitória de Santo Antão,0.464,23,4.228,8.067,24.558,3
+221,32,F,Indígena,Cabo de Santo Agostinho,0.431,25,4.244,8.21,30.242,3
+222,37,F,Parda,Cabo de Santo Agostinho,0.406,25,5.341,8.132,28.33,3
+223,22,F,Preta,Caruaru,0.501,19,5.744,8.074,20.387,3
+224,35,M,Preta,Vitória de Santo Antão,0.674,19,3.096,8.183,22.47,3
+225,59,M,Branca,Caruaru,0.029,25,1.16,9.289,57.222,3
+226,21,M,Branca,Paulista,0.363,21,4.035,8.47,30.884,3
+227,16,M,Preta,Jaboatão dos Guararapes,0.862,18,7.681,7.775,14.152,3
+228,44,F,Indígena,Recife,0.43,18,1.61,8.773,31.898,3
+229,41,M,Parda,Cabo de Santo Agostinho,0.377,25,2.047,8.592,39.783,3
+230,40,F,Branca,Camaragibe,0.632,19,5.781,7.836,15.867,3
+231,31,F,Parda,Vitória de Santo Antão,0.324,19,2.575,8.469,27.923,3
+232,32,F,Parda,Camaragibe,0.724,21,5.141,7.774,16.42,3
+233,26,M,Parda,Recife,0.389,19,3.766,8.607,30.528,3
+234,22,M,Branca,Camaragibe,0.62,20,6.572,8.104,22.108,3
+235,53,M,Preta,Vitória de Santo Antão,0.903,23,3.125,7.661,15.537,2
+236,35,M,Amarela,Paulista,0.501,24,4.684,8.352,32.46,3
+237,16,M,Parda,Cabo de Santo Agostinho,0.864,15,5.428,7.939,14.105,3
+238,29,M,Preta,Recife,0.488,18,3.375,8.523,27.43,3
+239,12,M,Indígena,Petrolina,0.278,25,2.679,8.786,44.645,3
+240,12,F,Preta,Garanhuns,0.035,17,1.57,9.187,37.188,3
+241,36,M,Branca,Cabo de Santo Agostinho,0.805,23,7.951,7.46,10.755,3
+242,47,M,Preta,Vitória de Santo Antão,0.547,16,3.174,8.331,21.283,3
+243,60,F,Parda,Jaboatão dos Guararapes,0.957,19,2.971,7.718,13.905,2
+244,47,F,Amarela,Petrolina,0.612,24,4.1,8.159,27.907,3
+245,28,F,Preta,Vitória de Santo Antão,0.735,15,5.191,7.765,12.253,3
+246,34,F,Preta,Garanhuns,0.529,20,4.48,7.964,21.078,3
+247,57,F,Amarela,Cabo de Santo Agostinho,0.466,15,1.173,9.175,32.623,3
+248,35,F,Branca,Cabo de Santo Agostinho,0.474,17,3.655,7.89,15.447,3
+249,21,F,Preta,Vitória de Santo Antão,0.546,20,6.08,8.082,21.612,3
+250,25,F,Indígena,Garanhuns,0.095,18,1.609,9.213,39.841,3
+251,50,F,Parda,Petrolina,0.249,23,1.589,8.871,43.054,3
+252,47,F,Preta,Vitória de Santo Antão,0.648,18,3.649,8.167,21.005,3
+253,32,F,Indígena,Caruaru,0.36,15,2.507,8.624,24.358,3
+254,26,M,Parda,Vitória de Santo Antão,0.443,21,3.366,8.45,30.463,3
+255,41,M,Indígena,Garanhuns,0.841,20,9.36,7.05,3.09,3
+256,12,M,Branca,Jaboatão dos Guararapes,0.133,15,1.857,9.087,31.306,3
+257,51,F,Amarela,Garanhuns,0.22,22,1.019,9.135,46.957,3
+258,19,F,Preta,Camaragibe,0.095,22,0.718,9.489,54.751,3
+259,16,M,Indígena,Paulista,0.826,24,11.511,7.505,13.161,3
+260,13,F,Branca,Olinda,0.696,15,6.093,7.587,8.781,3
+261,65,F,Parda,Petrolina,0.503,17,1.946,8.128,19.158,3
+262,34,F,Preta,Camaragibe,0.709,22,4.723,7.587,14.715,3
+263,19,F,Amarela,Caruaru,0.238,24,4.246,8.563,37.52,3
+264,31,F,Preta,Camaragibe,0.468,24,4.409,8.365,32.784,3
+265,31,M,Indígena,Paulista,0.625,25,5.313,8.069,26.746,3
+266,25,F,Parda,Jaboatão dos Guararapes,0.652,21,4.31,8.139,23.899,3
+267,58,M,Amarela,Paulista,0.331,23,2.859,8.513,34.786,3
+268,39,M,Branca,Camaragibe,0.176,21,2.036,8.92,40.319,3
+269,34,M,Indígena,Paulista,0.193,24,2.99,8.62,39.92,3
+270,39,F,Parda,Jaboatão dos Guararapes,0.652,25,7.232,7.812,20.302,3
+271,19,M,Preta,Jaboatão dos Guararapes,0.858,24,4.784,7.848,20.572,2
+272,12,F,Amarela,Caruaru,0.781,20,6.245,7.936,18.979,3
+273,55,M,Amarela,Recife,0.439,25,3.182,8.39,34.772,3
+274,12,M,Preta,Garanhuns,0.686,21,4.961,8.303,27.324,3
+275,18,M,Preta,Jaboatão dos Guararapes,0.437,19,2.851,8.698,32.273,3
+276,28,F,Indígena,Cabo de Santo Agostinho,0.266,18,2.978,8.586,28.56,3
+277,44,F,Indígena,Jaboatão dos Guararapes,0.104,23,0.607,9.75,63.233,3
+278,26,F,Parda,Olinda,0.926,18,9.507,7.383,7.262,3
+279,35,M,Preta,Garanhuns,0.446,25,4.739,8.312,32.812,3
+280,27,F,Amarela,Garanhuns,0.175,19,1.469,9.161,41.594,3
+281,67,F,Parda,Paulista,0.755,18,3.797,7.699,12.936,2
+282,31,M,Parda,Vitória de Santo Antão,0.696,22,5.648,8.025,23.055,3
+283,49,M,Parda,Petrolina,0.501,17,2.132,8.56,26.517,3
+284,27,M,Amarela,Caruaru,0.183,15,2.405,8.764,26.468,3
+285,55,M,Branca,Petrolina,0.838,15,4.072,7.754,11.288,2
+286,43,M,Indígena,Camaragibe,0.463,16,2.683,8.622,25.951,3
+287,12,F,Amarela,Camaragibe,0.068,23,2.464,9.118,48.722,3
+288,54,M,Preta,Vitória de Santo Antão,0.768,23,4.917,7.839,19.307,3
+289,14,F,Preta,Vitória de Santo Antão,0.325,15,2.624,8.914,28.696,3
+290,41,M,Preta,Olinda,0.152,25,2.372,8.907,49.182,3
+291,66,F,Branca,Olinda,0.168,19,0.902,9.327,44.21,3
+292,21,M,Amarela,Olinda,0.434,25,5.343,8.351,33.792,3
+293,47,F,Amarela,Cabo de Santo Agostinho,0.661,23,4.276,7.798,18.399,3
+294,45,F,Indígena,Cabo de Santo Agostinho,0.797,23,5.789,7.589,14.166,3
+295,41,F,Branca,Olinda,0.137,24,1.238,9.174,52.182,3
+296,31,M,Parda,Jaboatão dos Guararapes,0.522,17,4.745,8.067,18.135,3
+297,64,M,Branca,Vitória de Santo Antão,0.24,21,2.09,8.361,30.102,3
+298,37,F,Parda,Paulista,0.099,24,2.776,8.871,45.14,3
+299,47,M,Branca,Camaragibe,0.687,17,3.616,8.078,18.325,3
+300,39,F,Amarela,Garanhuns,0.64,16,4.753,7.88,14.073,3
+301,25,M,Preta,Cabo de Santo Agostinho,0.185,15,1.493,9.215,33.238,3
+302,42,F,Parda,Camaragibe,0.766,23,6.122,7.711,16.668,3
+303,47,M,Preta,Caruaru,0.583,17,3.114,8.296,22.026,3
+304,35,M,Parda,Camaragibe,0.824,16,5.382,7.663,11.324,3
+305,68,M,Preta,Jaboatão dos Guararapes,0.786,16,3.668,7.784,12.525,3
+306,42,F,Branca,Camaragibe,0.59,24,4.749,8.26,30.231,3
+307,44,M,Parda,Paulista,0.486,22,3.27,8.104,25.044,3
+308,25,F,Amarela,Camaragibe,0.58,24,6.863,7.92,22.304,3
+309,37,M,Parda,Paulista,0.693,25,5.199,8.099,27.464,3
+310,48,F,Parda,Vitória de Santo Antão,0.677,25,6.133,7.753,18.942,3
+311,58,F,Parda,Caruaru,0.434,19,2.514,8.483,28.193,3
+312,16,F,Parda,Olinda,0.218,16,2.214,8.791,28.657,3
+313,34,M,Branca,Garanhuns,0.209,15,1.333,9.181,32.73,3
+314,49,M,Parda,Garanhuns,0.575,20,4.191,7.938,19.2,3
+315,49,M,Parda,Camaragibe,0.599,16,2.497,8.388,22.203,3
+316,38,F,Branca,Camaragibe,0.507,25,5.342,8.157,28.934,3
+317,36,M,Preta,Caruaru,0.286,23,3.496,8.556,35.772,3
+318,37,F,Branca,Cabo de Santo Agostinho,0.076,22,1.515,9.177,47.898,3
+319,45,F,Preta,Petrolina,0.324,16,1.77,8.764,29.721,3
+320,21,M,Indígena,Paulista,0.555,24,4.613,8.232,29.7,3
+321,17,M,Parda,Recife,0.404,18,4.379,8.286,23.141,3
+322,29,M,Preta,Olinda,0.34,19,3.327,8.713,32.555,3
+323,28,F,Amarela,Camaragibe,0.236,15,1.805,8.845,27.695,3
+324,42,F,Indígena,Jaboatão dos Guararapes,0.442,21,2.585,8.331,29.148,3
+325,25,M,Indígena,Petrolina,0.621,24,5.884,8.258,30.184,3
+326,22,M,Amarela,Petrolina,0.426,20,3.675,8.495,29.894,3
+327,39,M,Indígena,Paulista,0.5,25,4.31,8.144,28.596,3
+328,28,F,Preta,Vitória de Santo Antão,0.605,15,4.141,8.113,16.691,3
+329,42,F,Indígena,Vitória de Santo Antão,0.802,15,4.287,7.565,8.47,2
+330,59,F,Parda,Vitória de Santo Antão,0.334,22,2.135,8.367,30.261,3
+331,45,F,Amarela,Olinda,0.085,19,0.975,9.221,43.642,3
+332,37,M,Preta,Vitória de Santo Antão,0.624,22,5.784,8.076,23.68,3
+333,52,M,Indígena,Petrolina,0.145,15,1.592,8.729,25.932,3
+334,44,M,Preta,Petrolina,0.689,23,4.977,8.101,25.336,3
+335,14,M,Preta,Paulista,0.626,15,6.316,7.74,11.11,3
+336,57,F,Branca,Caruaru,0.646,15,3.861,7.841,13.511,3
+337,39,F,Parda,Camaragibe,0.408,16,1.172,8.992,31.921,3
+338,40,M,Amarela,Recife,0.788,16,4.817,7.798,13.166,3
+339,64,M,Indígena,Petrolina,0.788,15,3.952,7.972,14.577,3
+340,62,F,Branca,Cabo de Santo Agostinho,0.563,20,1.479,8.702,34.045,3
+341,56,M,Parda,Petrolina,0.152,17,1.332,9.028,34.477,3
+342,47,F,Amarela,Cabo de Santo Agostinho,0.426,22,3.681,8.392,30.619,3
+343,61,F,Amarela,Jaboatão dos Guararapes,0.445,23,2.39,8.262,29.022,3
+344,34,M,Branca,Paulista,0.866,23,8.257,7.416,11.421,2
+345,22,M,Branca,Cabo de Santo Agostinho,0.418,15,4.079,8.113,16.781,3
+346,32,M,Amarela,Vitória de Santo Antão,0.655,16,4.824,7.788,12.607,3
+347,39,M,Preta,Vitória de Santo Antão,0.391,24,4.125,8.212,30.612,3
+348,31,F,Amarela,Paulista,0.395,22,3.14,8.617,35.576,3
+349,25,M,Preta,Camaragibe,0.539,18,4.059,8.353,24.369,3
+350,12,F,Parda,Cabo de Santo Agostinho,0.805,18,8.976,7.494,9.906,3
+351,55,F,Parda,Caruaru,0.578,25,4.752,7.949,23.732,3
+352,51,F,Branca,Vitória de Santo Antão,0.415,15,2.334,8.43,21.438,3
+353,31,F,Parda,Jaboatão dos Guararapes,0.25,21,3.615,8.526,33.191,3
+354,12,F,Branca,Garanhuns,0.643,23,5.707,8.213,27.908,3
+355,70,M,Amarela,Olinda,0.687,15,2.63,7.817,12.509,3
+356,38,F,Amarela,Camaragibe,0.385,16,3.207,8.063,17.022,3
+357,70,M,Branca,Garanhuns,0.509,15,2.873,7.823,13.571,3
+358,12,M,Preta,Recife,0.731,17,5.501,7.708,12.682,2
+359,60,F,Indígena,Paulista,0.57,17,3.393,7.981,16.688,3
+360,51,M,Preta,Recife,0.722,18,3.098,8.257,22.619,3
+361,70,F,Indígena,Caruaru,0.619,15,2.316,8.177,17.666,3
+362,32,F,Amarela,Paulista,0.548,20,6.117,7.63,14.507,3
+363,44,M,Amarela,Vitória de Santo Antão,0.251,24,1.259,9.134,51.183,3
+364,39,F,Preta,Petrolina,0.375,21,3.053,8.722,36.17,3
+365,25,M,Branca,Olinda,0.867,22,11.095,7.155,4.905,3
+366,33,M,Parda,Caruaru,0.131,18,1.082,9.449,44.09,3
+367,26,M,Amarela,Paulista,0.641,16,6.179,7.842,13.487,3
+368,12,F,Amarela,Vitória de Santo Antão,0.698,17,6.337,8.03,17.513,3
+369,69,F,Amarela,Olinda,0.612,16,2.122,8.141,18.307,3
+370,25,F,Amarela,Recife,0.394,18,3.2,8.396,25.15,3
+371,13,M,Preta,Paulista,0.58,18,5.625,8.204,21.681,3
+372,33,M,Branca,Recife,0.274,20,2.201,8.804,36.11,3
+373,27,M,Indígena,Vitória de Santo Antão,0.545,16,3.448,8.421,22.754,3
+374,27,F,Parda,Vitória de Santo Antão,0.304,21,3.075,8.687,35.445,3
+375,48,M,Branca,Camaragibe,0.666,21,4.194,8.044,21.928,3
+376,34,M,Parda,Vitória de Santo Antão,0.85,24,6.213,7.861,20.751,2
+377,22,M,Preta,Olinda,0.632,21,6.898,7.89,18.714,3
+378,46,M,Indígena,Recife,0.289,21,2.696,8.522,31.966,3
+379,23,M,Parda,Caruaru,0.649,17,5.554,8.086,18.455,3
+380,49,F,Indígena,Petrolina,0.559,25,3.595,8.365,34.12,3
+381,12,F,Branca,Olinda,0.368,25,3.366,8.809,45.225,3
+382,12,M,Amarela,Caruaru,0.671,18,4.597,7.903,17.755,2
+383,33,F,Indígena,Vitória de Santo Antão,0.283,22,1.946,9.176,47.909,3
+384,28,F,Branca,Garanhuns,0.746,19,4.109,8.381,26.235,3
+385,22,F,Indígena,Jaboatão dos Guararapes,0.274,20,2.199,8.96,39.196,3
+386,60,F,Branca,Camaragibe,0.78,23,4.374,7.69,15.903,3
+387,68,M,Preta,Jaboatão dos Guararapes,0.458,17,1.747,8.435,24.386,3
+388,34,F,Amarela,Garanhuns,0.795,24,6.144,7.803,19.731,2
+389,29,F,Parda,Petrolina,0.217,21,2.045,8.992,41.836,3
+390,42,F,Amarela,Garanhuns,0.792,21,4.864,7.798,16.753,3
+391,47,F,Preta,Recife,0.867,19,6.33,7.554,11.426,3
+392,42,F,Amarela,Cabo de Santo Agostinho,0.563,21,3.858,8.096,23.034,3
+393,21,M,Branca,Camaragibe,0.132,24,1.924,8.917,46.003,3
+394,26,M,Parda,Cabo de Santo Agostinho,0.574,19,7.135,7.778,14.782,3
+395,18,M,Preta,Vitória de Santo Antão,0.721,18,6.432,8.012,18.257,3
+396,32,F,Branca,Camaragibe,0.532,23,3.89,8.172,26.958,3
+397,25,M,Branca,Jaboatão dos Guararapes,0.703,16,5.904,8.019,16.311,3
+398,30,M,Parda,Camaragibe,0.675,23,6.187,7.881,20.842,3
+399,32,M,Amarela,Garanhuns,0.676,15,3.596,8.03,15.433,3
+400,37,M,Amarela,Jaboatão dos Guararapes,0.286,15,2.876,8.437,21.568,3
+401,44,M,Branca,Caruaru,0.671,20,4.028,8.157,23.14,3
+402,51,F,Amarela,Caruaru,0.722,23,3.332,8.011,23.263,3
+403,34,F,Preta,Recife,0.59,24,6.628,8.065,25.59,3
+404,56,F,Branca,Jaboatão dos Guararapes,0.391,17,1.872,8.734,29.474,3
+405,30,M,Parda,Olinda,0.458,23,5.651,8.216,27.96,3
+406,16,F,Parda,Cabo de Santo Agostinho,0.509,21,6.024,8.012,21.258,3
+407,28,M,Branca,Paulista,0.318,15,3.424,8.347,20.217,3
+408,21,M,Branca,Recife,0.804,22,5.966,7.9,20.702,3
+409,43,F,Amarela,Petrolina,0.418,25,2.721,8.326,33.162,3
+410,32,M,Parda,Garanhuns,0.402,22,4.761,8.264,27.807,3
+411,21,F,Parda,Recife,0.293,16,3.392,8.478,25.144,3
+412,19,F,Indígena,Camaragibe,0.866,15,5.002,7.959,14.767,3
+413,48,M,Preta,Camaragibe,0.887,20,5.008,7.76,15.179,2
+414,56,F,Preta,Recife,0.873,18,4.318,7.788,14.593,2
+415,49,M,Parda,Recife,0.497,18,2.711,8.487,26.756,3
+416,22,M,Parda,Olinda,0.161,19,2.838,8.934,36.737,3
+417,49,F,Amarela,Olinda,0.803,17,6.894,7.324,5.633,3
+418,17,F,Indígena,Jaboatão dos Guararapes,0.652,20,5.339,8.049,21.001,3
+419,30,F,Parda,Jaboatão dos Guararapes,0.78,24,10.387,7.286,8.27,3
+420,13,M,Indígena,Cabo de Santo Agostinho,0.396,23,3.785,8.703,39.165,3
+421,30,M,Parda,Olinda,0.716,15,4.253,7.743,11.149,3
+422,59,F,Amarela,Caruaru,0.66,16,2.146,8.233,19.737,3
+423,12,F,Preta,Cabo de Santo Agostinho,0.544,23,7.585,8.028,23.63,3
+424,55,M,Amarela,Garanhuns,0.787,24,5.195,7.609,14.813,3
+425,41,F,Parda,Garanhuns,0.959,15,5.691,7.493,8.223,3
+426,12,F,Amarela,Camaragibe,0.101,20,2.565,8.934,38.682,3
+427,28,F,Amarela,Camaragibe,0.752,17,6.055,7.693,12.847,3
+428,30,M,Indígena,Recife,0.354,17,2.548,8.726,29.342,3
+429,13,M,Preta,Paulista,0.421,19,2.85,8.797,34.144,3
+430,29,M,Branca,Petrolina,0.482,20,3.406,8.463,29.261,3
+431,29,F,Indígena,Olinda,0.574,20,3.803,8.222,24.474,3
+432,45,M,Branca,Cabo de Santo Agostinho,0.31,18,1.919,8.84,33.11,3
+433,23,F,Amarela,Recife,0.331,23,2.678,8.95,44.853,3
+434,41,M,Parda,Camaragibe,0.308,23,2.78,8.674,38.481,3
+435,14,F,Amarela,Jaboatão dos Guararapes,0.707,16,6.765,7.827,13.215,3
+436,31,M,Amarela,Cabo de Santo Agostinho,0.55,25,7.889,7.97,26.846,3
+437,28,F,Parda,Paulista,0.525,24,7.579,7.878,21.744,3
+438,35,F,Parda,Recife,0.345,20,3.352,8.544,30.876,3
+439,12,M,Amarela,Garanhuns,0.683,24,5.044,8.31,31.413,2
+440,32,M,Parda,Vitória de Santo Antão,0.92,22,8.725,7.25,6.949,2
+441,18,F,Preta,Olinda,0.634,24,6.964,7.953,23.263,3
+442,55,M,Branca,Cabo de Santo Agostinho,0.458,24,3.338,8.274,32.062,3
+443,52,F,Indígena,Paulista,0.529,16,2.188,8.436,23.002,3
+444,36,M,Parda,Garanhuns,0.355,18,3.907,8.349,24.414,3
+445,31,M,Branca,Olinda,0.405,21,3.207,8.632,34.291,3
+446,57,M,Preta,Jaboatão dos Guararapes,0.51,19,2.758,8.087,20.89,3
+447,42,F,Parda,Garanhuns,0.376,19,3.109,8.393,26.469,3
+448,28,F,Indígena,Camaragibe,0.496,20,5.613,8.056,21.118,3
+449,27,F,Parda,Jaboatão dos Guararapes,0.457,23,3.982,8.543,35.501,3
+450,54,M,Indígena,Camaragibe,0.282,20,1.909,8.888,37.758,3
+451,26,M,Preta,Petrolina,0.244,16,1.307,9.278,36.449,3
+452,30,F,Preta,Vitória de Santo Antão,0.2,22,2.761,9.078,45.718,3
+453,31,F,Preta,Jaboatão dos Guararapes,0.365,17,2.236,8.812,30.826,3
+454,33,F,Parda,Olinda,0.888,18,5.96,7.591,10.918,1
+455,58,M,Branca,Recife,0.361,22,1.944,8.698,37.366,3
+456,12,F,Parda,Recife,0.705,16,7.161,7.758,12.133,3
+457,43,F,Preta,Garanhuns,0.424,23,3.263,8.459,33.548,3
+458,44,F,Parda,Camaragibe,0.829,19,5.048,7.657,12.956,3
+459,43,F,Preta,Vitória de Santo Antão,0.734,20,4.897,7.822,16.981,3
+460,46,M,Parda,Recife,0.498,24,3.024,8.27,31.516,3
+461,20,F,Indígena,Caruaru,0.776,19,7.844,7.657,13.3,3
+462,29,F,Indígena,Garanhuns,0.51,21,4.338,8.333,28.007,3
+463,62,F,Preta,Caruaru,0.528,15,2.567,7.9,13.488,3
+464,53,F,Amarela,Paulista,0.379,17,2.1,8.633,27.776,3
+465,26,M,Preta,Cabo de Santo Agostinho,0.681,22,5.964,8.043,22.918,2
+466,51,M,Preta,Petrolina,0.661,19,4.632,7.956,18.159,3
+467,63,F,Parda,Cabo de Santo Agostinho,0.519,22,3.381,7.948,20.857,3
+468,59,F,Branca,Camaragibe,0.817,15,4.002,7.724,11.115,3
+469,27,F,Indígena,Vitória de Santo Antão,0.62,16,5.465,7.701,13.066,3
+470,40,M,Preta,Camaragibe,0.738,20,5.659,7.816,17.094,3
+471,39,M,Preta,Recife,0.641,15,3.922,8.063,15.928,3
+472,59,F,Branca,Camaragibe,0.488,25,2.72,8.392,34.791,3
+473,33,M,Amarela,Garanhuns,0.205,18,2.588,8.716,30.872,3
+474,12,F,Parda,Jaboatão dos Guararapes,0.335,15,2.691,8.805,27.073,3
+475,21,M,Preta,Petrolina,0.433,20,3.111,8.737,34.735,3
+476,14,M,Preta,Vitória de Santo Antão,0.255,21,2.254,8.92,40.336,3
+477,37,F,Preta,Caruaru,0.595,19,3.689,8.496,28.423,3
+478,22,M,Preta,Recife,0.245,19,1.849,8.864,35.391,3
+479,38,F,Amarela,Caruaru,0.731,23,6.376,7.61,14.332,3
+480,47,F,Parda,Caruaru,0.361,21,2.341,8.716,36.048,3
+481,21,F,Amarela,Olinda,0.21,24,2.226,8.782,42.761,3
+482,24,M,Amarela,Cabo de Santo Agostinho,0.509,25,4.633,8.252,31.319,3
+483,25,F,Indígena,Camaragibe,0.518,25,6.518,8.104,27.585,3
+484,27,M,Branca,Paulista,0.785,16,7.886,7.259,5.091,3
+485,28,M,Amarela,Recife,0.55,23,5.735,8.123,25.85,3
+486,39,F,Indígena,Jaboatão dos Guararapes,0.677,18,4.776,7.901,16.195,3
+487,46,F,Parda,Garanhuns,0.495,25,4.485,8.141,28.53,3
+488,18,M,Parda,Petrolina,0.504,21,5.726,8.268,26.657,3
+489,54,F,Amarela,Camaragibe,0.778,23,2.836,7.742,17.409,3
+490,26,M,Amarela,Jaboatão dos Guararapes,0.61,22,4.747,8.327,29.214,3
+491,33,M,Parda,Petrolina,0.229,22,1.699,8.939,42.664,3
+492,36,M,Indígena,Paulista,0.883,19,7.748,7.453,9.571,3
+493,37,M,Amarela,Vitória de Santo Antão,0.205,24,2.155,8.954,46.916,3
+494,26,M,Parda,Garanhuns,0.806,17,5.762,7.789,14.072,3
+495,45,F,Preta,Cabo de Santo Agostinho,0.75,16,3.926,7.88,14.082,3
+496,41,F,Preta,Camaragibe,0.603,16,3.756,8.268,20.285,3
+497,20,F,Parda,Olinda,0.131,15,1.91,8.768,26.964,3
+498,44,M,Amarela,Vitória de Santo Antão,0.394,20,2.318,8.778,35.541,3
+499,25,M,Indígena,Camaragibe,0.537,22,4.29,8.178,25.902,3
+500,42,M,Indígena,Paulista,0.471,23,3.2,8.67,38.388,3

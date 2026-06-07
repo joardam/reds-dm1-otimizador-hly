@@ -6,5 +6,9 @@ integridade relacional** (FKs, cronologia, faixas válidas) que garante a fideli
 Aqui mora a "verdade conhecida": quais marcadores foram plantados, a relação marcador→HLY, e as
 variáveis-ruído. Essa verdade é o gabarito contra o qual o BFSS e o MOFSS serão validados.
 
-> A definir antes de implementar (ver `ESTADO_ATUAL.md`, seção 5). Reaproveitar o que servir de
-> `old/banco/db_schema.py` (schema) e `old/banco/validator.py` (validação relacional).
+> ✅ **IMPLEMENTADO em 2026-06-07.**
+> - **Modelo numérico decidido:** `MODELO_NUMERICO.md` (M1/M2/M3, fórmula de ΔHLY, parâmetros, evidências).
+> - **Gerador:** `gerar_base.py` (usa `../simulador_hly/modelo_hly.py`). Rode `python3 gerar_base.py`.
+> - **Saída** (`saida/`): `base_bfss.csv` (entrada do BFSS), `reds_dm1_sintetico.db` (banco relacional REDS
+>   íntegro), `gabarito_marcadores.json` (relevantes×ruído), `pacientes_resumo.csv`.
+> - **Validação:** `../validacao/validar_base.py` (integridade relacional + recuperabilidade do sinal).

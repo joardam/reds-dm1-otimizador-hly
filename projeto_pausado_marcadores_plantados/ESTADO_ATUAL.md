@@ -121,8 +121,16 @@ não depende de baixar nada nem resolver acesso.
 
 ## 5. Próximos passos (ordem sugerida — NADA implementado ainda)
 
-1. **Desenhar o testbed de marcadores plantados** (discutir antes de codar):
-   - 🟡 **EM RASCUNHO** — estrutura desenhada em **`docs/desenho_marcadores.md`**. Decisões já fixadas:
+> ✅ **ATUALIZAÇÃO 2026-06-07 — PASSOS 1–3 CONCLUÍDOS.** O modelo numérico foi **fechado e implementado**
+> (decisões M1/M2/M3 + fórmula + parâmetros em `dados_sinteticos/MODELO_NUMERICO.md`), o **gerador**
+> (`dados_sinteticos/gerar_base.py` + `simulador_hly/modelo_hly.py`) e o **validador**
+> (`validacao/validar_base.py`) estão prontos, e a **base foi gerada e validada** (500 pacientes, 9.991
+> atendimentos em `dados_sinteticos/saida/`). Integridade relacional PASSOU; sinal recuperável (top-9 =
+> gabarito, recall 100%, R²=0,984). **Próximo passo real = implementar o BFSS** (passo 4) sobre
+> `saida/base_bfss.csv`, alvo `DELTA_HLY`, medindo precisão/recall contra `saida/gabarito_marcadores.json`.
+
+1. ~~**Desenhar o testbed de marcadores plantados**~~ ✅ **FEITO** (ver `dados_sinteticos/MODELO_NUMERICO.md`).
+   - Estrutura desenhada em **`docs/desenho_marcadores.md`**. Decisões já fixadas:
      - Base **100% DM1** (sem DM2); fora: metformina/sulfonilureia.
      - **Tratamento = escada ordenada `NIVEL_TRATAMENTO` (0→3)** atravessando modalidade + tier de
        insulina, monótona em eficácia e custo (L0 MDI+humana → L1 MDI+análogo → L2 bomba → L3
@@ -153,13 +161,13 @@ não depende de baixar nada nem resolver acesso.
        DCCT/EDIC) → "controlou bem desde cedo = pouco dano apesar de anos". `TEMPO_DIAGNOSTICO` cru
        vira proxy fraco/distrator. Responsividade re-normaliza para M1,M3 (ex.: 0.6·M1 + 0.4·M3).
        Detalhes na fórmula em `docs/desenho_marcadores.md` §1.
-   - Plano em **2 fases**: (1) mecânica temporal reusando faixas do reds_clean; (2) reformular valores.
-   - Falta a **proposta numérica** (pesos M1/M2/M3, curvas, regras de progressão temporal, custos por
-     nível, horizonte/cadência exatos, ruído, exemplo de paciente ponta a ponta).
-   - Definir o schema REDS mínimo (reaproveitar de `old/banco/db_schema.py` e `validator.py`).
-2. **Construir o gerador sintético com marcadores** + validador de integridade relacional.
-3. **Construir o simulador de HLY** (transforma perfil+tratamento em HLY, respeitando os marcadores).
-4. **Implementar BFSS** e validar recuperação dos marcadores (precisão/recall).
+   - ✅ **proposta numérica FECHADA** (pesos M1/M2/M3, curvas, progressão temporal, custos por nível
+     via escada, horizonte/cadência, ruído) → `dados_sinteticos/MODELO_NUMERICO.md`.
+   - ✅ schema REDS mínimo implementado no gerador (FKs/cronologia), validado por `validacao/validar_base.py`.
+2. ~~**Construir o gerador sintético com marcadores** + validador~~ ✅ **FEITO** (`dados_sinteticos/gerar_base.py`).
+3. ~~**Construir o simulador de HLY**~~ ✅ **FEITO** (`simulador_hly/modelo_hly.py`).
+4. **⏭️ PRÓXIMO: Implementar BFSS** sobre `dados_sinteticos/saida/base_bfss.csv` (alvo `DELTA_HLY`) e
+   validar recuperação dos marcadores (precisão/recall vs. `gabarito_marcadores.json`).
 5. **Implementar o PSO discreto** (2º estágio) + a **camada de Pareto** (a definir: MOPSO c/ arquivo
    externo vs. escalarização) e validar a Frente de Pareto vs. frente conhecida.
 6. (Em aberto) **Baseline de comparação** (ex.: NSGA-II/pymoo), se a equipe quiser um ao lado do PSO.

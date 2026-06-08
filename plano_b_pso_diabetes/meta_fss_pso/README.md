@@ -1,20 +1,24 @@
-# meta_fss_pso — Meta-Otimizacao: FSS otimiza hiperparametros do PSO
+# meta_fss_pso — Meta-Otimização: FSS otimiza hiperparâmetros do PSO
 
-> Semana #10 (PSO) x Semana #11 (FSS) da disciplina de Computacao Natural.
+> Semana #10 (PSO) x Semana #11 (FSS) da disciplina de Computação Natural.
 
-## O que e este modulo
+## O que é este módulo
 
-Usa o **FSS (Fish School Search)** para encontrar automaticamente os melhores hiperparametros
-do **PSO**, que por sua vez otimiza os pesos da regressao logistica para identificar o
-"individuo ideal" entre 357 diabeticos.
+Usa o **FSS (Fish School Search)** para encontrar automaticamente os melhores hiperparâmetros
+do **PSO**, que por sua vez otimiza os pesos da regressão logística para identificar o
+"indivíduo ideal" entre 357 diabéticos.
 
 ```
-FSS (meta-nivel)  ->  otimiza  ->  PSO (nivel 1)  ->  otimiza  ->  pesos da logistica
-[w_in, c1, c2, L]              [pesos do modelo]              [classificacao]
+FSS (meta-nível)  ->  otimiza  ->  PSO (nível 1)  ->  otimiza  ->  pesos da regressão
+[w_in, c1, c2, L]              [pesos do modelo]              [classificação]
 ```
 
-As funcoes de **Wellness** e **Fitness** sao identicas ao `pso_diabetes.py`.
-O FSS apenas ajusta os hiperparametros `w_in, c1, c2, LAMBDA` do PSO.
+As funções de **Wellness** e **Fitness** são idênticas ao `pso_diabetes.py`.
+O FSS apenas ajusta os hiperparâmetros `w_in, c1, c2, LAMBDA` do PSO.
+
+## Arquitetura e Integração Visual
+
+Este módulo foi refatorado para operar em conjunto com a raiz do projeto. Após gerar os resultados numéricos e visuais, as métricas e os vetores de hiperparâmetros são injetados diretamente na aba **Hiperparâmetros (FSS)** do arquivo `pso_visualizacao.html` gerado pelo `gerar_visualizacao.py` principal, que traz uma tabela comparativa (feature a feature) entre os pesos da execução padrão e os pesos meta-otimizados.
 
 ## Como rodar
 
@@ -23,29 +27,32 @@ cd plano_b_pso_diabetes/meta_fss_pso
 python meta_fss_pso.py
 ```
 
-Tempo estimado: **6-12 minutos**.
+Tempo estimado de execução: **6-12 minutos**.
 
-## Saidas geradas
+*Nota: Após a execução, lembre-se de rodar o `gerar_visualizacao.py` na raiz para atualizar o dashboard HTML.*
 
-| Arquivo | Conteudo |
+## Saídas geradas na pasta
+
+| Arquivo | Conteúdo |
 |---|---|
-| `RESULTADOS_META.md` | Tabelas de hiperparametros e AUC |
-| `resultados_metafss_convergencia.png` | Convergencia do meta-FSS por iteracao |
-| `resultados_comparacao_convergencia.png` | PSO padrao x PSO meta-otimizado |
-| `resultados_importancia_meta.png` | Importancia das features (PSO meta) |
+| `RESULTADOS_META.md` | Tabelas estáticas de hiperparâmetros encontrados e a variação da AUC. |
+| `resultados_metafss_convergencia.png` | Gráfico: Convergência do fitness (AUC) do meta-FSS por iteração. |
+| `resultados_comparacao_convergencia.png` | Gráfico: Convergência do erro no PSO padrão x PSO meta-otimizado. |
+| `resultados_importancia_meta.png` | Gráfico: Importância/Pesos das features obtidas com hiperparâmetros otimizados. |
+| `ESTRATEGIAS_AUC.md` | Anotações contendo as estratégias arquiteturais (ex: BFSS) para evolução preditiva. |
 
-## Hiperparametros otimizados pelo FSS
+## Hiperparâmetros otimizados pelo FSS
 
-| Parametro | Intervalo de busca | Valor padrao (empirico) |
+| Parâmetro | Intervalo de busca | Valor padrão (empírico) |
 |---|---|---|
 | `w_in` (inércia) | [0.30, 0.95] | 0.70 |
-| `c1` (confianca pessoal) | [0.50, 2.50] | 1.50 |
-| `c2` (confianca social) | [0.50, 2.50] | 1.50 |
-| `LAMBDA` (regularizacao L2) | [0.001, 0.50] | 0.05 |
+| `c1` (confiança pessoal) | [0.50, 2.50] | 1.50 |
+| `c2` (confiança social) | [0.50, 2.50] | 1.50 |
+| `LAMBDA` (regularização L2) | [0.001, 0.50] | 0.05 |
 
-## Configuracao do experimento
+## Configuração do experimento
 
-- **meta-FSS:** 15 peixes x 30 iteracoes
-- **PSO interno:** 15 particulas x 80 iteracoes (leve, para viabilidade computacional)
-- **Avaliacao:** CV-3 fold no conjunto de treino (evita data leakage)
-- **Base:** mesma do `pso_diabetes.py` — coorte bimodal, diabeticos (n=357)
+- **meta-FSS:** 15 peixes x 30 iterações
+- **PSO interno:** 15 partículas x 80 iterações (leve, para viabilidade computacional)
+- **Avaliação:** CV-3 fold no conjunto de treino (evita data leakage durante o ajuste fino)
+- **Base:** mesma do `pso_diabetes.py` — coorte bimodal, diabéticos (n=357)

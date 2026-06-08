@@ -5,21 +5,26 @@
 
 ## A fazer
 
-- [ ] **Tooltips de característica no seletor de par.** Ao passar o mouse (ou ao trocar) no
+- [x] **Tooltips de característica no seletor de par.** Ao passar o mouse (ou ao trocar) no
   seletor "Par de características" da aba Simulação, mostrar uma descrição curta de cada variável
   (ex.: CP2h = peptídeo-C 2h, mede reserva do pâncreas; BMI = IMC; BUN = ureia/função renal;
   waist1 = cintura/gordura abdominal). Pode ser um balãozinho de ajuda por característica.
+  → Feito: `DESCRICAO` em `gerar_visualizacao.py`; `title` nativo em cada `<option>` + balãozinho
+  `#parHelp` que atualiza ao trocar de par.
 
-- [ ] **Tirar a menção a "não em cardumes"** no cartão 3 da Apresentação. A frase
+- [x] **Tirar a menção a "não em cardumes"** no cartão 3 da Apresentação. A frase
   "inspirado no voo de bandos de pássaros — *não em cardumes*" ficou sem sentido para quem lê,
   porque não há contexto do porquê do contraste. Deixar só "inspirado no voo coordenado de bandos
   de pássaros (Kennedy & Eberhart, 1995)".
+  → Feito: cartão 3 agora só cita o voo de bandos (Kennedy & Eberhart, 1995).
 
-- [ ] **Consolidar/expandir a seção de Limitações.** Hoje há um cartão 9 na Apresentação e a
+- [x] **Consolidar/expandir a seção de Limitações.** Hoje há um cartão 9 na Apresentação e a
   "Atenção metodológica" no README, mas estão incompletos. Reunir TODAS as limitações num lugar
   claro (cartão da Apresentação + seção no relatório final), incluindo as levantadas durante o
   estudo (lista abaixo). Sempre que, ao explicar o código, surgir um "isso é bom colocar na
   limitação", registrar aqui na hora.
+  → Feito: cartão 9 reescrito como tabela com as 7 limitações; README com seção "Limitações
+  (lista consolidada)". (Falta só replicar no relatório final, quando existir.)
 
 ## Limitações levantadas durante o estudo (para incorporar)
 

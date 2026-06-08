@@ -1,0 +1,58 @@
+Preparando dados (modo rápido: 2500 treino / 1200 teste)...
+R² baseline (todas 25): 0.7496
+
+=== Etapa 1: grade grossa (24 configs, 50 iters, seed 42) ===
+  [01/24] alpha=0.6 tc=0.2 tv=0.2 -> P=0.46 R=0.67 F1=0.55 n_sel=13
+  [02/24] alpha=0.6 tc=0.2 tv=0.4 -> P=0.46 R=0.67 F1=0.55 n_sel=13
+  [03/24] alpha=0.6 tc=0.4 tv=0.2 -> P=0.50 R=0.89 F1=0.64 n_sel=16
+  [04/24] alpha=0.6 tc=0.4 tv=0.4 -> P=0.46 R=0.67 F1=0.55 n_sel=13
+  [05/24] alpha=0.6 tc=0.6 tv=0.2 -> P=0.60 R=0.67 F1=0.63 n_sel=10
+  [06/24] alpha=0.6 tc=0.6 tv=0.4 -> P=0.86 R=0.67 F1=0.75 n_sel=7
+  [07/24] alpha=0.7 tc=0.2 tv=0.2 -> P=0.50 R=0.89 F1=0.64 n_sel=16
+  [08/24] alpha=0.7 tc=0.2 tv=0.4 -> P=0.50 R=0.89 F1=0.64 n_sel=16
+  [09/24] alpha=0.7 tc=0.4 tv=0.2 -> P=0.50 R=0.78 F1=0.61 n_sel=14
+  [10/24] alpha=0.7 tc=0.4 tv=0.4 -> P=0.50 R=0.78 F1=0.61 n_sel=14
+  [11/24] alpha=0.7 tc=0.6 tv=0.2 -> P=0.55 R=0.67 F1=0.60 n_sel=11
+  [12/24] alpha=0.7 tc=0.6 tv=0.4 -> P=1.00 R=0.78 F1=0.88 n_sel=7
+  [13/24] alpha=0.8 tc=0.2 tv=0.2 -> P=0.40 R=0.67 F1=0.50 n_sel=15
+  [14/24] alpha=0.8 tc=0.2 tv=0.4 -> P=0.40 R=0.67 F1=0.50 n_sel=15
+  [15/24] alpha=0.8 tc=0.4 tv=0.2 -> P=0.50 R=0.78 F1=0.61 n_sel=14
+  [16/24] alpha=0.8 tc=0.4 tv=0.4 -> P=0.67 R=0.67 F1=0.67 n_sel=9
+  [17/24] alpha=0.8 tc=0.6 tv=0.2 -> P=0.62 R=0.89 F1=0.73 n_sel=13
+  [18/24] alpha=0.8 tc=0.6 tv=0.4 -> P=1.00 R=0.89 F1=0.94 n_sel=8
+  [19/24] alpha=0.9 tc=0.2 tv=0.2 -> P=0.47 R=0.89 F1=0.62 n_sel=17
+  [20/24] alpha=0.9 tc=0.2 tv=0.4 -> P=0.50 R=1.00 F1=0.67 n_sel=18
+  [21/24] alpha=0.9 tc=0.4 tv=0.2 -> P=0.50 R=0.78 F1=0.61 n_sel=14
+  [22/24] alpha=0.9 tc=0.4 tv=0.4 -> P=0.80 R=0.89 F1=0.84 n_sel=10
+  [23/24] alpha=0.9 tc=0.6 tv=0.2 -> P=0.60 R=1.00 F1=0.75 n_sel=15
+  [24/24] alpha=0.9 tc=0.6 tv=0.4 -> P=0.89 R=0.89 F1=0.89 n_sel=9
+
+=== Top 8 da grade (ordenado por F1) ===
+alpha   tc   tv n_sel     P     R    F1     R2
+  0.8  0.6  0.4     8   1.0 0.889 0.941 0.9219
+  0.9  0.6  0.4     9 0.889 0.889 0.889 0.9137
+  0.7  0.6  0.4     7   1.0 0.778 0.875 0.9053
+  0.9  0.4  0.4    10   0.8 0.889 0.842  0.869
+  0.6  0.6  0.4     7 0.857 0.667  0.75  0.892
+  0.9  0.6  0.2    15   0.6   1.0  0.75 0.8559
+  0.8  0.6  0.2    13 0.615 0.889 0.727  0.843
+  0.8  0.4  0.4     9 0.667 0.667 0.667 0.8595
+
+=== Etapa 2: estabilidade dos top-3 em seeds [42, 7, 123, 2024] ===
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\workspace\Faculdade\CN\projeto_pausado_marcadores_plantados\otimizadores\tuning_bfss.py", line 147, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\Lenovo\workspace\Faculdade\CN\projeto_pausado_marcadores_plantados\otimizadores\tuning_bfss.py", line 112, in main
+    print(f"  alpha={reg['alpha']} tc={reg['thres_c']} tv={reg['thres_v']} "
+    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          f"-> P={reg['P_med']}±{reg['P_dp']} "
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          f"R={reg['R_med']}±{reg['R_dp']} "
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+          f"F1={reg['F1_med']}±{reg['F1_dp']} n_sel\u2248{reg['n_sel_med']}")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u2248' in position 69: character maps to <undefined>

@@ -1,0 +1,58 @@
+{
+  "alvo_regressao": "DELTA_HLY",
+  "relevantes": [
+    "NU_IDADE",
+    "EXAME_HBA1C",
+    "DANO_ACUMULADO",
+    "MARCADOR_RESPOSTA",
+    "NIVEL_TRATAMENTO",
+    "IS_RENAL",
+    "IS_CARDIOVASCULAR",
+    "IS_RETINOPATIA",
+    "IS_NEUROPATIA"
+  ],
+  "irrelevantes": [
+    "TEMPO_DIAGNOSTICO",
+    "IN_SEXO",
+    "DS_RACA",
+    "NM_MUNIC",
+    "INSULINA_MARCA",
+    "PRESSAO_ARTERIAL",
+    "RUIDO_01",
+    "RUIDO_02",
+    "RUIDO_03",
+    "RUIDO_04",
+    "RUIDO_05",
+    "RUIDO_06",
+    "RUIDO_07",
+    "RUIDO_08",
+    "RUIDO_09",
+    "RUIDO_10"
+  ],
+  "notas": {
+    "TEMPO_DIAGNOSTICO": "distrator CORRELACIONADO (o driver causal é DANO_ACUMULADO)",
+    "NM_MUNIC": "dimensão de equidade do MOFSS; NÃO preditor de HLY",
+    "INSULINA_MARCA": "marca dentro do mesmo nível = ruído (sinal é o NIVEL_TRATAMENTO)"
+  },
+  "parametros": {
+    "ALVO_HBA1C": 7.0,
+    "POTENCIA_TRATAMENTO": {
+      "0": 0.55,
+      "1": 0.7,
+      "2": 0.85,
+      "3": 1.0
+    },
+    "PISO_HBA1C": {
+      "0": 8.5,
+      "1": 7.8,
+      "2": 7.2,
+      "3": 6.8
+    },
+    "W_M1": 0.6,
+    "W_M3": 0.4,
+    "DANO_K": 0.025,
+    "RUIDO_DHLY": 0.02
+  },
+  "seed": 42,
+  "n_pacientes": 500
+}

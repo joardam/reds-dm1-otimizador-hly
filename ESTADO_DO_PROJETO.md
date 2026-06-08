@@ -18,10 +18,15 @@
      cores por partícula, rastros, controles). É uma **fatia 2D didática** (2 pesos), não as 27D.
    - Como rodar: `pip install numpy pandas scikit-learn matplotlib` e `python3 pso_diabetes.py`.
 
-2. **`projeto_pausado_marcadores_plantados/` — PAUSADO (não abandonado).**
-   - Projeto ambicioso original: otimizador multiobjetivo HLY × Custo × Equidade validado por
-     marcadores plantados. Canônico: `ESTADO_ATUAL.md` lá dentro (tem todo o histórico de decisões).
-   - Pausado em 2026-06-06 por prazo/escopo, após conversa com o orientador.
+2. **`projeto_marcadores_plantados/` — plano principal (branch `claude/marcadores-plantados`).**
+   - Otimizador (Computação Natural) validado por marcadores plantados. Canônico: `ESTADO_ATUAL.md`
+     lá dentro (todo o histórico de decisões). Relatório consolidado: `RELATORIO_GERAL.md`.
+   - **Rota fechada (2026-06-07):** política **discretizada** + **PSO** no 2º estágio; **mFSS descartado** (§8).
+   - **Base final CONSTRUÍDA e validada (2026-06-07):** 500 pacientes / 10.031 atendimentos em
+     `dados_sinteticos/saida/` (`base_bfss.csv` + banco relacional + gabarito). Modelo em `MODELO_NUMERICO.md`.
+     Integridade relacional PASSOU; sinal recuperável (todo driver plantado > ruído puro).
+   - **BFSS implementado e validado (2026-06-08):** run canônico na base inteira → P=1.0, R=0.889,
+     F1=0.941, 8/9 marcadores; R² 0.786→0.930. Detalhes em `otimizadores/` e `RELATORIO_GERAL.md`.
 
 3. **`old/`** — 1ª tentativa (130-US/CTGAN), arquivada.
 

@@ -52,7 +52,7 @@ A interface é dividida em 3 abas:
 
 ## 5. Próximos Passos e Oportunidades
 
-Apesar de robusto na interpretação, a métrica de *AUC (Área Sob a Curva ROC)* no teste possui espaço para crescimento (~0.67). Um documento de registro (`meta_fss_pso/ESTRATEGIAS_AUC.md`) foi criado listando os caminhos técnicos para alavancar essa taxa de acerto. O roteiro priorizado é:
+Apesar de robusto na interpretação, a métrica de *AUC (Área Sob a Curva ROC)* no teste possui espaço para crescimento (~0.67). Um documento de registro (`../meta_fss_pso/contexto/ESTRATEGIAS_AUC.md`) foi criado listando os caminhos técnicos para alavancar essa taxa de acerto. O roteiro priorizado é:
 1. **(Prioridade) Tratamento de Classes Desbalanceadas:** Impor *focal loss* ou penalidades logarítmicas assimétricas para corrigir o viés majoritário.
 2. **Seleção de Variáveis (BFSS):** Adicionar uma nova camada onde um *Binary Fish School Search* desliga as features irrelevantes do dataset antes do PSO rodar.
 3. **Engenharia de Variáveis:** Inserir transformações e interações entre os atributos clínicos.

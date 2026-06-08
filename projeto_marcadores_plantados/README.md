@@ -10,8 +10,8 @@ Plano principal: um **otimizador** (Computação Natural) validado por **marcado
 
 ## Como navegar
 
-- **`RELATORIO_GERAL.md`** — relatório consolidado: passos tomados, resultados e explicações.
-- **`ESTADO_ATUAL.md`** — documento canônico com todo o histórico de decisões (escada de
+- **`contexto/RELATORIO_GERAL.md`** — relatório consolidado: passos tomados, resultados e explicações.
+- **`contexto/ESTADO_ATUAL.md`** — documento canônico com todo o histórico de decisões (escada de
   tratamento, M1/M2/M3, dano acumulado, epistemologia do BFSS, §8 da rota mFSS→discreto).
 - **`otimizadores/`** — o entregável avaliado (BFSS pronto; PSO multiobjetivo a seguir).
-- **`dados_sinteticos/MODELO_NUMERICO.md`** — o modelo gerador da base (drivers, ruídos, efeitos).
+- **`dados_sinteticos/contexto/MODELO_NUMERICO.md`** — o modelo gerador da base (drivers, ruídos, efeitos).

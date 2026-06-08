@@ -16,7 +16,7 @@ Este arquivo guarda o contexto da sessão atual de Inteligência Artificial, par
   - [x] Meta-FSS com movimentos individual, instintivo e volitivo
   - [x] PSO completo para comparação (padrão vs. meta-otimizado)
   - [x] `main()` e `salvar_saidas()`
-- [x] Executar script e avaliar `RESULTADOS_META.md` gerado.
+- [x] Executar script e avaliar `../RESULTADOS_META.md` gerado.
 - [x] Atualizar a visualização em HTML do PSO (`pso_visualizacao.html`) com uma nova aba para análises de hiperparâmetros.
 
 ## Próximos Passos (Backlog Ativo)

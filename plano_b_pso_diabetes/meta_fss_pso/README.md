@@ -39,7 +39,7 @@ Tempo estimado de execução: **6-12 minutos**.
 | `resultados_metafss_convergencia.png` | Gráfico: Convergência do fitness (AUC) do meta-FSS por iteração. |
 | `resultados_comparacao_convergencia.png` | Gráfico: Convergência do erro no PSO padrão x PSO meta-otimizado. |
 | `resultados_importancia_meta.png` | Gráfico: Importância/Pesos das features obtidas com hiperparâmetros otimizados. |
-| `ESTRATEGIAS_AUC.md` | Anotações contendo as estratégias arquiteturais (ex: BFSS) para evolução preditiva. |
+| `contexto/ESTRATEGIAS_AUC.md` | Anotações contendo as estratégias arquiteturais (ex: BFSS) para evolução preditiva. |
 
 ## Hiperparâmetros otimizados pelo FSS
 

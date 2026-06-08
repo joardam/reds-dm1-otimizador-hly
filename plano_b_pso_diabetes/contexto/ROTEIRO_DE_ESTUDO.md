@@ -50,7 +50,7 @@ São **dois arquivos**:
 ### Fase 7 — Saídas (o que o treino produz)
 - [ ] **7.1** Ranking dos pesos = o perfil do indivíduo ideal. — linhas 156–163.
 - [ ] **7.2** Perfil descritivo: média ideais × demais. — linhas 165–171.
-- [ ] **7.3** Os 2 gráficos (convergência e importância) e o `RESULTADOS.md`. `salvar_saidas()` — linhas 177–215.
+- [ ] **7.3** Os 2 gráficos (convergência e importância) e o `../RESULTADOS.md`. `salvar_saidas()` — linhas 177–215.
 
 ---
 

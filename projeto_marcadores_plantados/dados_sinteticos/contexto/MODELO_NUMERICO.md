@@ -1,7 +1,7 @@
 # Modelo numérico do testbed de marcadores plantados — DECIDIDO
 
 > **Status: DECIDIDO e implementado em 2026-06-07.** Este documento fecha a "proposta numérica"
-> que estava pendente (`docs/desenho_marcadores.md` §8 e `ESTADO_ATUAL.md` §5). As decisões abaixo
+> que estava pendente (`../../docs/contexto/desenho_marcadores.md` §8 e `../../contexto/ESTADO_ATUAL.md` §5). As decisões abaixo
 > foram tomadas com autonomia delegada pelo usuário, ancoradas em evidência (DCCT/EDIC, ADA, T1D Index).
 > O código que materializa tudo isto está em `simulador_hly/modelo_hly.py` e `dados_sinteticos/gerar_base.py`.
 

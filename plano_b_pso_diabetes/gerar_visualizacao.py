@@ -273,7 +273,12 @@ def montar_apresentacao(img_conv, img_imp, linhas, perfil, met):
 """
 
 
-def main():
+def construir_dados():
+    """Roda o pipeline real (PSO + gabarito sklearn) e devolve (payload, apres).
+
+    Reutilizado pelos geradores desktop e mobile, para não duplicar a execução do PSO
+    nem o relevo de desempenho. `payload` é o JSON embutido na simulação; `apres` é o
+    HTML pronto da aba de apresentação."""
     df = carregar_diabeticos()
     y = construir_rotulo(df)
     X, cols = selecionar_preditoras(df)
@@ -338,7 +343,17 @@ def main():
     payload = {"G": G, "pares": dados_pares,
                "descr": {c: DESCRICAO.get(c, c) for c in cols}}
     apres = montar_apresentacao(img_conv, img_imp, linhas, perfil, met)
-    html = TEMPLATE.replace("/*DATA*/", json.dumps(payload)).replace("<!--APRES-->", apres)
+    return payload, apres
+
+
+def render_html(template, payload, apres):
+    """Injeta os dados reais (JSON) e o HTML da apresentação no template escolhido."""
+    return template.replace("/*DATA*/", json.dumps(payload)).replace("<!--APRES-->", apres)
+
+
+def main():
+    payload, apres = construir_dados()
+    html = render_html(TEMPLATE, payload, apres)
     with open("pso_visualizacao.html", "w", encoding="utf-8") as f:
         f.write(html)
     print("[ok] pso_visualizacao.html gerado (", len(html), "bytes ) — abra no navegador.")

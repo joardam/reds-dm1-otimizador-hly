@@ -1,0 +1,133 @@
+======================================================================
+BFSS — seleção de variáveis na base sintética (marcadores plantados)
+======================================================================
+CSV:      C:\Users\Lenovo\workspace\Faculdade\CN\projeto_pausado_marcadores_plantados\dados_sinteticos\saida\base_bfss.csv
+Gabarito: C:\Users\Lenovo\workspace\Faculdade\CN\projeto_pausado_marcadores_plantados\dados_sinteticos\saida\gabarito_marcadores.json
+
+Modo: COMPLETO (canônico)
+Pacientes: 500 | Atendimentos: 10031 (wrapper: treino 6977 / teste 3054)
+Variáveis candidatas: 25 (9 relevantes + 16 irrelevantes no gabarito)
+
+R² baseline (todas as 25 variáveis): 0.7858
+
+Rodando BFSS (fishes=30, iters=100, alpha=0.8, thres_c=0.6, thres_v=0.4, seed=42)...
+
+  iter 001/100 | fitness(melhor-global) 0.7281 | R²(global) 0.8101 | n_sel(iter) 15
+  iter 002/100 | fitness(melhor-global) 0.7707 | R²(global) 0.8634 | n_sel(iter) 15
+  iter 003/100 | fitness(melhor-global) 0.7707 | R²(global) 0.8634 | n_sel(iter) 16
+  iter 004/100 | fitness(melhor-global) 0.7707 | R²(global) 0.8634 | n_sel(iter) 15
+  iter 005/100 | fitness(melhor-global) 0.7707 | R²(global) 0.8634 | n_sel(iter) 16
+  iter 006/100 | fitness(melhor-global) 0.7707 | R²(global) 0.8634 | n_sel(iter) 16
+  iter 007/100 | fitness(melhor-global) 0.7707 | R²(global) 0.8634 | n_sel(iter) 16
+  iter 008/100 | fitness(melhor-global) 0.7769 | R²(global) 0.8611 | n_sel(iter) 14
+  iter 009/100 | fitness(melhor-global) 0.7769 | R²(global) 0.8611 | n_sel(iter) 16
+  iter 010/100 | fitness(melhor-global) 0.7769 | R²(global) 0.8611 | n_sel(iter) 17
+  iter 011/100 | fitness(melhor-global) 0.7829 | R²(global) 0.8786 | n_sel(iter) 15
+  iter 012/100 | fitness(melhor-global) 0.7921 | R²(global) 0.8701 | n_sel(iter) 13
+  iter 013/100 | fitness(melhor-global) 0.7980 | R²(global) 0.8775 | n_sel(iter) 13
+  iter 014/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 13
+  iter 015/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 15
+  iter 016/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 15
+  iter 017/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 16
+  iter 018/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 16
+  iter 019/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 13
+  iter 020/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 15
+  iter 021/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 14
+  iter 022/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 15
+  iter 023/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 14
+  iter 024/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 14
+  iter 025/100 | fitness(melhor-global) 0.8003 | R²(global) 0.8804 | n_sel(iter) 15
+  iter 026/100 | fitness(melhor-global) 0.8084 | R²(global) 0.8905 | n_sel(iter) 13
+  iter 027/100 | fitness(melhor-global) 0.8260 | R²(global) 0.9026 | n_sel(iter) 12
+  iter 028/100 | fitness(melhor-global) 0.8273 | R²(global) 0.9041 | n_sel(iter) 12
+  iter 029/100 | fitness(melhor-global) 0.8334 | R²(global) 0.9018 | n_sel(iter) 11
+  iter 030/100 | fitness(melhor-global) 0.8334 | R²(global) 0.9018 | n_sel(iter) 11
+  iter 031/100 | fitness(melhor-global) 0.8334 | R²(global) 0.9018 | n_sel(iter) 11
+  iter 032/100 | fitness(melhor-global) 0.8469 | R²(global) 0.9086 | n_sel(iter) 10
+  iter 033/100 | fitness(melhor-global) 0.8512 | R²(global) 0.9140 | n_sel(iter) 10
+  iter 034/100 | fitness(melhor-global) 0.8664 | R²(global) 0.9230 | n_sel(iter) 09
+  iter 035/100 | fitness(melhor-global) 0.8664 | R²(global) 0.9230 | n_sel(iter) 10
+  iter 036/100 | fitness(melhor-global) 0.8664 | R²(global) 0.9230 | n_sel(iter) 09
+  iter 037/100 | fitness(melhor-global) 0.8664 | R²(global) 0.9230 | n_sel(iter) 09
+  iter 038/100 | fitness(melhor-global) 0.8664 | R²(global) 0.9230 | n_sel(iter) 09
+  iter 039/100 | fitness(melhor-global) 0.8664 | R²(global) 0.9230 | n_sel(iter) 09
+  iter 040/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 041/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 042/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 043/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 044/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 045/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 046/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 047/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 10
+  iter 048/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 049/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 050/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 051/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 052/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 053/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 054/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 055/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 056/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 057/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 058/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 059/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 060/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 061/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 062/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 07
+  iter 063/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 064/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 065/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 10
+  iter 066/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 067/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 068/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 069/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 070/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 071/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 072/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 073/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 074/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 075/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 076/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 077/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 078/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 079/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 10
+  iter 080/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 081/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 07
+  iter 082/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 083/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 084/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 07
+  iter 085/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 086/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 087/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 088/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 089/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 090/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 10
+  iter 091/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 092/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 07
+  iter 093/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 094/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 095/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 096/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 10
+  iter 097/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+  iter 098/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 10
+  iter 099/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 08
+  iter 100/100 | fitness(melhor-global) 0.8802 | R²(global) 0.9303 | n_sel(iter) 09
+
+======================================================================
+RESULTADO
+======================================================================
+Selecionadas: 8 de 25 variáveis
+Fitness (Eq.10): 0.8802
+R² do subconjunto selecionado: 0.9303  (baseline todas: 0.7858)
+Avaliações: 8100 consultas -> 3163 fits reais de KNN (cache evitou 4937)
+
+PRECISÃO: 1.000 | RECALL: 0.889 | F1: 0.941
+
+Auditoria por variável (vs gabarito):
+  [VP] acertos (8): ['DANO_ACUMULADO', 'EXAME_HBA1C', 'IS_NEUROPATIA', 'IS_RENAL', 'IS_RETINOPATIA', 'MARCADOR_RESPOSTA', 'NIVEL_TRATAMENTO', 'NU_IDADE']
+  [FP] falsos alarmes (0): []
+  [FN] relevantes perdidas (1): ['IS_CARDIOVASCULAR']
+  [VN] ruído corretamente descartado (16): ['DS_RACA', 'INSULINA_MARCA', 'IN_SEXO', 'NM_MUNIC', 'PRESSAO_ARTERIAL', 'RUIDO_01', 'RUIDO_02', 'RUIDO_03', 'RUIDO_04', 'RUIDO_05', 'RUIDO_06', 'RUIDO_07', 'RUIDO_08', 'RUIDO_09', 'RUIDO_10', 'TEMPO_DIAGNOSTICO']
+
+Salvo: otimizadores\resultados\bfss_resultado.json
+Salvo: otimizadores\resultados\bfss_relatorio.md

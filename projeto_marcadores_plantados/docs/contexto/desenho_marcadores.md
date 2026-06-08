@@ -1,7 +1,7 @@
 # Desenho dos marcadores plantados — RASCUNHO
 
 > Status: **rascunho** (estrutura decidida; faltam os números exatos).
-> Documento de trabalho. O canônico de estado é o `ESTADO_ATUAL.md` na raiz.
+> Documento de trabalho. O canônico de estado é o `../../contexto/ESTADO_ATUAL.md` na raiz.
 > Última atualização: 2026-06-07.
 
 ## 0. Decisões de base
@@ -21,7 +21,7 @@
     e o alvo da **regra de escalada** da política.
   - A **identidade da droga específica dentro de um mesmo nível = RUÍDO** (qual análogo basal, qual
     marca) → distrator que o BFSS idealmente ignora.
-  - A escada é **ordinal/discreta** → consistente com o "discreto por design" da §8 do `ESTADO_ATUAL.md`.
+  - A escada é **ordinal/discreta** → consistente com o "discreto por design" da §8 do `../../contexto/ESTADO_ATUAL.md`.
 - **Tudo deve encaixar no REDS clean** (reaproveitar schema/validador de `old/banco/`).
 - Base **longitudinal**: o **mesmo paciente repetido em vários tempos**, cronologicamente correto,
   com melhora/piora plantada (ver seção 2).
@@ -183,7 +183,7 @@ Como o mFSS trata **contínuo × discreto** (no `fss.py`):
 > ✅ **2026-06-07 — ROTA FECHADA ("Mundo B").** A política é **discretizada por design** → a necessidade
 > do mFSS **desaparece** e o **PSO** ocupa a vaga do motor do 2º estágio. **mFSS descartado.** O texto
 > abaixo sobre PALLAS/mFSS é histórico (não vamos mais usá-lo); mantido só para rastreabilidade.
-> **Ver `ESTADO_ATUAL.md` §8** (registro canônico da decisão). Continuam em aberto: o baseline (NSGA-II?)
+> **Ver `../../contexto/ESTADO_ATUAL.md` §8** (registro canônico da decisão). Continuam em aberto: o baseline (NSGA-II?)
 > e o **como** da camada de Pareto sobre o PSO (MOPSO c/ arquivo externo vs. escalarização).
 
 ⚠️ **(HISTÓRICO) ACHADO QUE MUDOU O PLANO:** o `fss.py` do PALLAS é **SINGLE-OBJECTIVE** (maximiza um

@@ -15,8 +15,14 @@ Reaproveita TODO o pipeline real (PSO + gabarito sklearn + relevo de desempenho)
 `gerar_visualizacao.py` via `construir_dados()` — nada de rodar o PSO duas vezes nem
 duplicar a apresentação.
 
+Mantém as MESMAS três abas do gerador desktop (Apresentação, Simulação e
+Hiperparâmetros/FSS) — qualquer mudança no pipeline ou no conteúdo das abas vem
+automaticamente de `construir_dados()`, então os dois geradores ficam em sincronia.
+
 Saída: pso_visualizacao_mobile.html  (abra no celular; autocontido, zero instalação).
 """
+import os
+
 from gerar_visualizacao import construir_dados, render_html
 
 
@@ -34,8 +40,8 @@ TEMPLATE_MOBILE = r"""<!DOCTYPE html>
         border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
  h1{font-size:15px;margin:0;line-height:1.3}
  small{color:var(--mut);font-size:12px}
- .tabs{margin-top:8px;display:flex;gap:8px}
- .tab{flex:1;background:#374151;color:#fff;border:0;border-radius:8px;padding:11px 8px;font-size:14px;
+ .tabs{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap}
+ .tab{flex:1 1 28%;background:#374151;color:#fff;border:0;border-radius:8px;padding:11px 6px;font-size:13px;
       font-weight:600;cursor:pointer;min-height:44px}
  .tab.active{background:var(--blue)}
 
@@ -104,10 +110,12 @@ TEMPLATE_MOBILE = r"""<!DOCTYPE html>
  <nav class="tabs">
   <button id="tabApres" class="tab active">📊 Apresentação</button>
   <button id="tabSim" class="tab">🎮 Simulação</button>
+  <button id="tabMeta" class="tab">📈 Hiperparâmetros</button>
  </nav>
 </header>
 
 <section id="view-apres"><!--APRES--></section>
+<section id="view-meta" style="display:none"><!--META--></section>
 
 <section id="view-sim" style="display:none">
  <div class="simhint">Cada partícula é uma combinação de 2 pesos. No <b>3D</b> a altura é o desempenho real
@@ -420,26 +428,30 @@ cv.addEventListener('touchcancel',touchEnd);
 // ---- menu de abas ----
 function show(which){
  const sim=which=='sim';
- document.getElementById('view-apres').style.display = sim?'none':'block';
+ document.getElementById('view-apres').style.display = which=='apres'?'block':'none';
  document.getElementById('view-sim').style.display   = sim?'block':'none';
- document.getElementById('tabApres').classList.toggle('active',!sim);
+ document.getElementById('view-meta').style.display  = which=='meta'?'block':'none';
+ document.getElementById('tabApres').classList.toggle('active',which=='apres');
  document.getElementById('tabSim').classList.toggle('active',sim);
+ document.getElementById('tabMeta').classList.toggle('active',which=='meta');
  window.scrollTo(0,0);
  if(sim) fitCanvas();                  // canvas só tem tamanho quando a aba está visível
 }
 document.getElementById('tabApres').onclick=()=>show('apres');
 document.getElementById('tabSim').onclick=()=>show('sim');
+document.getElementById('tabMeta').onclick=()=>show('meta');
 buildHeat(); updateParHelp(); setView(true); reset(); loop();
 </script></body></html>"""
 
 
 def main():
-    payload, apres = construir_dados()
-    html = render_html(TEMPLATE_MOBILE, payload, apres)
-    with open("pso_visualizacao_mobile.html", "w", encoding="utf-8") as f:
+    payload, apres, meta = construir_dados()
+    html = render_html(TEMPLATE_MOBILE, payload, apres, meta)
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                       "pso_visualizacao_mobile.html")
+    with open(out, "w", encoding="utf-8") as f:
         f.write(html)
-    print("[ok] pso_visualizacao_mobile.html gerado (", len(html),
-          "bytes ) — abra no celular.")
+    print(f"[ok] {out} gerado ({len(html):,} bytes) — abra no celular.")
 
 
 if __name__ == "__main__":

@@ -129,7 +129,7 @@ o objetivo foi **subir a precisão** (cortar falsos positivos) sem perder marcad
 | **Campeã** (α=0.8, tc=0.6, tv=0.4) | **1.000 ± 0** | **0.889 ± 0** | **0.941 ± 0** | **8.0 ± 0** |
 
 **Desvio zero**: seleciona exatamente os mesmos 8 marcadores em todos os seeds. (Detalhe bruto em
-`otimizadores/resultados/tuning.md` e `estabilidade.md`.)
+`../otimizadores/resultados/tuning.md` e `../otimizadores/resultados/estabilidade.md`.)
 
 ---
 
@@ -155,7 +155,7 @@ o objetivo foi **subir a precisão** (cortar falsos positivos) sem perder marcad
   `TEMPO_DIAGNOSTICO`.
 - **FN (1):** `IS_CARDIOVASCULAR`.
 
-Saídas auditáveis: `otimizadores/resultados/bfss_resultado.json`, `bfss_relatorio.md` (tabela
+Saídas auditáveis: `../otimizadores/resultados/bfss_resultado.json`, `../otimizadores/resultados/bfss_relatorio.md` (tabela
 VP/FP/FN/VN por variável) e `run_completo_console.log` (histórico das 100 iterações).
 
 ---
@@ -169,7 +169,7 @@ mera correlação. A parcimônia da Eq.(10) (com `α=0.8` e `thres_v=0.4`) penal
 não agregam R² suficiente.
 
 **Por que o único miss é `IS_CARDIOVASCULAR` — e por que isso é um resultado bom.** Pelo modelo
-gerador (`dados_sinteticos/MODELO_NUMERICO.md`, §7), as comorbidades entram via
+gerador (`../dados_sinteticos/contexto/MODELO_NUMERICO.md`, §7), as comorbidades entram via
 `desconto_comorbidade ≈ clip(0.18·renal + 0.20·cardio + 0.15·retino + 0.15·neuro, …)`, e o
 componente cardiovascular é o **driver mais fraco, mais raro e mais tardio** (efeito ≈ **0,0052**,
 manifestando-se em idades ≥40 anos). Ele foi deliberadamente colocado na **"zona contestada"** do
@@ -210,4 +210,4 @@ python rodar_bfss.py                 # modo rápido (subamostrado, ~1 min)
 python rodar_bfss.py --completo      # run canônico (base inteira, ~18-20 min)
 ```
 Padrões já apontam para a campeã (`α=0.8, thres_c=0.6, thres_v=0.4`). Saídas em
-`otimizadores/resultados/`.
+`../otimizadores/resultados/`.

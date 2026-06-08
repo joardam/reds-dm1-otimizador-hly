@@ -28,7 +28,7 @@ não aloca paciente-a-paciente; ele otimiza os **parâmetros de uma política** 
 tratamento, priorização e orçamento) aplicada à população ao longo do horizonte longitudinal. O BFSS
 escolhe as features que as regras usam; MOFSS/NSGA-II/PSO otimizam os parâmetros. O **orçamento acopla
 os pacientes** → problema não-separável (evita o risco de ser fácil demais). Detalhes em
-`docs/desenho_marcadores.md` §5b. **Atualização 2026-06-07:** os parâmetros são **discretizados** e o
+`../docs/contexto/desenho_marcadores.md` §5b. **Atualização 2026-06-07:** os parâmetros são **discretizados** e o
 **PSO** os otimiza (mFSS descartado — ver §8).
 
 **Referência do mFSS contínuo-discreto:** PALLAS (`yukuntan92/PALLAS`, `PALLAS/fss.py`), lido linha a
@@ -122,7 +122,7 @@ não depende de baixar nada nem resolver acesso.
 ## 5. Próximos passos (ordem sugerida — NADA implementado ainda)
 
 > ✅ **ATUALIZAÇÃO 2026-06-07 — PASSOS 1–3 CONCLUÍDOS.** O modelo numérico foi **fechado e implementado**
-> (decisões M1/M2/M3 + fórmula + parâmetros em `dados_sinteticos/MODELO_NUMERICO.md`), o **gerador**
+> (decisões M1/M2/M3 + fórmula + parâmetros em `../dados_sinteticos/contexto/MODELO_NUMERICO.md`), o **gerador**
 > (`dados_sinteticos/gerar_base.py` + `simulador_hly/modelo_hly.py`) e o **validador**
 > (`validacao/validar_base.py`) estão prontos, e a **base foi gerada e validada** (500 pacientes, 10.031
 > atendimentos em `dados_sinteticos/saida/`). Integridade relacional PASSOU; sinal recuperável (todo
@@ -130,8 +130,8 @@ não depende de baixar nada nem resolver acesso.
 > design — §7). **Próximo passo real = implementar o BFSS** (passo 4) sobre
 > `saida/base_bfss.csv`, alvo `DELTA_HLY`, medindo precisão/recall contra `saida/gabarito_marcadores.json`.
 
-1. ~~**Desenhar o testbed de marcadores plantados**~~ ✅ **FEITO** (ver `dados_sinteticos/MODELO_NUMERICO.md`).
-   - Estrutura desenhada em **`docs/desenho_marcadores.md`**. Decisões já fixadas:
+1. ~~**Desenhar o testbed de marcadores plantados**~~ ✅ **FEITO** (ver `../dados_sinteticos/contexto/MODELO_NUMERICO.md`).
+   - Estrutura desenhada em **`../docs/contexto/desenho_marcadores.md`**. Decisões já fixadas:
      - Base **100% DM1** (sem DM2); fora: metformina/sulfonilureia.
      - **Tratamento = escada ordenada `NIVEL_TRATAMENTO` (0→3)** atravessando modalidade + tier de
        insulina, monótona em eficácia e custo (L0 MDI+humana → L1 MDI+análogo → L2 bomba → L3
@@ -161,9 +161,9 @@ não depende de baixar nada nem resolver acesso.
        É um acumulador `dano(t)=dano(t−1)+max(0,HbA1c(t)−alvo)` (efeito legado/memória metabólica,
        DCCT/EDIC) → "controlou bem desde cedo = pouco dano apesar de anos". `TEMPO_DIAGNOSTICO` cru
        vira proxy fraco/distrator. Responsividade re-normaliza para M1,M3 (ex.: 0.6·M1 + 0.4·M3).
-       Detalhes na fórmula em `docs/desenho_marcadores.md` §1.
+       Detalhes na fórmula em `../docs/contexto/desenho_marcadores.md` §1.
    - ✅ **proposta numérica FECHADA** (pesos M1/M2/M3, curvas, progressão temporal, custos por nível
-     via escada, horizonte/cadência, ruído) → `dados_sinteticos/MODELO_NUMERICO.md`.
+     via escada, horizonte/cadência, ruído) → `../dados_sinteticos/contexto/MODELO_NUMERICO.md`.
    - ✅ schema REDS mínimo implementado no gerador (FKs/cronologia), validado por `validacao/validar_base.py`.
 2. ~~**Construir o gerador sintético com marcadores** + validador~~ ✅ **FEITO** (`dados_sinteticos/gerar_base.py`).
 3. ~~**Construir o simulador de HLY**~~ ✅ **FEITO** (`simulador_hly/modelo_hly.py`).
@@ -225,7 +225,7 @@ Banco → BFSS → mFSS (o próprio mFSS constrói a Frente de Pareto)
 - O mFSS contínuo×discreto só está implementado no **PALLAS** (nichado), e o `fss.py` é
   **SINGLE-OBJECTIVE** — **NÃO tem Frente de Pareto** (sem dominância, sem arquivo de não-dominados).
   ⚠️ O clone `docs/PALLAS_ref/` está no `.gitignore` e **não vem no repo** — o que sabemos do PALLAS
-  vem das anotações em `docs/desenho_marcadores.md` §5b, não de código reverificável aqui.
+  vem das anotações em `../docs/contexto/desenho_marcadores.md` §5b, não de código reverificável aqui.
 - São **DUAS dificuldades independentes:** **(A)** a camada de Pareto e **(B)** o contínuo×discreto.
   PALLAS resolve **B sem A**. MOFSS de prateleira costuma ter **A sem B**. Precisamos de **A+B**.
 - A **única razão de ser do mFSS** é lidar com os **dois domínios**. E o usuário esclareceu que o misto

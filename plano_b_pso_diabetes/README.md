@@ -1,7 +1,7 @@
 # Plano B — PSO sobre coorte de diabéticos (entrega de curto prazo)
 
 > **Status: em andamento — 2026-06-06.** Plano B de **fácil implementação**, escolhido após conversa
-> com o orientador (o plano ambicioso ficou em `../projeto_pausado_marcadores_plantados/`).
+> com o orientador (o plano principal está em `../projeto_marcadores_plantados/`).
 > Meta: algo **minimamente apresentável dentro do prazo**.
 
 ## Decisões fechadas

@@ -1,0 +1,18 @@
+Preparando dados (subamostra 2500/1200, seed 42)...
+
+=== CAMPEA (F1): {'alpha': 0.8, 'thres_c': 0.6, 'thres_v': 0.4} | seeds [42, 7, 123, 2024] ===
+  seed   42: P=1.00 R=0.89 F1=0.94 n_sel=8
+  seed    7: P=1.00 R=0.89 F1=0.94 n_sel=8
+  seed  123: P=1.00 R=0.89 F1=0.94 n_sel=8
+  seed 2024: P=1.00 R=0.89 F1=0.94 n_sel=8
+  >> P=1.000+-0.000 R=0.889+-0.000 F1=0.941+-0.000 n_sel=8.0+-0.0
+
+=== RECALL_TOTAL: {'alpha': 0.9, 'thres_c': 0.6, 'thres_v': 0.2} | seeds [42, 7, 123, 2024] ===
+  seed   42: P=0.60 R=1.00 F1=0.75 n_sel=15
+  seed    7: P=0.57 R=0.89 F1=0.70 n_sel=14
+  seed  123: P=0.64 R=1.00 F1=0.78 n_sel=14
+  seed 2024: P=0.64 R=1.00 F1=0.78 n_sel=14
+  >> P=0.614+-0.030 R=0.972+-0.048 F1=0.753+-0.036 n_sel=14.2+-0.4
+
+Salvo: otimizadores\resultados\estabilidade.md
+ESTAB_FIM exit=0

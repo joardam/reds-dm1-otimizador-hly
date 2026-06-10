@@ -46,11 +46,17 @@ def run_bfss(dados,
              s_ind_end=0.001,
              w_scale=500.0,
              seed=42,
-             verbose=True):
+             verbose=True,
+             on_iter=None):
     """Executa o BFSS sobre os dados já preparados por `preparar_dados`.
 
     `dados` é o dicionário retornado por preprocessamento.preparar_dados.
     Retorna um ResultadoBFSS (auditável).
+
+    `on_iter` (opcional): callback invocado ao fim de cada iteração como
+    `on_iter(t, cardume, melhor_pos, melhor_fit, melhor_r2)`. Serve para
+    instrumentação/replay (ex.: gerar visualização) SEM alterar a dinâmica —
+    é apenas leitura do estado. Padrão `None` = nenhum efeito.
     """
     rng = np.random.RandomState(seed)
 
@@ -92,6 +98,8 @@ def run_bfss(dados,
         n_sel = int(np.sum(melhor_iter.position))
         historico.append((t + 1, float(melhor_iter.fitness),
                           float(melhor_iter.r2), n_sel))
+        if on_iter is not None:
+            on_iter(t, cardume, melhor_pos, melhor_fit, melhor_r2)
         if verbose:
             print(f"  iter {t+1:03d}/{num_iterations} | "
                   f"fitness(melhor-global) {melhor_fit:.4f} | "

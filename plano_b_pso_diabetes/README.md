@@ -1,7 +1,7 @@
 # Plano B — PSO sobre coorte de diabéticos (entrega de curto prazo)
 
 > **Status: em andamento — 2026-06-06.** Plano B de **fácil implementação**, escolhido após conversa
-> com o orientador (o plano ambicioso ficou em `../projeto_pausado_marcadores_plantados/`).
+> com o orientador (o plano principal está em `../projeto_marcadores_plantados/`).
 > Meta: algo **minimamente apresentável dentro do prazo**.
 
 ## Decisões fechadas
@@ -56,9 +56,29 @@ Gera: `RESULTADOS.md`, `resultados_convergencia_pso.png`, `resultados_importanci
 - **Perfil do indivíduo ideal:** mais **magro** (BMI/cintura/gordura↓), menos **resistência à insulina**
   (HOMA-IR/insulina jejum↓), **ALT↓** (menos fígado gorduroso) e **menos histórico familiar** de DM.
 
-## Atenção metodológica
+## Limitações (lista consolidada)
+
+> Mesmas limitações do cartão 9 da Apresentação. Reunidas aqui para servir de base ao relatório final.
+
+- **Natureza dos dados.** Retrato **transversal** (uma foto no tempo) → fala de **associação**, não de
+  causa. **Coorte única** (rastreio metabólico, China, 2012) → não generaliza para o Brasil/SUS.
+  Declarar como **testbed**.
+- **Tipo de diabetes.** A base **não distingue tipo 1 de tipo 2** → "diabetes tipo não especificado".
+  O entregável é o **otimizador**; a base é apenas campo de teste.
+- **Definição de "ideal".** O rótulo (idade↑ + HbA1c↓ + comorbidades↓) é uma **escolha de projeto**
+  defensável, mas não a única.
+- **Corte do terço (33%).** Limiar **arbitrário** que gera classes desbalanceadas (119 ideais × 238
+  demais). Não é grave (AUC lida bem), mas é uma decisão, não uma verdade.
+- **Lista de preditoras.** As 26 características foram **curadas à mão** (de 190 colunas), por
+  conhecimento de domínio — não por varredura automática. Interpretável e sem circularidade, mas pode
+  ter deixado de fora alguma pista boa.
+- **Imputação pela mediana.** "Achata" a variação (vários vazios viram o mesmo valor). Aceitável com
+  <25% de ausência, mas reduz um pouco a variabilidade real.
+- **Regularização (L2).** LAMBDA=0.05 foi **calibrado empiricamente**, não por validação cruzada.
+  Funcionou bem, mas o jeito "by the book" seria escolher por cross-validation.
+
+### Cuidados na leitura
 
 - Não fatiar os 357 em sub-recortes pequenos (ex.: "top 10%" = ~36 → fraco).
-- Coorte única (China, 2012) → não generaliza; declarar como testbed.
 - O rótulo é construído de {idade, HbA1c, comorbidades}; por isso essas variáveis (e proxies de
   glicose/lipídio/PA) ficam **fora** dos preditores, pra a descoberta não ser circular.

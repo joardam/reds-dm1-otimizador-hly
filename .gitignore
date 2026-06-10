@@ -9,8 +9,9 @@ __pycache__/
 venv/
 env/
 
-# Clone de referência externa (PALLAS) — não republicar repo de terceiro
+# Clones de referência externa — não republicar repo de terceiro
 docs/PALLAS_ref/
+FSS-dm1-otmization/
 
 # Config local do Claude (pessoal, não compartilhar)
 .claude/settings.local.json

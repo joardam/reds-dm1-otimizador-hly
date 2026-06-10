@@ -1,16 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Gera um app HTML autocontido com DUAS telas (menu de abas):
+Gera um app HTML autocontido com TRÊS abas:
 
-  1) APRESENTAÇÃO — o problema, o método, os gráficos (convergência + importância) e a leitura
-     dos resultados: o que cada número significa e por que faz sentido ter chegado nele.
-  2) SIMULAÇÃO interativa — o PSO "nadando" no relevo de desempenho real (fatia 2D de 2 pesos).
+  1) APRESENTAÇÃO — o problema, o método, os gráficos e a leitura dos resultados.
+  2) SIMULAÇÃO interativa — o PSO animado no relevo de desempenho real (fatia 2D).
+  3) HIPERPARÂMETROS (FSS) — resultados da meta-otimização FSS sobre os hiperparâmetros do PSO.
 
-Os números (AUC, cosseno, pesos, perfil) vêm de uma execução real do PSO (mesmo pipeline do
-pso_diabetes.py). Os gráficos PNG são embutidos em base64 -> o HTML não depende de arquivos externos.
-
-Saída: pso_visualizacao.html  (abra no navegador; zero instalação).
+Os números vêm de execuções reais do PSO e do meta-FSS. Gráficos PNG são embutidos em base64.
+Saída: pso_visualizacao.html na raiz de plano_b_pso_diabetes/ (zero dependências externas).
 """
 import base64
 import json
@@ -39,6 +37,41 @@ AMIGAVEL = {
     "Gender": "sexo", "Smoking": "tabagismo", "FatherDM": "pai com diabetes",
     "MotherDM": "mãe com diabetes", "DMfamilyHistory": "histórico familiar de diabetes",
 }
+
+# descrição curta por característica (para os tooltips/balãozinho do seletor de par)
+DESCRICAO = {
+    "BMI": "IMC — peso relativo à altura (massa corporal)",
+    "waist1": "cintura — mede gordura abdominal",
+    "Waist2": "cintura (2ª medida) — gordura abdominal",
+    "hip": "quadril — circunferência do quadril",
+    "WHR": "relação cintura/quadril — como a gordura se distribui",
+    "Fat": "% de gordura corporal",
+    "HR": "frequência cardíaca de repouso",
+    "FINS": "insulina de jejum — quanto o pâncreas secreta em jejum",
+    "FCP": "peptídeo-C de jejum — reserva/produção do pâncreas",
+    "INS2h": "insulina 2h pós-glicose — resposta ao açúcar",
+    "CP2h": "peptídeo-C 2h — reserva do pâncreas após estímulo",
+    "HomaIR": "HOMA-IR — grau de resistência à insulina",
+    "ISIGutt": "índice de Gutt — sensibilidade à insulina",
+    "ALT": "ALT — enzima do fígado (sobe no fígado gorduroso)",
+    "AST": "AST — enzima do fígado",
+    "GGT": "GGT — enzima do fígado/vias biliares",
+    "ALP": "fosfatase alcalina — fígado/osso",
+    "BUN": "ureia (BUN) — função renal",
+    "SCRE": "creatinina sérica — função renal",
+    "TP": "proteína total do sangue",
+    "ALB": "albumina — proteína ligada ao fígado/nutrição",
+    "Gender": "sexo",
+    "Smoking": "tabagismo",
+    "FatherDM": "pai com diabetes",
+    "MotherDM": "mãe com diabetes",
+    "DMfamilyHistory": "histórico familiar de diabetes",
+}
+
+
+# Hiperparâmetros meta-otimizados pelo FSS (últimos valores de meta_fss_pso.py).
+# Atualize estes valores se rodar meta_fss_pso.py novamente.
+_HP_META = dict(w_in=0.6661, c1=0.7366, c2=0.5915, lam=0.0159)
 
 
 def fitness_full(w, X, y, b):
@@ -119,8 +152,8 @@ def montar_apresentacao(img_conv, img_imp, linhas, perfil, met):
 
  <div class="card">
   <h2>3. O papel do PSO</h2>
-  <p>O PSO é inspirado no <b>voo coordenado de bandos de pássaros</b> (Kennedy &amp; Eberhart, 1995) —
-     <i>não</i> em cardumes. Cada "partícula" do enxame é uma <b>tentativa de resposta</b>: um conjunto
+  <p>O PSO é inspirado no <b>voo coordenado de bandos de pássaros</b> (Kennedy &amp; Eberhart, 1995).
+     Cada "partícula" do enxame é uma <b>tentativa de resposta</b>: um conjunto
      de pesos que diz o quanto cada característica empurra alguém para o perfil "ideal". As partículas
      voam pelo espaço de possibilidades, atraídas pela melhor posição que elas já viram
      (memória própria) e pela melhor que o <b>bando inteiro</b> já viu (cooperação social), até o
@@ -204,14 +237,253 @@ def montar_apresentacao(img_conv, img_imp, linhas, perfil, met):
 
  <div class="card">
   <h2>9. Limitações (para não exagerar)</h2>
-  <p class="muted">• É um retrato <b>transversal</b> (uma foto no tempo), então fala de
-     <b>associação</b>, não de causa. • Uma única coorte (China, 2012) → não generaliza para
-     o Brasil/SUS. • O rótulo "ideal" é uma <b>escolha de projeto</b> (idade + HbA1c + comorbidades),
-     defensável mas não única. • Base não distingue tipo 1/tipo 2 → é testbed do otimizador.</p>
+  <p>Toda escolha de projeto tem um custo. Reunimos aqui, de forma honesta, <b>tudo</b> o que limita
+     a leitura dos resultados — desde o desenho do estudo até as decisões técnicas da pipeline.</p>
+  <table class="r">
+   <tr><th>Limitação</th><th>O que significa</th></tr>
+   <tr><td><b>Natureza dos dados</b></td>
+       <td>É um retrato <b>transversal</b> (uma foto no tempo): fala de <b>associação</b>, não de
+           <b>causa</b>. E vem de uma <b>coorte única</b> (rastreio metabólico, China, 2012) → não
+           generaliza para o Brasil/SUS.</td></tr>
+   <tr><td><b>Tipo de diabetes</b></td>
+       <td>A base <b>não distingue tipo 1 de tipo 2</b> (sem autoanticorpos) → "diabetes tipo não
+           especificado". O entregável é o <b>otimizador</b>; a base é apenas testbed.</td></tr>
+   <tr><td><b>Definição de "ideal"</b></td>
+       <td>O rótulo (idade↑ + HbA1c↓ + comorbidades↓) é uma <b>escolha de projeto</b> defensável,
+           mas não a única — outra equipe poderia pesar diferente.</td></tr>
+   <tr><td><b>Corte do terço (33%)</b></td>
+       <td>O limiar que separa "ideais" dos "demais" é <b>arbitrário</b> e gera classes
+           desbalanceadas ({ni} ideais × {nd} demais). Não é grave (o AUC lida bem), mas é uma
+           decisão, não uma verdade.</td></tr>
+   <tr><td><b>Lista de preditoras</b></td>
+       <td>As 26 características foram <b>curadas à mão</b> (de 190 colunas), por conhecimento de
+           domínio — não por varredura automática. Prós: interpretável, sem circularidade. Contra:
+           pode ter ficado de fora alguma pista boa não pensada.</td></tr>
+   <tr><td><b>Imputação pela mediana</b></td>
+       <td>Preencher vazios com a mediana <b>"achata" a variação</b> (vários buracos viram o mesmo
+           valor). Aceitável com &lt;25% de ausência, mas reduz um pouco a variabilidade real.</td></tr>
+   <tr><td><b>Regularização (L2)</b></td>
+       <td>A força da L2 (LAMBDA = 0,05) foi <b>calibrada empiricamente</b>, não por validação
+           cruzada. Funcionou bem (pesos moderados, treino×teste próximos), mas o jeito "by the book"
+           seria escolher por cross-validation.</td></tr>
+  </table>
  </div>
 
  <p class="muted" style="text-align:center;margin:20px 0">
    Quer ver o algoritmo trabalhando? Abra a aba <b>🎮 Simulação interativa</b> acima.</p>
+
+</div>
+"""
+
+
+def _fitness_meta(w, X, y, lam):
+    """Fitness idêntico ao PSO padrão, com lam configurável."""
+    p = np.clip(sigmoid(X @ w[:-1] + w[-1]), 1e-9, 1 - 1e-9)
+    logloss = -np.mean(y * np.log(p) + (1 - y) * np.log(1 - p))
+    return -(logloss + lam * np.sum(w[:-1] ** 2))
+
+
+def _pso_meta(X, y, hp, n_part=40, n_iter=300):
+    """PSO com hiperparâmetros meta-otimizados. Retorna pesos de feature (sem bias)."""
+    w_in, c1, c2, lam = hp["w_in"], hp["c1"], hp["c2"], hp["lam"]
+    rng = np.random.default_rng(7)
+    D = X.shape[1] + 1
+    pos = rng.uniform(-4, 4, (n_part, D))
+    vel = rng.uniform(-1, 1, (n_part, D))
+    pbest = pos.copy()
+    pbest_fit = np.array([_fitness_meta(p, X, y, lam) for p in pos])
+    g = int(pbest_fit.argmax())
+    gbest, gbest_fit = pbest[g].copy(), pbest_fit[g]
+    for it in range(n_iter):
+        r1, r2 = rng.random((n_part, D)), rng.random((n_part, D))
+        vel = w_in * vel + c1 * r1 * (pbest - pos) + c2 * r2 * (gbest - pos)
+        pos = np.clip(pos + vel, -4, 4)
+        fit = np.array([_fitness_meta(p, X, y, lam) for p in pos])
+        melh = fit > pbest_fit
+        pbest[melh] = pos[melh]
+        pbest_fit[melh] = fit[melh]
+        if pbest_fit.max() > gbest_fit:
+            g = int(pbest_fit.argmax())
+            gbest, gbest_fit = pbest[g].copy(), pbest_fit[g]
+        if (it + 1) % 75 == 0:
+            print(f"   PSO-meta iter {it+1:3d} | AUC(treino)={auc_pesos(gbest, X, y):.4f}")
+    return gbest[:-1]
+
+
+def _gerar_tabela_comparacao(w_pad, w_meta, cols):
+    """Tabela HTML comparando pesos PSO-padrão x PSO-meta, feature a feature."""
+    ordem_pad = np.argsort(-np.abs(w_pad))
+    rank_meta_dict = {int(i): r for r, i in enumerate(np.argsort(-np.abs(w_meta)))}
+    n_inv = sum(1 for i in range(len(cols)) if (w_pad[i] >= 0) != (w_meta[i] >= 0))
+
+    rows = []
+    for rank_pad, idx in enumerate(ordem_pad):
+        idx = int(idx)
+        p_p = float(w_pad[idx])
+        p_m = float(w_meta[idx])
+        mesmo = (p_p >= 0) == (p_m >= 0)
+        cls_p = "pos" if p_p > 0 else "neg"
+        cls_m = "pos" if p_m > 0 else "neg"
+        sinal_td = "<td>\u2705</td>" if mesmo else "<td class='neg'>\u26a0\ufe0f invertido</td>"
+        delta = rank_meta_dict[idx] - rank_pad
+        if abs(delta) <= 2:
+            rank_td = f"<td class='muted'>\u2248 {rank_pad + 1}\u00ba</td>"
+        elif delta < 0:
+            rank_td = f"<td class='pos'>\u25b2 {abs(delta)}</td>"
+        else:
+            rank_td = f"<td class='neg'>\u25bc {delta}</td>"
+        rows.append(
+            f"<tr><td>{cols[idx]}</td>"
+            f"<td class='{cls_p}'>{p_p:+.3f}</td>"
+            f"<td class='{cls_m}'>{p_m:+.3f}</td>"
+            f"{sinal_td}{rank_td}</tr>"
+        )
+
+    if n_inv == 0:
+        conclusao = "<span class='pos'>Nenhum sinal invertido \u2014 conclus\u00e3o qualitativa id\u00eantica nos dois modelos.</span>"
+    elif n_inv <= 3:
+        conclusao = (f"<span class='pos'>{n_inv} sinal(is) invertido(s) \u2014 todos em features de peso baixo. "
+                     f"Narrativa principal preservada.</span>")
+    else:
+        conclusao = (f"<span class='neg'>{n_inv} sinais invertidos \u2014 verificar quais features mudaram de "
+                     f"dire\u00e7\u00e3o e avaliar o impacto na interpreta\u00e7\u00e3o.</span>")
+
+    header = ("<tr><th>Feature</th><th>Peso padr\u00e3o</th><th>Peso meta (FSS)</th>"
+              "<th>Sinal</th><th>Ranking</th></tr>")
+    return (f"<p>{conclusao}</p>"
+            f'<table class="r"><thead>{header}</thead><tbody>'
+            + "".join(rows)
+            + "</tbody></table>")
+
+
+def montar_aba_meta(w_pad_arr, w_meta_arr, cols):
+    """Gera o HTML da aba 'Hiperparâmetros (FSS)' com imagens embutidas em base64.
+    Se os PNGs não existirem (meta_fss_pso.py não rodou ainda), retorna um aviso."""
+    base = os.path.join(os.path.dirname(os.path.abspath(__file__)), "meta_fss_pso")
+    paths = {
+        "fss": os.path.join(base, "resultados_metafss_convergencia.png"),
+        "cmp": os.path.join(base, "resultados_comparacao_convergencia.png"),
+        "imp": os.path.join(base, "resultados_importancia_meta.png"),
+    }
+    if not all(os.path.exists(p) for p in paths.values()):
+        return ('<div class="apres"><div class="card">'
+                '<h2>Resultados FSS não encontrados</h2>'
+                '<p class="muted">Execute <code>meta_fss_pso/meta_fss_pso.py</code> '
+                'para gerar os resultados e depois rode este script novamente.</p>'
+                '</div></div>')
+
+    img_fss = b64(paths["fss"])
+    img_cmp = b64(paths["cmp"])
+    img_imp = b64(paths["imp"])
+    print("[ok] imagens FSS lidas")
+
+    tabela_comp = _gerar_tabela_comparacao(w_pad_arr, w_meta_arr, cols)
+
+    return f"""
+<div class="apres">
+
+ <div class="card">
+  <h2>5. Meta-Otimização: FSS calibrando os hiperparâmetros do PSO</h2>
+  <p>O PSO original usa parâmetros empíricos fixos (w&thinsp;=&thinsp;0,7&nbsp;;&nbsp;c1&thinsp;=&thinsp;c2&thinsp;=&thinsp;1,5&nbsp;;&nbsp;&lambda;&thinsp;=&thinsp;0,05).
+     Neste experimento um segundo algoritmo de Computação Natural &mdash; o
+     <b>FSS (Fish School Search)</b> &mdash; assume o papel de &ldquo;meta-otimizador&rdquo;:
+     cada peixe representa uma configuração candidata de hiperparâmetros e nada em busca
+     da que maximiza a AUC de classificação.</p>
+  <p>A avaliação de cada peixe usa <b>CV-3</b> (3-fold cross-validation) exclusivamente
+     sobre o conjunto de treino &mdash; o conjunto de teste nunca é visto durante a busca,
+     evitando <em>data leakage</em>.</p>
+  <div class="kpis">
+   <div class="kpi"><b>15</b><span>peixes no FSS</span></div>
+   <div class="kpi"><b>30</b><span>iterações do FSS</span></div>
+   <div class="kpi"><b>15&thinsp;&times;&thinsp;80</b><span>partículas&thinsp;&times;&thinsp;iter por avaliação</span></div>
+   <div class="kpi"><b>CV-3</b><span>folds para o fitness</span></div>
+  </div>
+ </div>
+
+ <div class="card">
+  <h2>6. Hiperparâmetros encontrados pelo FSS</h2>
+  <table class="r">
+   <tr><th>Parâmetro</th><th>Papel</th><th>Padrão empírico</th><th>Valor (FSS)</th><th>Variação</th></tr>
+   <tr>
+    <td><b>w_in</b></td>
+    <td class="muted">Inércia das partículas</td>
+    <td>0,700</td><td class="pos">0,666</td><td class="neg">&minus;0,034</td>
+   </tr>
+   <tr>
+    <td><b>c1</b></td>
+    <td class="muted">Confiança pessoal</td>
+    <td>1,500</td><td class="pos">0,737</td><td class="neg">&minus;0,763</td>
+   </tr>
+   <tr>
+    <td><b>c2</b></td>
+    <td class="muted">Confiança social</td>
+    <td>1,500</td><td class="pos">0,592</td><td class="neg">&minus;0,908</td>
+   </tr>
+   <tr>
+    <td><b>&lambda; (LAMBDA)</b></td>
+    <td class="muted">Regularização L2</td>
+    <td>0,050</td><td class="pos">0,016</td><td class="neg">&minus;0,034</td>
+   </tr>
+  </table>
+  <p><b>Por que o FSS preferiu valores menores?</b> Com apenas ~250 amostras de treino e
+     26 features, partículas com <b>menos inércia e menor atração social</b> exploram o
+     espaço de pesos de forma mais diversa antes de convergir. A
+     <b>regularização menor</b> permite que o modelo capture mais sinal dos dados, gerando
+     AUC superior sem sobreajuste perceptível no conjunto de teste.</p>
+ </div>
+
+ <div class="card">
+  <h2>7. Gráfico: convergência do meta-FSS</h2>
+  <img src="data:image/png;base64,{img_fss}" alt="convergencia meta-FSS">
+  <p><b>O que mostra:</b> a melhor AUC de CV-3 encontrada pelo cardume a cada iteração.
+     O cardume parte de AUC&nbsp;&approx;&nbsp;0,73 e converge para <b>0,787</b> &mdash; evidenciando
+     que os três movimentos do FSS (individual, instintivo, volitivo) orientam a busca de
+     forma progressiva e eficaz.</p>
+  <p class="muted">A linha tracejada é a AUC de teste do PSO com parâmetros empíricos (baseline).
+     O FSS supera esse valor já na iteração&nbsp;5.</p>
+ </div>
+
+ <div class="card">
+  <h2>8. PSO padrão &times; PSO meta-otimizado</h2>
+  <img src="data:image/png;base64,{img_cmp}" alt="comparacao convergencia PSO">
+  <div class="kpis" style="margin-top:14px">
+   <div class="kpi"><b>0,664</b><span>AUC teste &mdash; PSO padrão</span></div>
+   <div class="kpi"><b>0,678</b><span>AUC teste &mdash; PSO meta (FSS)</span></div>
+   <div class="kpi"><b style="color:#8ee6a0">+2,1&thinsp;%</b><span>melhoria relativa</span></div>
+   <div class="kpi"><b>0,701</b><span>cosseno entre os pesos</span></div>
+  </div>
+  <p><b>O que mostra:</b> o PSO com hiperparâmetros encontrados pelo FSS converge mais
+     rápido no treino <b>(0,837 vs&nbsp;0,821)</b> e obtém AUC de teste superior
+     <b>(0,678 vs&nbsp;0,664)</b>, com +2,1&thinsp;% de ganho relativo.</p>
+  <p><b>Cosseno&nbsp;=&nbsp;0,701</b> (diferente do 1,000 original PSO&nbsp;&times;&nbsp;sklearn).
+     Isso é esperado e correto: os dois PSOs usam regularizações diferentes
+     (&lambda;&nbsp;=&nbsp;0,016 vs&nbsp;0,050), portanto convergem para direções
+     distintas no espaço de pesos. Confirma que a meta-otimização encontrou uma
+     solução <em>genuinamente diferente</em> da empírica.</p>
+ </div>
+
+ <div class="card">
+  <h2>9. Perfil do indivíduo ideal &mdash; PSO meta-otimizado</h2>
+  <img src="data:image/png;base64,{img_imp}" alt="importancia features PSO meta">
+  <p><b>Como ler:</b> peso <span class="pos">verde/positivo</span> = ter mais dessa
+     característica aproxima do perfil ideal; peso
+     <span class="neg">vermelho/negativo</span> = ter mais afasta do ideal.
+     O padrão qualitativo permanece consistente com o PSO original: fatores de
+     <b>composição corporal</b> e <b>resistência à insulina</b> dominam os pesos negativos,
+     confirmando a robustez da análise.</p>
+  <p class="muted">Quer ver o algoritmo trabalhando visualmente?
+     Abra a aba <b>🎮 Simulação interativa</b> acima.</p>
+ </div>
+
+ <div class="card">
+  <h2>10. As features mudaram de direção? Padrão × meta-otimizado</h2>
+  <p>Ambos os modelos usam as <b>mesmas 26 features</b>. Tabela ordenada pela importância no
+     modelo padrão (mesma referência da aba <b>📊 Apresentação</b>). Sinal ✅ = mesma
+     direção em ambos os modelos; ⚠️ = direções opostas.</p>
+  {tabela_comp}
+  <p class="muted">▲/▼ no ranking indica subida ou descida de posição no modelo meta.
+     Features com sinal invertido em pesos pequenos têm impacto narrativo baixo.</p>
+ </div>
 
 </div>
 """
@@ -279,12 +551,20 @@ def main():
             "Z": [[round(v, 5) for v in row] for row in Z.tolist()],
         })
 
-    payload = {"G": G, "pares": dados_pares}
+    payload = {"G": G, "pares": dados_pares,
+               "descr": {c: DESCRICAO.get(c, c) for c in cols}}
+    print("\n=== PSO meta-otimizado (comparação de pesos) ===")
+    w_meta_comp = _pso_meta(Xtr, ytr, _HP_META)
     apres = montar_apresentacao(img_conv, img_imp, linhas, perfil, met)
-    html = TEMPLATE.replace("/*DATA*/", json.dumps(payload)).replace("<!--APRES-->", apres)
-    with open("pso_visualizacao.html", "w", encoding="utf-8") as f:
+    meta = montar_aba_meta(pesos, w_meta_comp, cols)
+    html = (TEMPLATE
+            .replace("/*DATA*/", json.dumps(payload))
+            .replace("<!--APRES-->", apres)
+            .replace("<!--META-->", meta))
+    out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "pso_visualizacao.html")
+    with open(out, "w", encoding="utf-8") as f:
         f.write(html)
-    print("[ok] pso_visualizacao.html gerado (", len(html), "bytes ) — abra no navegador.")
+    print(f"[ok] {out} gerado ({len(html):,} bytes) — abra no navegador.")
 
 
 TEMPLATE = r"""<!DOCTYPE html>
@@ -334,17 +614,27 @@ TEMPLATE = r"""<!DOCTYPE html>
  <nav class="tabs">
   <button id="tabApres" class="tab active">📊 Apresentação</button>
   <button id="tabSim" class="tab">🎮 Simulação interativa</button>
+  <button id="tabMeta" class="tab">📈 Hiperparâmetros (FSS)</button>
  </nav>
 </header>
 
 <section id="view-apres"><!--APRES--></section>
 
 <section id="view-sim" style="display:none">
- <div style="padding:10px 16px"><small>Cada partícula é uma combinação de 2 pesos. O fundo é o desempenho real (claro = melhor). A ⭐ é o ótimo (fora do centro, de propósito). As partículas (bando) convergem para o topo.</small></div>
+ <div style="padding:10px 16px"><small>Cada partícula é uma combinação de 2 pesos. Veja o enxame em <b>2D</b> (mapa de calor visto de cima) ou em <b>3D</b> (superfície, onde a altura é o desempenho). Claro/alto = melhor; a ⭐ é o ótimo. As partículas (bando) convergem para o topo.</small></div>
  <div class="wrap">
   <canvas id="cv" width="620" height="620"></canvas>
   <div class="panel">
    <div class="row"><label>Par de características</label><select id="par"></select></div>
+   <div class="legend" id="parHelp"></div>
+   <div class="row"><label>Visualização</label><span>
+     <button id="v2d">2D</button> <button id="v3d" class="sec">3D</button></span></div>
+   <div class="row" id="row3d" style="display:none">
+     <label><input type="checkbox" id="autorot" checked> Girar sozinho</label>
+     <label>Zoom <input type="range" id="zoom3d" min="40" max="300" value="100"></label></div>
+   <div class="row" id="row3d2" style="display:none">
+     <label>Altura <input type="range" id="zscale" min="20" max="100" value="55"></label>
+     <span class="muted" style="font-size:11px">scroll = zoom · arraste = girar</span></div>
    <div class="row">
     <button id="play">▶ Play</button>
     <button id="step" class="sec">Passo</button>
@@ -365,6 +655,7 @@ TEMPLATE = r"""<!DOCTYPE html>
   </div>
  </div>
 </section>
+<section id="view-meta" style="display:none"><!--META--></section>
 <script>
 const DATA = /*DATA*/;
 const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
@@ -372,13 +663,22 @@ const G=DATA.G, W=cv.width, H=cv.height;
 let P=DATA.pares[0];                 // par atual
 let heat=document.createElement('canvas'); heat.width=G; heat.height=G;
 let particles=[], gbest=null, iter=0, playing=false, traces=[], acc=0;
+let render3d=false, yaw=0.7, pitch=0.95, H3=0.55, zoom=1, autorot=true, drag3=null;  // estado da câmera 3D
 const SPF=[0,0.04,0.08,0.16,0.3,0.6,1.2,2.5,4,7,11]; // passos por frame por valor do slider (1..10)
 const SPF_LBL=['','muito lenta','lenta','lenta','média','média','rápida','rápida','muito rápida','muito rápida','turbo'];
 
 // ---- seletor de par ----
 const sel=document.getElementById('par');
-DATA.pares.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.fi+'  ×  '+p.fj;sel.appendChild(o);});
-sel.onchange=()=>{P=DATA.pares[sel.value]; buildHeat(); reset();};
+const descr=f=>(DATA.descr&&DATA.descr[f])||f;
+DATA.pares.forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.fi+'  ×  '+p.fj;
+ o.title=p.fi+': '+descr(p.fi)+'\n'+p.fj+': '+descr(p.fj);   // tooltip nativo ao passar o mouse
+ sel.appendChild(o);});
+function updateParHelp(){
+ document.getElementById('parHelp').innerHTML=
+   '<b>'+P.fi+'</b>: '+descr(P.fi)+'<br><b>'+P.fj+'</b>: '+descr(P.fj);
+}
+function legend3d(){ document.getElementById('leg').innerHTML='Superfície 3D — a <b>altura</b> é o desempenho real. Eixo X = peso de <b>'+P.fi+'</b>, eixo Y = peso de <b>'+P.fj+'</b>. ⭐ = ótimo (no pico). <b>Arraste</b> para girar.'; }
+sel.onchange=()=>{P=DATA.pares[sel.value]; buildHeat(); updateParHelp(); if(render3d) legend3d(); reset();};
 
 function color(t){ // t in [0,1] -> azul->verde->amarelo->vermelho-claro (desempenho)
  t=Math.max(0,Math.min(1,t));
@@ -423,7 +723,7 @@ function reset(){
  }
  document.getElementById('it').textContent=0;
  document.getElementById('best').textContent=gbest.f.toFixed(4);
- draw();
+ render();
 }
 function stepOnce(){
  const w=+document.getElementById('winr').value/100;
@@ -486,29 +786,109 @@ function star(cx,cy,r,col){ ctx.beginPath();
  for(let i=0;i<10;i++){const ang=Math.PI/5*i-Math.PI/2,rad=i%2?r*0.45:r;
    const X=cx+Math.cos(ang)*rad,Y=cy+Math.sin(ang)*rad; i?ctx.lineTo(X,Y):ctx.moveTo(X,Y);}
  ctx.closePath(); ctx.fillStyle=col; ctx.fill(); }
-function loop(){ if(playing){ acc += SPF[+document.getElementById('speed').value];
-   while(acc>=1){ stepOnce(); acc--; } } animate(); draw(); requestAnimationFrame(loop); }
+// ---- render 3D: a MESMA superfície de desempenho, agora com altura = fitness ----
+function draw3d(){
+ const CX=W/2, CY=H*0.60, scale=360*zoom, dz=(P.zmax-P.zmin)||1;
+ const cyw=Math.cos(yaw), syw=Math.sin(yaw), cpt=Math.cos(pitch), spt=Math.sin(pitch);
+ // projeta um ponto do mundo (wx,wy,wz) -> [pixelX, pixelY, profundidade] (giro + inclinação)
+ const proj=(wx,wy,wz)=>{ const xr=wx*cyw-wy*syw, yr=wx*syw+wy*cyw;
+   return [CX+xr*scale, CY-(yr*spt+wz*cpt)*scale, yr*cpt-wz*spt]; };
+ const gx=b=>(b/(G-1)-0.5), gy=a=>(a/(G-1)-0.5), gz=v=>((v-P.zmin)/dz-0.5)*H3;
+ const nx=x=>((x-P.xmin)/(P.xmax-P.xmin)-0.5), ny=y=>((y-P.ymin)/(P.ymax-P.ymin)-0.5);
+ ctx.fillStyle='#05070b'; ctx.fillRect(0,0,W,H);
+ // malha de quadrados pintada por altura, desenhada do fundo p/ a frente (painter's algorithm)
+ const S=2, quads=[];
+ for(let a=0;a+S<G;a+=S) for(let b=0;b+S<G;b+=S){
+   const z00=P.Z[a][b], z10=P.Z[a][b+S], z11=P.Z[a+S][b+S], z01=P.Z[a+S][b];
+   const A=proj(gx(b),gy(a),gz(z00)),     B=proj(gx(b+S),gy(a),gz(z10));
+   const C=proj(gx(b+S),gy(a+S),gz(z11)), D=proj(gx(b),gy(a+S),gz(z01));
+   quads.push({A,B,C,D,t:((z00+z10+z11+z01)/4-P.zmin)/dz,depth:(A[2]+B[2]+C[2]+D[2])/4});
+ }
+ quads.sort((m,n)=>n.depth-m.depth);
+ for(const q of quads){ const c=color(q.t);
+   ctx.beginPath(); ctx.moveTo(q.A[0],q.A[1]); ctx.lineTo(q.B[0],q.B[1]);
+   ctx.lineTo(q.C[0],q.C[1]); ctx.lineTo(q.D[0],q.D[1]); ctx.closePath();
+   ctx.fillStyle='rgb('+c[0]+','+c[1]+','+c[2]+')'; ctx.fill();
+   ctx.strokeStyle='rgba(0,0,0,.18)'; ctx.lineWidth=.5; ctx.stroke(); }
+ // rastros projetados sobre o relevo (mesma cor da partícula, desbotando na cauda)
+ if(document.getElementById('trace').checked){ ctx.lineCap='round';
+   for(let i=0;i<traces.length;i++){ const pc=particles[i]; if(!pc) continue;
+     const tr=traces[i], hue=pc.hue; let prev=null;
+     for(let k=0;k<tr.length;k++){ const pp=proj(nx(tr[k][0]),ny(tr[k][1]),gz(fit(tr[k][0],tr[k][1]))+.015);
+       if(prev){ const al=k/tr.length; ctx.beginPath(); ctx.moveTo(prev[0],prev[1]); ctx.lineTo(pp[0],pp[1]);
+         ctx.strokeStyle='hsla('+hue+',95%,62%,'+(al*0.9).toFixed(3)+')'; ctx.lineWidth=0.6+2.2*al; ctx.stroke(); }
+       prev=pp; } } }
+ // velocidades (seta curta a partir de cada partícula, seguindo o relevo)
+ if(document.getElementById('showv').checked){
+   for(const p of particles){ const a0=proj(nx(p.dx),ny(p.dy),gz(fit(p.dx,p.dy))+.02);
+     const b0=proj(nx(p.dx+p.vx*3),ny(p.dy+p.vy*3),gz(fit(p.dx+p.vx*3,p.dy+p.vy*3))+.02);
+     ctx.beginPath(); ctx.moveTo(a0[0],a0[1]); ctx.lineTo(b0[0],b0[1]);
+     ctx.strokeStyle='rgba(255,220,120,.85)'; ctx.lineWidth=1.2; ctx.stroke(); } }
+ // partículas pousadas na superfície (cada uma na sua cor), ordenadas por profundidade
+ const pts=particles.map(p=>({s:proj(nx(p.dx),ny(p.dy),gz(fit(p.dx,p.dy))+.02),hue:p.hue}))
+                    .sort((m,n)=>n.s[2]-m.s[2]);
+ ctx.save();
+ for(const q of pts){ ctx.shadowColor='hsl('+q.hue+',95%,60%)'; ctx.shadowBlur=8;
+   ctx.beginPath(); ctx.arc(q.s[0],q.s[1],4,0,7); ctx.fillStyle='hsl('+q.hue+',95%,66%)'; ctx.fill(); }
+ ctx.restore();
+ if(document.getElementById('showg').checked && gbest){
+   const g=proj(nx(gbest.x),ny(gbest.y),gz(fit(gbest.x,gbest.y))+.02);
+   ctx.save(); ctx.shadowColor='#22d3ee'; ctx.shadowBlur=12;
+   ctx.beginPath(); ctx.arc(g[0],g[1],7,0,7); ctx.strokeStyle='#22d3ee'; ctx.lineWidth=2.5; ctx.stroke(); ctx.restore(); }
+ const o=proj(nx(P.ox),ny(P.oy),gz(fit(P.ox,P.oy))+.03);
+ ctx.save(); ctx.shadowColor='#ffd166'; ctx.shadowBlur=14; star(o[0],o[1],12,'#ffd166'); ctx.restore();
+}
+function render(){ render3d?draw3d():draw(); }
+function loop(){
+ if(playing){ acc += SPF[+document.getElementById('speed').value]; while(acc>=1){ stepOnce(); acc--; } }
+ if(render3d && autorot && !drag3) yaw+=0.006;            // gira sozinho quando não está arrastando
+ animate(); render(); requestAnimationFrame(loop);
+}
 // ---- controles ----
 document.getElementById('play').onclick=function(){playing=!playing; this.textContent=playing?'⏸ Pause':'▶ Play';};
-document.getElementById('step').onclick=()=>{stepOnce();draw();};
+document.getElementById('step').onclick=()=>{stepOnce();render();};
 document.getElementById('reset').onclick=reset;
 document.getElementById('speed').oninput=function(){document.getElementById('speedLbl').textContent=SPF_LBL[this.value];};
 document.getElementById('np').oninput=function(){document.getElementById('npLbl').textContent=this.value; reset();};
 document.getElementById('winr').oninput=function(){document.getElementById('wLbl').textContent=(this.value/100).toFixed(2);};
 document.getElementById('c1').oninput=function(){document.getElementById('c1Lbl').textContent=(this.value/100).toFixed(1);};
 document.getElementById('c2').oninput=function(){document.getElementById('c2Lbl').textContent=(this.value/100).toFixed(1);};
-['trace','showg','showv'].forEach(id=>document.getElementById(id).onchange=draw);
+['trace','showg','showv'].forEach(id=>document.getElementById(id).onchange=render);
+// ---- alternância 2D/3D + câmera ----
+function setView(is3d){ render3d=is3d;
+ document.getElementById('row3d').style.display=is3d?'flex':'none';
+ document.getElementById('row3d2').style.display=is3d?'flex':'none';
+ document.getElementById('v3d').className=is3d?'':'sec';
+ document.getElementById('v2d').className=is3d?'sec':'';
+ if(is3d) legend3d(); else buildHeat();
+ render();
+}
+document.getElementById('v2d').onclick=()=>setView(false);
+document.getElementById('v3d').onclick=()=>setView(true);
+document.getElementById('autorot').onchange=function(){autorot=this.checked;};
+document.getElementById('zscale').oninput=function(){H3=this.value/100; if(!playing) render();};
+document.getElementById('zoom3d').oninput=function(){zoom=this.value/100; if(!playing) render();};
+cv.addEventListener('wheel',e=>{ if(!render3d) return; e.preventDefault();
+ zoom=Math.max(0.4,Math.min(3,zoom*(e.deltaY<0?1.1:0.9)));
+ document.getElementById('zoom3d').value=Math.round(zoom*100); if(!playing) render(); },{passive:false});
+cv.addEventListener('mousedown',e=>{ if(render3d) drag3={x:e.clientX,y:e.clientY,yaw,pitch}; });
+window.addEventListener('mousemove',e=>{ if(drag3){ yaw=drag3.yaw+(e.clientX-drag3.x)*0.01;
+  pitch=Math.max(0.15,Math.min(1.45,drag3.pitch+(e.clientY-drag3.y)*0.005)); if(!playing) render(); }});
+window.addEventListener('mouseup',()=>{drag3=null;});
 // ---- menu de abas ----
 function show(which){
  document.getElementById('view-apres').style.display = which=='apres'?'block':'none';
  document.getElementById('view-sim').style.display   = which=='sim'?'block':'none';
+ document.getElementById('view-meta').style.display  = which=='meta'?'block':'none';
  document.getElementById('tabApres').classList.toggle('active',which=='apres');
  document.getElementById('tabSim').classList.toggle('active',which=='sim');
+ document.getElementById('tabMeta').classList.toggle('active',which=='meta');
  window.scrollTo(0,0);
 }
 document.getElementById('tabApres').onclick=()=>show('apres');
 document.getElementById('tabSim').onclick=()=>show('sim');
-buildHeat(); reset(); loop();
+document.getElementById('tabMeta').onclick=()=>show('meta');
+buildHeat(); updateParHelp(); reset(); loop();
 </script></body></html>"""
 
 

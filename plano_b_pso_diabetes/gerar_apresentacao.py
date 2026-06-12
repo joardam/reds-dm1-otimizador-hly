@@ -25,6 +25,7 @@ SANS  = "Calibri"
 BASE = "/home/user/reds-dm1-otimizador-hly/plano_b_pso_diabetes"
 CONV_PNG = BASE + "/resultados_convergencia_pso.png"
 IMP_PNG  = BASE + "/resultados_importancia.png"
+META_PNG = BASE + "/meta_fss_pso/resultados_comparacao_convergencia.png"
 OUT = BASE + "/Apresentacao_Equipe4_PlanoB.pptx"
 
 ARROW = "→"  # →
@@ -75,7 +76,7 @@ def hline(slide, l, t, w, color=ACCENT, weight=1.5):
     sp.line.fill.background()
     return sp
 
-def chrome(slide, kicker, title, idx, total=13):
+def chrome(slide, kicker, title, idx, total=14):
     _, ktf = box(slide, ML, Inches(0.45), CW, Inches(0.3))
     para(ktf, kicker.upper(), size=11, color=ACCENT2, bold=True, font=SANS, space_after=0, first=True)
     _, ttf = box(slide, ML, Inches(0.74), CW, Inches(0.7))
@@ -414,9 +415,50 @@ _, mtf = box(s, ML, my, lw, Inches(1.2))
 para(mtf, "Médias (ideais vs demais):", size=13, color=MUTE, bold=True, font=SANS, first=True, space_after=4)
 para(mtf, "BMI 21,4 vs 24,8   ·   ISIGutt 57,3 vs 104,8   ·   ALT 33,4 vs 45,7", size=13, color=INK, font=SANS, space_after=0)
 
-# ===================== 11 BFSS DE RELANCE =====================
+# ===================== 11 META-FSS =====================
 s = newslide()
-chrome(s, "Fechamento", "BFSS, de relance — o plano principal segue vivo", 11)
+chrome(s, "Validação e ganho", "Meta-FSS — o enxame que ajusta o enxame", 11)
+_, sub = box(s, ML, Inches(1.62), CW, Inches(0.35))
+para(sub, "FSS (Fish School Search) otimiza os hiperparâmetros do PSO — meta-otimização em dois níveis.",
+     size=13.5, color=MUTE, italic=True, font=SANS, first=True)
+flow = [
+    ("FSS — meta-nível", "ajusta w, c1, c2, λ", ACCENT),
+    ("PSO — nível 1", "otimiza os pesos do modelo", ACCENT2),
+    ("Regressão logística", "classifica o Wellness", S_GREEN),
+]
+fbw = (CW - Inches(1.0))/3; fy = Inches(2.15)
+for i,(h,d,col) in enumerate(flow):
+    x = ML + i*(fbw+Inches(0.5))
+    rect(s, x, fy, fbw, Inches(1.0), fill=PANEL, line=col, line_w=1.0, shape=MSO_SHAPE.ROUNDED_RECTANGLE)
+    rect(s, x, fy, Inches(0.1), Inches(1.0), fill=col)
+    _, tf = box(s, x+Inches(0.32), fy+Inches(0.2), fbw-Inches(0.5), Inches(0.7))
+    para(tf, h, size=14.5, color=INK, bold=True, font=SANS, first=True, space_after=2)
+    para(tf, d, size=12, color=MUTE, font=SANS, space_after=0)
+    if i < 2:
+        _, atf = box(s, x+fbw+Inches(0.04), fy+Inches(0.24), Inches(0.42), Inches(0.5))
+        para(atf, ARROW, size=22, color=MUTE, bold=True, font=SANS, align=PP_ALIGN.CENTER, first=True)
+lw = CW*0.46; ly = Inches(3.55)
+_, tf = box(s, ML, ly, lw, Inches(2.3))
+para(tf, "Hiperparâmetros encontrados pelo FSS", size=14.5, color=ACCENT, bold=True, font=SANS, first=True, space_after=9)
+bullets(tf, [
+    "w = 0,67  ·  c1 = 0,74  ·  c2 = 0,59  ·  λ = 0,016",
+    "AUC teste: 0,678 (meta)  vs  0,664 (padrão)  →  +0,014",
+    "Avaliação por CV-3 no treino (sem tocar no teste).",
+], size=13.5, gap=10, lead=ACCENT)
+rw = CW - lw - Inches(0.5); rx = ML + lw + Inches(0.5)
+rect(s, rx, Inches(3.45), rw, Inches(2.45), fill=PAPER, line=HAIR, line_w=0.75)
+pic = s.shapes.add_picture(META_PNG, rx, Inches(3.6), height=Inches(2.18))
+pic.left = int(rx + (rw - pic.width)/2)
+cy = Inches(6.08)
+rect(s, ML, cy, CW, Inches(0.78), fill=PANEL, line=ACCENT2, line_w=1.0)
+_, ctf = box(s, ML+Inches(0.3), cy+Inches(0.12), CW-Inches(0.6), Inches(0.6))
+para(ctf, "Leitura honesta: o ganho (+0,014) está dentro do ruído da estimativa (IC ≈ 0,68 ± 0,15) e parte vem "
+          "do afrouxamento do L2. O ponto não é o número — é mostrar a família FSS (Semana #11) governando o PSO.",
+     size=12, color=INK, italic=True, font=SANS, first=True)
+
+# ===================== 12 BFSS DE RELANCE =====================
+s = newslide()
+chrome(s, "Fechamento", "BFSS, de relance — o plano principal segue vivo", 12)
 _, tf = box(s, ML, Inches(2.0), CW*0.58, Inches(4.0))
 para(tf, "Validação por marcadores plantados", size=17, color=INK, bold=True, font=SERIF, first=True, space_after=10)
 bullets(tf, [
@@ -437,7 +479,7 @@ para(stf, "Recuperou 8 de 9 marcadores plantados; o subconjunto selecionado elev
 
 # ===================== 12 LIMITAÇÕES =====================
 s = newslide()
-chrome(s, "Fechamento", "Limitações declaradas", 12)
+chrome(s, "Fechamento", "Limitações declaradas", 13)
 lims = [
     "A base não distingue T1D/T2D → 'diabetes tipo não especificado'; é testbed, não evidência clínica.",
     "Coorte única e transversal (China, 2012) → fala de associação, não de causalidade.",
@@ -457,7 +499,7 @@ for i,t in enumerate(lims):
 
 # ===================== 13 CONCLUSÃO =====================
 s = newslide()
-chrome(s, "Fechamento", "Próximos passos e conclusão", 13)
+chrome(s, "Fechamento", "Próximos passos e conclusão", 14)
 stages = ["PSO (Plano B)", "BFSS", "Simulador HLY", "MOPSO + NSGA-II"]
 pw = (CW - Inches(1.2))/4; py = Inches(2.1)
 for i,st in enumerate(stages):

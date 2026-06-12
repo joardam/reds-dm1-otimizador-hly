@@ -67,10 +67,13 @@ def rect(slide, l, t, w, h, fill=PANEL, line=None, line_w=0.75, shape=MSO_SHAPE.
     return sp
 
 def hline(slide, l, t, w, color=ACCENT, weight=1.5):
-    ln = slide.shapes.add_connector(2, l, t, l + w, t)
-    ln.line.color.rgb = color; ln.line.width = Pt(weight)
-    ln.shadow.inherit = False
-    return ln
+    # filete como retangulo fino (evita <p:cxnSp>, que dispara "reparo" no PowerPoint)
+    h = Pt(weight)
+    sp = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, l, int(t - h/2), w, int(h))
+    sp.shadow.inherit = False
+    sp.fill.solid(); sp.fill.fore_color.rgb = color
+    sp.line.fill.background()
+    return sp
 
 def chrome(slide, kicker, title, idx, total=13):
     _, ktf = box(slide, ML, Inches(0.45), CW, Inches(0.3))

@@ -19,7 +19,8 @@ GREEN = RGBColor(0x2E, 0x6B, 0x4F)
 AMBER = RGBColor(0xB0, 0x7A, 0x2A)
 GREYS = RGBColor(0x9A, 0x9A, 0x9A)
 
-SERIF = "Book Antiqua"   # Palatino-like, igual ao template
+SERIF = "Palatino Linotype"   # fonte exata do template do professor
+SANSB = "Arial"               # marcadores de bullet (igual ao template)
 ARROW = "→"
 
 BASE = "/home/user/reds-dm1-otimizador-hly/plano_b_pso_diabetes"
@@ -69,7 +70,7 @@ def bullets(tf, items, size=16, gap=8, color=INK, lead=NAVY, first0=True):
         txt, bold = (it if isinstance(it, tuple) else (it, False))
         p = tf.paragraphs[0] if (i == 0 and first0) else tf.add_paragraph()
         p.space_after = Pt(gap); p.space_before = Pt(0)
-        r0 = p.add_run(); r0.text = "•  "; _f(r0, size, lead, True, False, SERIF)
+        r0 = p.add_run(); r0.text = "•  "; _f(r0, size, lead, True, False, SANSB)
         r = p.add_run(); r.text = txt; _f(r, size, color, bold, False, SERIF)
 
 def master(slide, num):
@@ -77,11 +78,11 @@ def master(slide, num):
     hw = Inches(4.55)
     slide.shapes.add_picture(HDR, int(SW - hw), Inches(0.12), width=hw)
     rect(slide, Inches(0.3), Inches(6.82), SW - Inches(0.6), Pt(1.4), fill=STEEL)
-    slide.shapes.add_picture(FTR, Inches(0.32), Inches(6.88), height=Inches(0.6))
-    _, ctf = box(slide, Inches(1.95), Inches(6.95), Inches(8.2), Inches(0.5))
-    para(ctf, "COURSE: Computação Natural", size=10, color=NAVY, first=True, space_after=1)
-    para(ctf, "CLASS: Equipe 4  -  TOPIC: Otimizador Bioinspirado (Plano B)", size=10, color=NAVY, space_after=0)
-    _, ntf = box(slide, SW - Inches(0.95), Inches(6.96), Inches(0.6), Inches(0.3))
+    slide.shapes.add_picture(FTR, Inches(0.32), Inches(6.95), height=Inches(0.5))
+    _, ctf = box(slide, Inches(1.85), Inches(6.97), Inches(9.0), Inches(0.5))
+    para(ctf, "COURSE: Computação Natural", size=11, color=NAVY, first=True, space_after=1)
+    para(ctf, "CLASS: Equipe 4  -  TOPIC: Otimizador Bioinspirado (Plano B)", size=11, color=NAVY, space_after=0)
+    _, ntf = box(slide, SW - Inches(0.95), Inches(7.0), Inches(0.6), Inches(0.3))
     para(ntf, str(num), size=12, color=NAVY, align=PP_ALIGN.RIGHT, first=True)
 
 def titled(title, num):

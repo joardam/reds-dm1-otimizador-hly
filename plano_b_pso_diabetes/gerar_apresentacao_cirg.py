@@ -77,7 +77,7 @@ def master(slide, num):
     hw = Inches(4.55)
     slide.shapes.add_picture(HDR, int(SW - hw), Inches(0.12), width=hw)
     rect(slide, Inches(0.3), Inches(6.82), SW - Inches(0.6), Pt(1.4), fill=STEEL)
-    slide.shapes.add_picture(FTR, Inches(0.32), Inches(6.9), width=Inches(1.3))
+    slide.shapes.add_picture(FTR, Inches(0.32), Inches(6.88), height=Inches(0.6))
     _, ctf = box(slide, Inches(1.95), Inches(6.95), Inches(8.2), Inches(0.5))
     para(ctf, "COURSE: Computação Natural", size=10, color=NAVY, first=True, space_after=1)
     para(ctf, "CLASS: Equipe 4  -  TOPIC: Otimizador Bioinspirado (Plano B)", size=10, color=NAVY, space_after=0)
@@ -227,7 +227,7 @@ bullets(tf, ["A base não possui rótulo 'saudável vs. doente'.","É um snapsho
 para(tf, "Conexão com HLY", size=15, color=NAVY, bold=True, space_after=6, space_before=8)
 para(tf, "Ausência de complicações + controle metabólico = pilares que sustentam os Anos de Vida Saudáveis.",
      size=14, color=INK, space_after=0)
-fy = Inches(3.95)
+fy = Inches(4.6)
 rect(s, ML, fy, lw, Inches(0.95), fill=LIGHT, line=HAIR, line_w=0.75)
 _, ftf = box(s, ML+Inches(0.3), fy+Inches(0.13), lw-Inches(0.6), Inches(0.75))
 para(ftf, "Wellness  =  terço superior de", size=13, color=GRAY, first=True, space_after=2)

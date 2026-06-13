@@ -78,7 +78,7 @@ def master(slide, num):
     hw = Inches(4.55)
     slide.shapes.add_picture(HDR, int(SW - hw), Inches(0.12), width=hw)
     rect(slide, Inches(0.3), Inches(6.82), SW - Inches(0.6), Pt(1.4), fill=STEEL)
-    slide.shapes.add_picture(FTR, Inches(0.32), Inches(6.95), height=Inches(0.5))
+    slide.shapes.add_picture(FTR, Inches(0.32), Inches(6.92), height=Inches(0.55))
     _, ctf = box(slide, Inches(1.85), Inches(6.97), Inches(9.0), Inches(0.5))
     para(ctf, "COURSE: Computação Natural", size=11, color=NAVY, first=True, space_after=1)
     para(ctf, "CLASS: Equipe 4  -  TOPIC: Otimizador Bioinspirado (Plano B)", size=11, color=NAVY, space_after=0)

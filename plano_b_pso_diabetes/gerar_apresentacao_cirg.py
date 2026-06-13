@@ -122,7 +122,7 @@ items = [
     ("02", "O Plano B e seu objetivo", "Objetivo adaptado e a variável Wellness"),
     ("03", "Como funciona", "Passo a passo e por que PSO (enxame)"),
     ("04", "Validação e ganho", "O ótimo conhecido, o perfil ideal e o Meta-FSS"),
-    ("05", "Fechamento", "BFSS de relance, limitações e próximos passos"),
+    ("05", "Fechamento", "BFSS, contribuição, limitações e próximos passos"),
 ]
 top = Inches(1.55); rowh = Inches(0.86); gap = Inches(0.07)
 for i,(n,t,d) in enumerate(items):
@@ -387,8 +387,46 @@ para(stf, "STATUS", size=11, color=GRAY, bold=True, first=True, space_after=4)
 para(stf, "BFSS validado", size=18, color=GREEN, bold=True, space_after=6)
 para(stf, "Recuperou 8 de 9 marcadores plantados; o subconjunto selecionado eleva o R².", size=13, color=INK, space_after=0)
 
-# ============================================================ 14 LIMITAÇÕES
-s = titled("Limitações declaradas", 14)
+# ============================================================ 14 CONTRIBUIÇÃO
+s = titled("O que descobrimos — contribuição do estudo", 14)
+_, sub = box(s, ML, Inches(1.3), CW, Inches(0.35))
+para(sub, "A entrega é um otimizador validado e um perfil interpretável — não uma conclusão clínica.",
+     size=13.5, color=GRAY, italic=True, first=True)
+cards = [
+    ("Contribuição metodológica", NAVY, [
+        "PSO de enxame implementado do zero e validado.",
+        "Corretude provada por dois caminhos independentes:",
+        "ótimo analítico — cosseno = 1,000;",
+        "verdade-base plantada (BFSS) — F1 = 0,94.",
+    ]),
+    ("O que foi descoberto", GREEN, [
+        "Perfil interpretável do 'indivíduo ideal' entre diabéticos.",
+        "Mais magro, menor resistência à insulina, fígado preservado, sem histórico familiar.",
+        "O otimizador redescobre, sozinho, um perfil clinicamente coerente.",
+    ]),
+    ("A fronteira (o que não é)", STEEL, [
+        "Não é achado clínico: a base é testbed.",
+        "Não distingue T1D/T2D; coorte única e transversal.",
+        "Fala de associação, não de causalidade.",
+    ]),
+]
+colw = (CW - Inches(0.6)) / 3; ctop = Inches(1.78); chh = Inches(3.1)
+for i,(h,bc,its) in enumerate(cards):
+    x = ML + i*(colw+Inches(0.3))
+    rect(s, x, ctop, colw, chh, fill=LIGHT, line=HAIR, line_w=0.75)
+    rect(s, x, ctop, colw, Inches(0.1), fill=bc)
+    _, tf = box(s, x+Inches(0.26), ctop+Inches(0.32), colw-Inches(0.52), chh-Inches(0.5))
+    para(tf, h, size=15.5, color=bc, bold=True, first=True, space_after=9)
+    bullets(tf, its, size=12.8, gap=8, lead=bc, first0=False)
+fy = Inches(5.1)
+rect(s, ML, fy, CW, Inches(1.25), fill=NAVY)
+_, ftf = box(s, ML+Inches(0.4), fy+Inches(0.18), CW-Inches(0.8), Inches(0.95))
+para(ftf, "Em uma frase", size=12, color=ONNAVY, bold=True, first=True, space_after=3)
+para(ftf, "Contribuímos com um otimizador de enxame validado por dois caminhos — ótimo analítico (cosseno 1,000) e verdade-base plantada (F1 0,94) — e com um perfil interpretável e reprodutível; o valor é o método validado, não uma conclusão clínica.",
+     size=13, color=PAPER, bold=True, space_after=0)
+
+# ============================================================ 15 LIMITAÇÕES
+s = titled("Limitações declaradas", 15)
 lims = ["A base não distingue T1D/T2D → 'diabetes tipo não especificado'; é testbed, não evidência clínica.",
     "Coorte única e transversal (China, 2012) → fala de associação, não de causalidade.",
     "O rótulo 'ideal' é uma escolha de projeto defensável, não a única.",
@@ -403,8 +441,8 @@ for i,t in enumerate(lims):
     _, tf = box(s, x+Inches(0.3), y+Inches(0.22), colw-Inches(0.55), Inches(0.95))
     para(tf, t, size=13.5, color=INK, first=True)
 
-# ============================================================ 15 CONCLUSÃO
-s = titled("Próximos passos e conclusão", 15)
+# ============================================================ 16 CONCLUSÃO
+s = titled("Próximos passos e conclusão", 16)
 stages = ["PSO (Plano B)","BFSS","Simulador HLY","MOPSO + NSGA-II"]
 pw = (CW - Inches(1.2))/4; py = Inches(1.7)
 for i,st in enumerate(stages):
